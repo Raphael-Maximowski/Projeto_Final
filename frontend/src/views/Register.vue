@@ -1,5 +1,22 @@
 <template>
   <main>
+      <div id="modal" v-if="this.pass = 0">
+        <div class="info-modal">
+          <div class="icon">
+            <div class="ghost">
+              <div class="img-modal">
+
+              </div>
+            </div>
+            <div class="error">
+              <p>Opps...</p>
+              {{this.errors[0]}}
+            </div>
+          </div>
+          <div class="line">
+          </div>
+        </div>
+      </div>
     <div class="camada">
       <section>
         <div class="logo">
@@ -19,25 +36,25 @@
 
         <div class="input">
           <form action="" method="post">
-            <div>
+            <div>                       
                 <div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off">
+                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="name">
                   <label for="floatingInput">Nome</label>
                 </div>
               </div>
               <div>
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off">
+                  <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="email">
                   <label for="floatingInput">Email</label>
                 </div>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input type="password" class="form-control" id="floatingPassword"  v-model="password">
                 <label for="floatingPassword">Senha</label>
               </div>
               <div class="form-floating">
-                <input type="confirmpassword" class="form-control" id="floatingPassword" placeholder="confirmpassword">
+                <input type="password" class="form-control" id="floatingPassword" v-model="confirmpassword">
                 <label for="floatingPassword">Confirme sua Senha</label>
               </div>
               <div class="extra_info">
@@ -48,9 +65,7 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-primary">
-                Entrar
-              </button>
+                <div class="btn btn-primary" @click="ValidateForm">Entrar</div>
             </div>
           </form>
         </div>
@@ -100,9 +115,165 @@
     </div>
     </main>
 </template>
-<script ></script>
+<script>
+
+
+export default {
+    components: {
+    },
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+      errors: [],
+      pass: 1
+    };
+  },
+
+  methods: {
+    ValidateName()
+    {
+      if (this.name.length == 0)
+      {
+        this.errors.push('O Campo nome é Obrigatório!')
+        this.pass = 0;
+      }
+      else if (this.name.length < 3)
+      {
+        this.errors.push('O Campo nome precisa de pelo menos três Caracteres!')
+        this.pass = 0;
+      }
+      else if (this.name.length > 30)
+      {
+        this.errors.push('O Campo nome excedeu o limite máximo de Caracteres!') 
+        this.pass = 0;
+      }
+    },
+
+    ValidateEmail()
+    {
+      const emailpadrao = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (this.email.length == 0)
+      {
+        this.errors.push('O campo Email é obrigatório!')
+        this.pass = 0;
+      }
+      else if (!emailpadrao.test(this.email))
+      {
+        this.errors.push('Email Invalido!')
+        this.pass = 0;
+      }
+    },
+
+    ValidatePassword()
+    {
+      if (this.password.length == 0)
+      {
+         this.errors.push('O Campo senha é obrigatório!')   
+      }
+      else if (this.password.length < 8)
+      {
+        this.errors.push('O Campo senha precisa de pelo menos oito Caracteres!')
+        this.pass = 0;
+      }
+    },
+
+    ValidateConfirmPassword()
+    {
+      if (this.confirmpassword.length == 0)
+      {
+        this.errors.push('O Campo Confirmar Senha é obrigatório!')   
+      }
+      else if (this.confirmpassword.length < 8)
+      {
+        this.errors.push('O Campo Confirmar senha precisa de pelo menos oito Caracteres!')
+        this.pass = 0;
+      }
+    },
+
+    CheckPassword()
+    {
+      if (this.password != this.confirmpassword)
+      {
+        this.errors.push('Alguma das Senhas esta incorreta, insira novamente')
+        this.pass = 0;
+      }
+    },
+
+    ValidateForm()
+    {
+      this.ValidateName(),
+      this.ValidateEmail(),
+      this.ValidatePassword(),
+      this.ValidateConfirmPassword(),
+      this.CheckPassword(),
+      console.log(this.errors)
+      this.errors = [];
+    },
+
+    sendForm()
+    {
+      if (this.pass == 0)
+      {
+        alert(this.errors[0]);
+      }
+      else if (this.pass = 1)
+      {
+        alert('Usuario Cadastrado');
+      }
+    },
+  },
+};
+</script>
+
 
 <style>
+
+.img-modal {
+  background-image: url('../assets/images/modal.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+}
+
+.info-modal {
+  background-color: rgb(255, 255, 255);
+  width: 15vw;
+  height: 10vh;
+  margin-top: 38px;
+  margin-left: 9vw;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 1;
+}
+
+.icon {
+  height: 8vh;
+  display: flex;
+}
+.line {
+  background-color: red;
+  height: 2vh;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.ghost {
+  width: 6vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  width: 9vw;
+  height: 8vh;
+}
+
 /* DEFINIÇÕES FUNDO */
 /* Animação Sentido Horário */
   @keyframes rotate {
@@ -231,7 +402,7 @@
     justify-content: center;
     height: 100vh;
     width: 100vw;
-    z-index: 1;
+    z-index: 2;
   }
 
     /* Criando Base do Login */
@@ -268,6 +439,7 @@
 
   /* Definições Gerais Box Animação */
   .box {
+    z-index: 2;
     position: absolute;
     width: 100%;
     height: 100%;
