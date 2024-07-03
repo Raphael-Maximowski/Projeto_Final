@@ -13,13 +13,19 @@
           </div>
           <div class="descricao">
             <h1>Sua Jornada começa aqui</h1>
-            <p>Um único login para o Customer Relationship Management da 3C Plus</p>
+            <p>Crie sua conta para acessar o Customer Relationship Management da 3C Plus</p>
           </div>
         </div>
 
         <div class="input">
           <form action="" method="post">
             <div>
+                <div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off">
+                  <label for="floatingInput">Nome</label>
+                </div>
+              </div>
               <div>
                 <div class="form-floating mb-3">
                   <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off">
@@ -30,13 +36,14 @@
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Senha</label>
               </div>
+              <div class="form-floating">
+                <input type="confirmpassword" class="form-control" id="floatingPassword" placeholder="confirmpassword">
+                <label for="floatingPassword">Confirme sua Senha</label>
+              </div>
               <div class="extra_info">
                 <div class="forgot">
-                  <p>Esqueceu sua senha?</p>
-                </div>
-                <div class="forgot">
-                  <a href="/register">
-                    <p>Não tem uma conta? Crie já</p>
+                  <a href="/">
+                      <p>Ja possui uma conta? Realize login</p>
                   </a>
                 </div>
               </div>
@@ -231,7 +238,7 @@
   .camada section {
     background-color: rgb(255, 255, 255);
     width: 45vw;
-    height: 70vh;
+    height: 90vh;
     border-radius: 5px;
     box-shadow: 
     5px 5px 20px rgba(0, 0, 0, 0.055), 
@@ -342,7 +349,7 @@
   /* Definições P Descrição */
   .descricao p {
     color: #788B9E;
-    font-size: 0.96vw;
+    font-size: 0.88vw;
   }
 
   /* Definições Base do Input, Abrange toda Região Abaixo da Descrição */
@@ -361,6 +368,10 @@
     border-radius: 5px;
     border: 1px solid lightgrey;
     font-size:15px
+  }
+
+  .form-floating{
+    margin-bottom: 15px;
   }
 
   /*Configueações Label BootStrap*/
