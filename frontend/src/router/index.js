@@ -4,14 +4,7 @@ import HomeView from '../views/HomeView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-      meta: {
-        title: 'Home'
-      }
-    },
+
     {
       path: '/about',
       name: 'about',
@@ -21,11 +14,19 @@ const router = createRouter({
       }
     },
     {
-      path: '/login',
-      name: 'login',
+      path: '/',
+      name: 'Login',
       component: () => import('../views/Login.vue'),
       meta: {
-        title: 'login'
+        title: '3C Plus'
+      }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/Register.vue'),
+      meta: {
+        title: '3C Plus'
       }
     }
   ]
