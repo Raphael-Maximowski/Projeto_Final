@@ -1,16 +1,15 @@
 <template>
   <main>
-      <div id="modal" v-if="this.pass = 0">
+      <div id="modal" v-if="this.pass != 1">
         <div class="info-modal">
           <div class="icon">
             <div class="ghost">
               <div class="img-modal">
-
               </div>
             </div>
             <div class="error">
-              <p>Opps...</p>
-              {{this.errors[0]}}
+              
+              <p>{{this.errors[0]}}</p>
             </div>
           </div>
           <div class="line">
@@ -139,31 +138,42 @@ export default {
       {
         this.errors.push('O Campo nome é Obrigatório!')
         this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
       else if (this.name.length < 3)
       {
         this.errors.push('O Campo nome precisa de pelo menos três Caracteres!')
         this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
       else if (this.name.length > 30)
       {
         this.errors.push('O Campo nome excedeu o limite máximo de Caracteres!') 
         this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
     },
 
     ValidateEmail()
     {
-      const emailpadrao = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
       if (this.email.length == 0)
       {
         this.errors.push('O campo Email é obrigatório!')
         this.pass = 0;
-      }
-      else if (!emailpadrao.test(this.email))
-      {
-        this.errors.push('Email Invalido!')
-        this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
     },
 
@@ -172,11 +182,20 @@ export default {
       if (this.password.length == 0)
       {
          this.errors.push('O Campo senha é obrigatório!')   
+         this.pass = 0;
+         setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
       else if (this.password.length < 8)
       {
         this.errors.push('O Campo senha precisa de pelo menos oito Caracteres!')
         this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
     },
 
@@ -184,12 +203,21 @@ export default {
     {
       if (this.confirmpassword.length == 0)
       {
-        this.errors.push('O Campo Confirmar Senha é obrigatório!')   
+        this.errors.push('O Campo Confirmar Senha é obrigatório!') 
+        this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000);   
       }
       else if (this.confirmpassword.length < 8)
       {
         this.errors.push('O Campo Confirmar senha precisa de pelo menos oito Caracteres!')
         this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
     },
 
@@ -199,6 +227,10 @@ export default {
       {
         this.errors.push('Alguma das Senhas esta incorreta, insira novamente')
         this.pass = 0;
+        setTimeout(() => {
+          this.pass = 1;
+          this.errors = [];
+        }, 8000); 
       }
     },
 
@@ -209,27 +241,69 @@ export default {
       this.ValidatePassword(),
       this.ValidateConfirmPassword(),
       this.CheckPassword(),
-      console.log(this.errors)
-      this.errors = [];
+      this.sendForm()
     },
+
 
     sendForm()
     {
-      if (this.pass == 0)
-      {
-        alert(this.errors[0]);
-      }
-      else if (this.pass = 1)
+      if (this.pass == 1)
       {
         alert('Usuario Cadastrado');
       }
+
+      else if (this.pass =! 0)
+      {
+        this.pass = 0;
+        console.log(this.errors)
+        console.log(this.email);
+      }
     },
+
+
   },
 };
 </script>
 
 
 <style>
+@keyframes moveUpDown {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  5%, 10% {
+    opacity: 1; /* Aparece */
+    transform: translateY(0); /* Mantém na posição inicial */
+  }
+  20% {
+    opacity: 1; /* Aparece */
+    transform: translateY(40px); /* Desce 200px */
+  }
+  30%, 90% {
+    opacity: 1; /* Aparece */
+    transform: translateY(40px); /* Mantém por 8 segundos (16s * 0.5 a 1.5) */
+  }
+  100% {
+    opacity: 0; /* Desaparece */
+    transform: translateY(0);
+  }
+}
+
+.info-modal {
+  position: relative;
+  opacity: 0;
+  animation: moveUpDown 8s ease-in-out 1;
+}
+
+.error h2 {
+  font-size: 20px;
+}
+.error p {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
 
 .img-modal {
   background-image: url('../assets/images/modal.png');
@@ -244,7 +318,6 @@ export default {
   background-color: rgb(255, 255, 255);
   width: 15vw;
   height: 10vh;
-  margin-top: 38px;
   margin-left: 9vw;
   border-radius: 10px;
   position: absolute;
