@@ -62,7 +62,7 @@
                   </a>
                 </div>
               </div>
-                <a href="/email" class="btn btn-primary" @click="ValidateForm">Entrar</a>
+                <a class="btn btn-primary" @click="ValidateForm">Entrar</a>
             </div>
           </form>
         </div>
@@ -113,8 +113,7 @@
     </main>
 </template>
 <script>
-
-
+import SendUser from '../services/HttpService';
 export default {
     components: {
     },
@@ -125,6 +124,7 @@ export default {
       password: "",
       confirmpassword: "",
       errors: [],
+      user: [],
       pass: 1
     };
   },
@@ -240,24 +240,30 @@ export default {
       this.ValidateConfirmPassword(),
       this.CheckPassword(),
       this.sendForm()
+      console.log(this.pass);
     },
 
+    async sendForm() {
+  if (this.pass === 1) {
+    alert('Usuário Cadastrado');
+    const user = {
+      name: this.name,
+      email: this.email,
+      password: this.password,
+    };
 
-    sendForm()
-    {
-      if (this.pass == 1)
-      {
-        alert('Usuario Cadastrado');
-      }
-
-      else if (this.pass =! 0)
-      {
-        this.pass = 0;
-        console.log(this.errors)
-        console.log(this.email);
-      }
-    },
-
+    try {
+      const response = await SendUser(user);
+      console.log('Resposta da API:', response);
+      console.log('Dados do usuário:', this.user); // Ajuste aqui para exibir os dados corretos
+    } catch (error) {
+      console.error('Erro ao cadastrar usuário:', error);
+      // Trate o erro, se necessário
+    }
+  } else {
+    this.pass = 0; // Corrija a condição para verificar se this.pass não é igual a 0
+  }
+}
 
   },
 };
