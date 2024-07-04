@@ -13,15 +13,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix'=> 'crm', 'middleware'=> 'auth:sanctum'], function() {
-    Route::post('logout', [AuthController::class, 'logout']);
+    
 });
 Route::post('register',[AuthController::class, 'register']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-
-// Rota para a recuperção de senha 
-//* Route::get('forgot-password', function () {
-    //return view('auth.forgot-password');
-//})->middleware('guest')->name('password.request');
+Route::post('login', [AuthController::class, 'login']);
+Route::delete('logout', [AuthController::class, 'logout']);
 
 
 // Rota para verificar se o usuário está no banco de dados para enviar o email
