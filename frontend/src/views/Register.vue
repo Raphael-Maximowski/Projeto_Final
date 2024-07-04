@@ -1,4 +1,6 @@
 <template>
+  <head>
+  </head>
   <main>
       <div id="modal" v-if="this.pass != 1">
         <div class="info-modal">
@@ -34,6 +36,7 @@
 
         <div class="input">
           <form action="" method="post">
+            
             <div>                       
                 <div>
                     <div class="form-floating mb-3">
@@ -125,7 +128,7 @@ export default {
       password: "",
       confirmpassword: "",
       errors: [],
-      user: [],
+      user: {},
       pass: 1
     };
   },
@@ -247,16 +250,17 @@ export default {
     async sendForm() {
   if (this.pass === 1) {
     alert('Usuário Cadastrado');
-    const user = {
-  nome: this.nome,
-  email: this.email,
-  password: this.password,
-};
 
     try {
+      const user = {
+        name: this.nome,
+        email: this.email,
+        password: this.password,
+    };
+
       const response = await SendUser(user);
       console.log('Resposta da API:', response);
-      console.log('Dados do usuário:', this.user); // Ajuste aqui para exibir os dados corretos
+      console.log('Dados do usuário:', this.ValidateName, this.email, this.password); 
     } catch (error) {
       console.error('Erro ao cadastrar usuário:', error);
       // Trate o erro, se necessário

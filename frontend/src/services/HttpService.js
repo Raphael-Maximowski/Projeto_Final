@@ -1,9 +1,6 @@
 import axios from "axios";
 
 
-props: {
-  user: Array
-}
 
 const HttpService = axios.create({
   baseURL: "http://localhost:8000/api/",
@@ -12,11 +9,15 @@ const HttpService = axios.create({
   },
 });
 
-export const SendUser = async(user) => {
-
-  const response = await HttpService.post('register', user);
-  console.log(response.data);
-}
+export const SendUser = async (user) => {
+  try {
+    const response = await HttpService.post('register', user);
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    console.error('Erro ao enviar usuário:', error.response ? error.response.data : error.message);
+  }
+};
 
 export default HttpService;
 
