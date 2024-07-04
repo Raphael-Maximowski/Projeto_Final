@@ -8,7 +8,6 @@
               </div>
             </div>
             <div class="error">
-              
               <p>{{this.errors[0]}}</p>
             </div>
           </div>
@@ -64,7 +63,8 @@
                 </div>
               </div>
 
-                <div class="btn btn-primary" @click="ValidateForm">Entrar</div>
+                <button class="btn btn-primary" @click="ValidateForm">Entrar</button>
+                <h1>Teste</h1>
             </div>
           </form>
         </div>
@@ -290,10 +290,20 @@ export default {
   }
 }
 
+#modal {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+    z-index: 100;
+}
+
 .info-modal {
   position: relative;
   opacity: 0;
   animation: moveUpDown 8s ease-in-out 1;
+  margin-right:65vw;
 }
 
 .error h2 {
@@ -318,10 +328,8 @@ export default {
   background-color: rgb(255, 255, 255);
   width: 15vw;
   height: 10vh;
-  margin-left: 9vw;
   border-radius: 10px;
   position: absolute;
-  z-index: 1;
 }
 
 .icon {
