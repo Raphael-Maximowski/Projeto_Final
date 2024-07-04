@@ -14,7 +14,7 @@ class AuthController extends Controller
         $user = User::create([
             'name'=> request('name'),
             'email'=> request('email'),
-            'password'=> request('password'),
+            'password'=> Hash::make($request->password),
         ]);
 
         return response()->json(["User"=>$user]);
@@ -23,7 +23,16 @@ class AuthController extends Controller
         
 
     public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         $user = User::where("email", $request->email)->firstOrFail();
+
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
         $token= $user->createToken("auth_token")->plainTextToken;
 
         return response()->json([
@@ -34,6 +43,10 @@ class AuthController extends Controller
     } 
 
     public function logout(Request $request) {
+        $request->user()->currentAccessToken()->delete();
 
+        return response()->json([
+            "message" => 'Logout successful',
+        ]);
     }
 }
