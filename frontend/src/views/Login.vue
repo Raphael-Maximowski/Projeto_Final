@@ -32,7 +32,9 @@
               </div>
               <div class="extra_info">
                 <div class="forgot">
-                  <p>Esqueceu sua senha?</p>
+                  <a href="/redefine">
+                    <p>Esqueceu sua senha?</p>
+                  </a>
                 </div>
                 <div class="forgot">
                   <a href="/register">

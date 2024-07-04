@@ -27,6 +27,11 @@ const router = createRouter({
       meta: {
         title: '3C Plus'
       }
+    },
+    {
+      path: '/redefine',
+      name: 'redefine',
+      component: () => import('../views/Redefine.vue')
     }
   ]
 })
