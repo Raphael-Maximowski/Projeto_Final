@@ -37,7 +37,7 @@
             <div>                       
                 <div>
                     <div class="form-floating mb-3">
-                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="name">
+                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="nome">
                   <label for="floatingInput">Nome</label>
                 </div>
               </div>
@@ -113,13 +113,14 @@
     </main>
 </template>
 <script>
-import SendUser from '../services/HttpService';
+import { SendUser } from '../services/HttpService';
+
 export default {
     components: {
     },
   data() {
     return {
-      name: "",
+      nome: "",
       email: "",
       password: "",
       confirmpassword: "",
@@ -132,7 +133,7 @@ export default {
   methods: {
     ValidateName()
     {
-      if (this.name.length == 0)
+      if (this.nome.length == 0)
       {
         this.errors.push('O Campo nome é Obrigatório!')
         this.pass = 0;
@@ -141,7 +142,7 @@ export default {
           this.errors = [];
         }, 8000); 
       }
-      else if (this.name.length < 3)
+      else if (this.nome.length < 3)
       {
         this.errors.push('O Campo nome precisa de pelo menos três Caracteres!')
         this.pass = 0;
@@ -150,7 +151,7 @@ export default {
           this.errors = [];
         }, 8000); 
       }
-      else if (this.name.length > 30)
+      else if (this.nome.length > 30)
       {
         this.errors.push('O Campo nome excedeu o limite máximo de Caracteres!') 
         this.pass = 0;
@@ -247,10 +248,10 @@ export default {
   if (this.pass === 1) {
     alert('Usuário Cadastrado');
     const user = {
-      name: this.name,
-      email: this.email,
-      password: this.password,
-    };
+  nome: this.nome,
+  email: this.email,
+  password: this.password,
+};
 
     try {
       const response = await SendUser(user);

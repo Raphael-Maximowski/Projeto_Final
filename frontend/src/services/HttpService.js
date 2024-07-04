@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 props: {
-  user: Object 
+  user: Array
 }
 
 const HttpService = axios.create({
