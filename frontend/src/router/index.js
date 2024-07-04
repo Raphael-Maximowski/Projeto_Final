@@ -4,15 +4,6 @@ import HomeView from '../views/HomeView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue'),
-      meta: {
-        title: 'About'
-      }
-    },
     {
       path: '/',
       name: 'Login',
@@ -28,9 +19,19 @@ const router = createRouter({
       meta: {
         title: '3C Plus'
       }
+    },
+    {
+      path: '/email',
+      name: 'email',
+      component: () => import('../views/ConfirmEmail.vue'),
+      meta: {
+        title: '3C Plus'
+      }
     }
   ]
 })
+
+
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;

@@ -1,6 +1,6 @@
 <template>
   <main>
-      <div id="modal" v-if="this.pass != 1">
+      <div id="modal">
         <div class="info-modal">
           <div class="icon">
             <div class="ghost">
@@ -8,7 +8,7 @@
               </div>
             </div>
             <div class="error">
-              <p>{{this.errors[0]}}</p>
+              <p>error place</p>
             </div>
           </div>
           <div class="line">
@@ -27,44 +27,20 @@
             </div>
           </div>
           <div class="descricao">
-            <h1>Sua Jornada começa aqui</h1>
-            <p>Crie sua conta para acessar o Customer Relationship Management da 3C Plus</p>
+            <h1>Finalizando Cadastro</h1>
+            <p>Em poucos passos você poderá acessar o Customer Relationship Management da 3C Plus</p>
           </div>
         </div>
-
-        <div class="input">
-          <form action="" method="post">
-            <div>                       
-                <div>
-                    <div class="form-floating mb-3">
-                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="name">
-                  <label for="floatingInput">Nome</label>
+        <div class="validator">
+            <div class="loader"></div>
+            <div class="button">
+                <div class="emailicon">
+                    <img src="../assets/images/email.png" alt="">
                 </div>
-              </div>
-              <div>
-                <div class="form-floating mb-3">
-                  <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="email">
-                  <label for="floatingInput">Email</label>
+                <div class="message">
+                    <p>Validar Email</p>
                 </div>
-              </div>
-              <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword"  v-model="password">
-                <label for="floatingPassword">Senha</label>
-              </div>
-              <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" v-model="confirmpassword">
-                <label for="floatingPassword">Confirme sua Senha</label>
-              </div>
-              <div class="extra_info">
-                <div class="forgot">
-                  <a href="/">
-                      <p>Ja possui uma conta? Realize login</p>
-                  </a>
-                </div>
-              </div>
-                <a href="/email" class="btn btn-primary" @click="ValidateForm">Entrar</a>
             </div>
-          </form>
         </div>
       </section>
     </div>
@@ -120,145 +96,12 @@ export default {
     },
   data() {
     return {
-      name: "",
-      email: "",
-      password: "",
-      confirmpassword: "",
-      errors: [],
-      pass: 1
+
     };
   },
 
   methods: {
-    ValidateName()
-    {
-      if (this.name.length == 0)
-      {
-        this.errors.push('O Campo nome é Obrigatório!')
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-      else if (this.name.length < 3)
-      {
-        this.errors.push('O Campo nome precisa de pelo menos três Caracteres!')
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-      else if (this.name.length > 30)
-      {
-        this.errors.push('O Campo nome excedeu o limite máximo de Caracteres!') 
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
-    ValidateEmail()
-    {
-
-      if (this.email.length == 0)
-      {
-        this.errors.push('O campo Email é obrigatório!')
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
-    ValidatePassword()
-    {
-      if (this.password.length == 0)
-      {
-         this.errors.push('O Campo senha é obrigatório!')   
-         this.pass = 0;
-         setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-      else if (this.password.length < 8)
-      {
-        this.errors.push('O Campo senha precisa de pelo menos oito Caracteres!')
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
-    ValidateConfirmPassword()
-    {
-      if (this.confirmpassword.length == 0)
-      {
-        this.errors.push('O Campo Confirmar Senha é obrigatório!') 
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000);   
-      }
-      else if (this.confirmpassword.length < 8)
-      {
-        this.errors.push('O Campo Confirmar senha precisa de pelo menos oito Caracteres!')
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
-    CheckPassword()
-    {
-      if (this.password != this.confirmpassword)
-      {
-        this.errors.push('Alguma das Senhas esta incorreta, insira novamente')
-        this.pass = 0;
-        setTimeout(() => {
-          this.pass = 1;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
-    ValidateForm()
-    {
-      this.ValidateName(),
-      this.ValidateEmail(),
-      this.ValidatePassword(),
-      this.ValidateConfirmPassword(),
-      this.CheckPassword(),
-      this.sendForm()
-    },
-
-
-    sendForm()
-    {
-      if (this.pass == 1)
-      {
-        alert('Usuario Cadastrado');
-      }
-
-      else if (this.pass =! 0)
-      {
-        this.pass = 0;
-        console.log(this.errors)
-        console.log(this.email);
-      }
-    },
-
-
+  
   },
 };
 </script>
@@ -301,7 +144,6 @@ export default {
   position: relative;
   opacity: 0;
   animation: moveUpDown 8s ease-in-out 1;
-  margin-right:65vw;
 }
 
 .error h2 {
@@ -488,7 +330,7 @@ export default {
   .camada section {
     background-color: rgb(255, 255, 255);
     width: 45vw;
-    height: 90vh;
+    height: 65vh;
     border-radius: 5px;
     box-shadow: 
     5px 5px 20px rgba(0, 0, 0, 0.055), 
@@ -603,66 +445,62 @@ export default {
     font-size: 0.88vw;
   }
 
-  /* Definições Base do Input, Abrange toda Região Abaixo da Descrição */
-  .input {
-    height: 40vh;
-    padding-top: 2em;
-    display: flex;
-    justify-content: center;
-  }
-
-/*Configueações Input BootStrap*/
-  #floatingInput, #floatingPassword{
-    height: 6vh;
-    width: 30vw;
-    min-height: 30px;
-    border-radius: 5px;
-    border: 1px solid lightgrey;
-    font-size:15px
-  }
-
-  .form-floating{
-    margin-bottom: 15px;
-  }
-
-  /*Configueações Label BootStrap*/
-  .form-floating > label {
-    padding: 0px;
-    padding-top: 8px;
-    font-size: 12px;
-    padding-left: 10px;
-    background-color: rgba(0, 0, 0, 0);
-    color: grey;
-  }
-
-  /*Configueações Label BootStrap*/
-  .form-floating > label::after {
-    padding-bottom: 20px;
-  }
-
-  /*Configueações Informaçoes Extras (Senha/Nova Conta) BootStrap*/
-  .extra_info 
-  {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  /*Configueações escritas*/
-  .forgot p {
-    margin-top: 5px;
-    font-size: 13px;
-    color: grey;
-    text-decoration: underline;
-  }
-
-  /*Configueações Botão BootStrap*/
+/*Configueações Botão BootStrap*/
   button {
     width: 30vw;
     margin-top: 1em;
   }
 
-  /*Configueações Input BootStrap*/
-  .form-control:focus {
-    box-shadow: none; 
-  } 
+  .validator {
+    margin-top: 3.5em;
+    height: 8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button {
+    color: white;
+    background-color:#3057F2 ;
+    border-radius: 5px;
+    width: 15vw;
+    text-align: center;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    position: fixed;
+
+  }
+
+  .button img {
+    margin-left: 15px;
+    
+  }
+  .button p {
+    margin-top: 14px;
+    margin-left: 30px;
+  }
+  .button:hover {
+    background-color: #2336C7;
+    padding: 10px
+  }
+
+  .loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #373753;
+  border-right-color: #373753;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-right: 25vw;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
 </style>
+
