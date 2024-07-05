@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -44,10 +45,9 @@ class AuthController extends Controller
     } 
 
     public function logout(Request $request) {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json([
-            "message" => 'Logout successful',
-        ]);
+        $user = Auth::user();
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+    
+        return response()->json(['message' => 'Logout successful']);
     }
 }
