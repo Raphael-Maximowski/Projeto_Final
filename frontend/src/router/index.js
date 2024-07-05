@@ -43,6 +43,14 @@ const router = createRouter({
       meta: {
         title: '3C Plus'
       }
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component:()=>import('../views/DashBoard.vue'),
+      meta: {
+        title: '3C Plus'
+      }
     }
   ]
 })
