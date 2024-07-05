@@ -7,6 +7,7 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\EmailController;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\ValidateEmailController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -14,7 +15,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix'=> 'crm', 'middleware'=> 'auth:sanctum'], function() {
-    Route::get('logout', [AuthController::class, 'logout']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
 Route::post('register',[AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -29,3 +30,9 @@ Route::post('forget_password', [EmailController::class, 'emailValidated'])
 Route::post('reset_password', [EmailController::class, 'resetPassword'])
 ->middleware('guest')
 ->name('password.update');
+
+// Rota de validação de email
+Route::post('email/verify', [ValidateEmailController::class, 'verifyEmail'])
+->middleware('auth') 
+->name('verification.send');
+
