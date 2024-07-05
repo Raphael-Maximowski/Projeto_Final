@@ -10,13 +10,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ValidateEmailcontroller extends Controller
 {
-    public function login(Request $request)
+    public function verifyEmail(Request $request)
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
+
+        
         // Autentica o usuário
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
@@ -26,9 +28,10 @@ class ValidateEmailcontroller extends Controller
                 // E-mail verificado, redireciona para o dashboard ou outra rota
                 return redirect()->intended('/dashboard');
             } else {
+                $user->sendEmailVerificationNotification();
                 // E-mail não verificado, desloga o usuário
                 Auth::logout();
-                return back()->withErrors(['email' => 'Seu e-mail ainda não foi verificado.']);
+                return response()->json('Email Enviado');
             }
         }
 
