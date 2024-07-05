@@ -19,16 +19,5 @@ export const SendUser = async (user) => {
   }
 };
 
-export const RedefinePassword = asyc (email) => {
-  try {
-    const response = await HttpService.post('forget_password', email);
-    console.log(response.data);
-    return response; 
-  }
-  catch (error) {
-    console.error('Erro ao enviar usuário:', error.response ? error.response.data : error.message);
-  } 
-}
-
 export default HttpService;
 

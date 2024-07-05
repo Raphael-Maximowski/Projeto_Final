@@ -1,27 +1,63 @@
 <template>
     <main>
       <div class="camada">
+            <div class="camada">
+      <!-- Ativação Alerta -->
+       <div id="modal" v-if="this.pass != true">
+        <!-- Container Principal do Modal -->
+        <div class="info-modal">
+          <!-- Background Icone -->
+          <div class="icon">
+            <!-- Background Ghost -->
+            <div class="ghost">
+              <!-- Inserindo Imagem Ghost -->
+              <div class="img-modal">
+              </div>
+            </div>
+            <!-- Background Erros -->
+            <div class="error">
+              <!-- Exibindo Primeiro erro Disparado na Array -->
+              <p>{{this.errors[0]}}</p>
+            </div>
+          </div>
+          <!-- Underline Vermelho no Alerta -->
+          <div class="line">
+          </div>
+        </div>
+      </div>
+       </div>
+
+       <!-- Formulário -->
         <section>
+          <!-- Parte Superior Acima do Primeiro Input -->
           <div class="logo">
+            <!-- Parte onde Ficaria a Imagem -->
             <div class="img">
+              <!-- Camada -->
               <div class="background">
+                <!-- Container com Rotação de Imagens -->
                 <div class="containerimg">
+                  <!-- Imagem1 -->
                   <div class="box box1"></div>
+                  <!-- Imagem 2 -->
                   <div class="box box2"></div>
                 </div>
               </div>
             </div>
+            <!-- Descrição da Tela -->
             <div class="descricao">
               <h1>Redefinindo Senha</h1>
-              <p>Em poucos passos iremos recuperar seu Login</p>
+              <p>Em poucos passos iremos recuperar seu acesso</p>
             </div>
           </div>
-  
+
+          <!-- Container Formularios -->
           <div class="input">
             <form action="" method="post">
               <div>
                 <div>
-                    <h3 class="email">Insira novamente seu Email</h3>
+                    <h3 class="email">Insira seu Email</h3>
+                    <!-- Input Email -->
                   <div class="form-floating mb-3">
                     <input type="name" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off" v-model="email">
                     <label for="floatingInput" >Email</label>
@@ -29,8 +65,9 @@
                 </div>
                 <div class="extra_info">
                 </div>
-  
-                <a type="submit" class="btn btn-primary" @click="sendemail">
+
+                <!-- Disparando pra API e Validando -->
+                <a id="send" class="btn btn-primary" @click="Validator">
                   Enviar Redefinição de Senha
                 </a>
               </div>
@@ -80,27 +117,171 @@
           </div>
         </div>
       </div>
-      </main>
-  </template>\
-<script >
-export default {
+    </main>
+</template>
+
+<script>
+ export default {
     data() {
+       // Parametros que serão passados ao BackEnd e Validações
         return {
-            email: ""
+            email: "",
+            errors: [],
+            data: {},
+            pass: true
         }
     },
 
-    methods : {
-        sendemail()
+    methods: {
+      // Validando Email
+        ValidateEmail() {
+            if (this.email.length == 0) {
+              this.errors.push('O campo Email é obrigatório!')  
+              this.pass = false;
+              // Após Aparecer Erro Reseta os Parametros
+              setTimeout(() => {
+              this.pass = true;
+              this.errors = [];
+              }, 8000); 
+            }
+        },
+
+       // Enviar Data API 
+        sendemail() {
+          if (this.pass ===  true)
+          {
+            this.data = {
+            email: this.email
+            };
+            console.log(this.data);
+          }
+
+          else {
+            this.pass = false;
+            console.log(this.pass);
+          }
+        },
+
+        // Chamando Action
+        Validator()
         {
-            console.log(this.email);
+          this.ValidateEmail(),
+          this.sendemail()       
         }
     }
 };
 </script>
   
+  
   <style>
+/* DEFINIÇÕES ALERTA */
+/* Animação Aparecer e Sumir */
+@keyframes moveUpDown {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  5%, 10% {
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(110px); 
+  }
+  30%, 90% {
+    opacity: 1; 
+    transform: translateY(110px);
+  }
+  100% {
+    opacity: 0; 
+    transform: translateY(0);
+  }
+}
 
+/* Background Alerta */
+#modal {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+    z-index: 1;
+    }
+
+  /* Principal Elemento Visual Modal */
+.info-modal {
+  position: relative;
+  opacity: 0;
+  animation: moveUpDown 8s ease-in-out 1;
+  margin-right:65vw;
+}
+
+/* Configuração Texto */
+.error p {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* Imagem Ghost */
+.img-modal {
+  background-image: url('../assets/images/modal.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+}
+
+/* Redefinições Extras Modal */
+.info-modal {
+  background-color: rgb(255, 255, 255);
+  width: 15vw;
+  height: 10vh;
+  border-radius: 10px;
+  position: absolute;
+}
+
+/* Tamanho Background icon ghost */
+.icon {
+  height: 8vh;
+  display: flex;
+}
+
+/* Linha */
+.line {
+  background-color: red;
+  height: 2vh;
+  border-radius: 0px 0px 10px 10px;
+}
+
+/* Background Ghost */
+.ghost {
+  width: 6vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Erro */
+.error {
+  width: 9vw;
+  height: 8vh;
+}
+
+/* DEFINIÇÕES FUNDO */
+/* Animação Sentido Horário */
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+/* H3 Email */
 .email {
     font-size: 1vw;
 }
@@ -247,6 +428,7 @@ export default {
       -5px -5px 20px rgba(0, 0, 0, 0.048); 
       padding: 15px; 
       position: absolute;
+      z-index: 1000;
     }
   
     /* Região Superior Abrangindo Animação e Descrição */
@@ -412,4 +594,8 @@ export default {
     .form-control:focus {
       box-shadow: none; 
     } 
+
+    #send {
+      width: 30vw;
+    }
   </style>

@@ -31,7 +31,18 @@ const router = createRouter({
     {
       path: '/redefine',
       name: 'redefine',
-      component: () => import('../views/Redefine.vue')
+      component: () => import('../views/Redefine.vue'),
+      meta: {
+        title: '3C Plus'
+      }
+    },
+    {
+      path: '/newpassword',
+      name: 'newpassword',
+      component: () => import('../views/NewPassword.vue'),
+      meta: {
+        title: '3C Plus'
+      }
     }
   ]
 })

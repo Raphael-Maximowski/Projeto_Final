@@ -1,6 +1,6 @@
 <template>
   <main>
-   <div id="modal" v-if="this.pass != true">
+    <div id="modal" v-if="this.pass != 1">
         <!-- Container Principal do Modal -->
         <div class="info-modal">
           <!-- Background Icone -->
@@ -23,16 +23,16 @@
         </div>
       </div>
 
-      <!-- Formulário -->
+    <!-- Formulário -->
     <div class="camada">
       <section>
         <!-- Parte Superior Acima do Primeiro Input -->
         <div class="logo">
           <!-- Parte onde Ficaria a Imagem -->
           <div class="img">
-            <!-- Camada -->
+             <!-- Camada -->
             <div class="background">
-              <!-- Container com Rotação de Imagens -->
+               <!-- Container com Rotação de Imagens -->
               <div class="containerimg">
                 <!-- Imagem1 -->
                 <div class="box box1"></div>
@@ -43,49 +43,34 @@
           </div>
           <!-- Descrição da Tela -->
           <div class="descricao">
-            <h1>Sua Jornada começa aqui</h1>
-            <p>Crie sua conta para acessar o Customer Relationship Management da 3C Plus</p>
+            <h1>Redefinindo sua Senha</h1>
+            <p>Insira sua nova senha para acessar o CRM da 3C Plus</p>
           </div>
         </div>
 
         <!-- Container Formularios -->
         <div class="input">
           <form action="" method="post">
-            
-            <div>                       
-                <div>
-                  <!-- Input Nome -->
-                    <div class="form-floating mb-3">
-                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="nome">
-                  <label for="floatingInput">Nome</label>
-                </div>
-              </div>
+            <div>
               <div>
-                <!-- Input Email -->
+                <!-- Input Nova Senha -->
                 <div class="form-floating mb-3">
-                  <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="email">
-                  <label for="floatingInput">Email</label>
+                  <input type="password" class="form-control" id="floatingInput"  autocomplete="off" v-model="password">
+                  <label for="floatingInput">Nova Senha</label>
                 </div>
               </div>
-              <!-- Input Senha -->
+              <!-- Input Confirmação Nova Senha -->
               <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword"  v-model="password">
-                <label for="floatingPassword">Senha</label>
+                <input type="password" class="form-control" id="floatingPassword" v-model="confirmpassword" >
+                <label for="floatingPassword">Confirme sua nova senha</label>
               </div>
-              <!-- Input Confirm Senha -->
-              <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" v-model="confirmpassword">
-                <label for="floatingPassword">Confirme sua Senha</label>
-              </div>
-              <div class="extra_info">
-                <div class="forgot">
-                  <a href="/">
-                      <p>Ja possui uma conta? Realize login</p>
+
+              <!-- Disparando pra API e Validando -->
+              <a class="button">
+                  <a id="send" class="btn btn-primary" @click="ValidateForm">
+                    Alterar Senha
                   </a>
-                </div>
-              </div>
-              <!-- Dispara pra API -->
-                <a class="btn btn-primary" @click="ValidateForm">Entrar</a>
+              </a>
             </div>
           </form>
         </div>
@@ -136,83 +121,23 @@
     </main>
 </template>
 <script>
-import { SendUser } from '../services/HttpService';
-
 export default {
     components: {
     },
-     // Parametros que serão passados ao BackEnd e Validações
   data() {
+  // Parametros que serão passados ao BackEnd e Validações
     return {
-      nome: "",
-      email: "",
       password: "",
       confirmpassword: "",
       errors: [],
-      user: {},
+      data: {},
       pass: true
     };
   },
 
+
   methods: {
-    // Validando Nome
-    ValidateName()
-    {
-      if (this.nome.length == 0)
-      {
-        // Push caso não valide
-        this.errors.push('O Campo nome é Obrigatório!')
-        // Redefine Passagem como falsa
-        this.pass = false;
-        // Após Aparecer Erro Reseta os Parametros
-        setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000); 
-      }
-      else if (this.nome.length < 3)
-      {
-        // Push caso não valide
-        this.errors.push('Insira pelo menos três Caracteres!')
-        // Redefine Passagem como falsa
-        this.pass = false;
-        // Após Aparecer Erro Reseta os Parametros
-        setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000); 
-      }
-      else if (this.nome.length > 30)
-      {
-        // Push caso não valide
-        this.errors.push('O Campo nome excedeu o limite máximo de Caracteres!') 
-        // Redefine Passagem como falsa
-        this.pass = false;
-        // Após Aparecer Erro Reseta os Parametros
-        setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
-    ValidateEmail()
-    {
-
-      if (this.email.length == 0)
-      {
-        // Push caso não valide
-        this.errors.push('O campo Email é obrigatório!')
-        // Redefine Passagem como falsa
-        this.pass = false;
-        // Após Aparecer Erro Reseta os Parametros
-        setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
+    // Validando Senha
     ValidatePassword()
     {
       if (this.password.length == 0)
@@ -227,6 +152,7 @@ export default {
           this.errors = [];
         }, 8000); 
       }
+
       else if (this.password.length < 8)
       {
         // Push caso não valide
@@ -241,6 +167,7 @@ export default {
       }
     },
 
+    // Validando Confirmaçao de Senha
     ValidateConfirmPassword()
     {
       if (this.confirmpassword.length == 0)
@@ -255,10 +182,28 @@ export default {
           this.errors = [];
         }, 8000);   
       }
+
       else if (this.confirmpassword.length < 8)
       {
         // Push caso não valide
         this.errors.push('Insira pelo menos oito Caracteres!')
+        // Redefine Passagem como falsa
+        this.pass = false;
+         // Após Aparecer Erro Reseta os Parametros
+        setTimeout(() => {
+          this.pass = true;
+          this.errors = [];
+        }, 8000); 
+      }
+    },
+
+    // Validando os dois Inputs
+    CheckPassword()
+    {
+      if (this.password != this.confirmpassword)
+      {
+        // Push caso não valide
+        this.errors.push('Alguma das Senhas esta incorreta, insira novamente')
         // Redefine Passagem como falsa
         this.pass = false;
         // Após Aparecer Erro Reseta os Parametros
@@ -269,64 +214,33 @@ export default {
       }
     },
 
-    CheckPassword()
-    {
-      if (this.password != this.confirmpassword)
-      {
-        // Push caso não valide
-        this.errors.push('Alguma das Senhas esta incorreta, insira novamente')
-        // Redefine Passagem como falsa
-        this.pass = false;
-        // Após Aparecer Erro Reseta os Parametros 
-        setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000); 
-      }
-    },
-
-    // Unindo as Validações em apenas um método
+    // Validando Formulário e Chamando Métodos
     ValidateForm()
     {
-      this.ValidateName(),
-      this.ValidateEmail(),
       this.ValidatePassword(),
       this.ValidateConfirmPassword(),
       this.CheckPassword(),
       this.sendForm()
-      console.log("Teste" . this.pass);
     },
 
-    // Disparando pra API
-    async sendForm() {
-  if (this.pass === true) {
-    alert('Usuário Cadastrado');
+    // Enviando Dados Após Validação
+    sendForm() {
+      // Validação OK
+        if (this.pass === true) {
+            this.data = {
+              password: this.password
+            }
+        }
 
-    // Armazenando Usuario em um Objeto
-    try {
-      const user = {
-        name: this.nome,
-        email: this.email,
-        password: this.password,
-    };
-
-    // Chamando Método do Service e passando User
-      const response = await SendUser(user);
-      console.log('Resposta da API:', response);
-      console.log('Dados do usuário:', this.ValidateName, this.email, this.password); 
-    } catch (error) {
-      console.error('Erro ao cadastrar usuário:', error);
+        // Redefine Passagem como falsa
+        else if (this.pass != true)
+        {
+            this.pass = false; 
+        }
     }
-
-    // Caso não Valide o Usuário Redefine a Passagem pra Falsa
-  } else {
-    this.pass = false; 
   }
-}
-  },
 };
 </script>
-
 
 <style>
 /* DEFINIÇÕES ALERTA */
@@ -342,11 +256,11 @@ export default {
   }
   20% {
     opacity: 1;
-    transform: translateY(40px); 
+    transform: translateY(110px); 
   }
   30%, 90% {
     opacity: 1; 
-    transform: translateY(40px);
+    transform: translateY(110px);
   }
   100% {
     opacity: 0; 
@@ -553,14 +467,14 @@ export default {
     justify-content: center;
     height: 100vh;
     width: 100vw;
-    z-index: 2;
+    z-index: 1;
   }
 
     /* Criando Base do Login */
   .camada section {
     background-color: rgb(255, 255, 255);
     width: 45vw;
-    height: 90vh;
+    height: 70vh;
     border-radius: 5px;
     box-shadow: 
     5px 5px 20px rgba(0, 0, 0, 0.055), 
@@ -590,7 +504,6 @@ export default {
 
   /* Definições Gerais Box Animação */
   .box {
-    z-index: 2;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -672,7 +585,7 @@ export default {
   /* Definições P Descrição */
   .descricao p {
     color: #788B9E;
-    font-size: 0.88vw;
+    font-size: 0.96vw;
   }
 
   /* Definições Base do Input, Abrange toda Região Abaixo da Descrição */
@@ -691,10 +604,6 @@ export default {
     border-radius: 5px;
     border: 1px solid lightgrey;
     font-size:15px
-  }
-
-  .form-floating{
-    margin-bottom: 15px;
   }
 
   /*Configueações Label BootStrap*/
@@ -728,13 +637,19 @@ export default {
   }
 
   /*Configueações Botão BootStrap*/
-  button {
+  .button {
     width: 30vw;
-    margin-top: 1em;
+    margin-top: 2em;
   }
 
   /*Configueações Input BootStrap*/
   .form-control:focus {
     box-shadow: none; 
   } 
+
+  /* Enviar Button */
+  #send {
+    width: 30vw;
+    margin-top: 2vw;
+  }
 </style>
