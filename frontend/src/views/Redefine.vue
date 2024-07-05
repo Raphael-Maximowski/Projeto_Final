@@ -121,6 +121,8 @@
 </template>
 
 <script>
+import { ResetPassword } from '@/services/HttpService';
+
  export default {
     data() {
        // Parametros que serão passados ao BackEnd e Validações
@@ -147,14 +149,22 @@
         },
 
        // Enviar Data API 
-        sendemail() {
+        async sendemail() {
           if (this.pass ===  true)
           {
-            this.data = {
-            email: this.email
-            };
-            console.log(this.data);
-          }
+            try {
+              const data = {
+                email: this.email
+              }
+              console.log(this.email)
+
+              const response = await ResetPassword(data);
+              console.log('Resposta da API:', response);
+            } catch (error) {
+              console.error('Erro ao Enviar Email');
+            }
+        }
+
 
           else {
             this.pass = false;
