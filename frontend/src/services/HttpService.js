@@ -18,6 +18,32 @@ export const SendUser = async (user) => {
     console.error('Erro ao enviar usuário:', error.response ? error.response.data : error.message);
   }
 };
+
+export const SendEmail = async(user) => {
+  try {
+    const response = await HttpService.post('email/verify', user);
+    return response;
+  } catch (error) {
+    console.error('Erro ao enviar usuário:', error.response ? error.response.data : error.message);
+  }
+    
+}
+
+
+///////
+
+export const ResetPassword = async(data) => {
+  try {
+    const response = await HttpService.post('forget_password', data);
+    console.log(response.data);
+    return response;
+  } catch (error) {
+    console.error('Erro');
+  }
+  }
+
+
 //forget_password
 export default HttpService;
+
 
