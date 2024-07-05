@@ -1,43 +1,41 @@
 <template>
   <main>
-      <div id="modal">
-        <div class="info-modal">
-          <div class="icon">
-            <div class="ghost">
-              <div class="img-modal">
-              </div>
-            </div>
-            <div class="error">
-              <p>error place</p>
-            </div>
-          </div>
-          <div class="line">
-          </div>
-        </div>
-      </div>
+    <!-- Formulário -->
     <div class="camada">
       <section>
+        <!-- Parte Superior Acima do Primeiro Input -->
         <div class="logo">
+          <!-- Parte onde Ficaria a Imagem -->
           <div class="img">
+            <!-- Camada -->
             <div class="background">
+              <!-- Container com Rotação de Imagens -->
               <div class="containerimg">
+                <!-- Imagem1 -->
                 <div class="box box1"></div>
+                <!-- Imagem 2 -->
                 <div class="box box2"></div>
               </div>
             </div>
           </div>
+          <!-- Descrição da Tela -->
           <div class="descricao">
             <h1>Finalizando Cadastro</h1>
             <p>Em poucos passos você poderá acessar o Customer Relationship Management da 3C Plus</p>
           </div>
         </div>
+        <!-- Container para Validação -->
         <div class="validator">
+          <!-- Gif de Loading -->
             <div class="loader"></div>
+            <!-- Container Botão e Icone Email -->
             <div class="button">
+              <!-- Icone Email -->
                 <div class="emailicon">
                     <img src="../assets/images/email.png" alt="">
                 </div>
-                <div class="message">
+                <!-- Submit -->
+                <div class="message" @click="EmailConfirmed">
                     <p>Validar Email</p>
                 </div>
             </div>
@@ -96,104 +94,25 @@ export default {
     },
   data() {
     return {
-
+      // Confirmação de Validação com Email
+      data: false
     };
   },
 
-  methods: {
   
+  methods: {
+     // Método pra Disparar na API o timeStamp do Usuario
+    EmailConfirmed()
+    {
+      this.data = true;
+      console.log(this.data);
+    }  
   },
 };
 </script>
 
 
 <style>
-@keyframes moveUpDown {
-  0% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  5%, 10% {
-    opacity: 1; /* Aparece */
-    transform: translateY(0); /* Mantém na posição inicial */
-  }
-  20% {
-    opacity: 1; /* Aparece */
-    transform: translateY(40px); /* Desce 200px */
-  }
-  30%, 90% {
-    opacity: 1; /* Aparece */
-    transform: translateY(40px); /* Mantém por 8 segundos (16s * 0.5 a 1.5) */
-  }
-  100% {
-    opacity: 0; /* Desaparece */
-    transform: translateY(0);
-  }
-}
-
-#modal {
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-    z-index: 100;
-}
-
-.info-modal {
-  position: relative;
-  opacity: 0;
-  animation: moveUpDown 8s ease-in-out 1;
-}
-
-.error h2 {
-  font-size: 20px;
-}
-.error p {
-  margin-top: 10px;
-  font-size: 13px;
-}
-
-
-.img-modal {
-  background-image: url('../assets/images/modal.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-}
-
-.info-modal {
-  background-color: rgb(255, 255, 255);
-  width: 15vw;
-  height: 10vh;
-  border-radius: 10px;
-  position: absolute;
-}
-
-.icon {
-  height: 8vh;
-  display: flex;
-}
-.line {
-  background-color: red;
-  height: 2vh;
-  border-radius: 0px 0px 10px 10px;
-}
-
-.ghost {
-  width: 6vw;
-  height: 8vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.error {
-  width: 9vw;
-  height: 8vh;
-}
 
 /* DEFINIÇÕES FUNDO */
 /* Animação Sentido Horário */
@@ -451,6 +370,7 @@ export default {
     margin-top: 1em;
   }
 
+   /* Definições BackGround da Validação */
   .validator {
     margin-top: 3.5em;
     height: 8em;
@@ -459,6 +379,7 @@ export default {
     align-items: center;
   }
 
+   /* Definições Botão */
   .button {
     color: white;
     background-color:#3057F2 ;
@@ -469,22 +390,25 @@ export default {
     align-items: center;
     display: flex;
     position: fixed;
-
   }
 
+   /* Icone Email */
   .button img {
     margin-left: 15px;
-    
   }
+
+   /* Botão Texto */
   .button p {
     margin-top: 14px;
     margin-left: 30px;
   }
+
+   /* Botão Hover */
   .button:hover {
     background-color: #2336C7;
-    padding: 10px
   }
 
+   /* Loading */
   .loader {
   border: 4px solid rgba(0, 0, 0, 0.1);
   border-left-color: #373753;
@@ -496,11 +420,10 @@ export default {
   margin-right: 25vw;
 }
 
+ /* Animação Loading */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-
 </style>
 

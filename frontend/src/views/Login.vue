@@ -1,41 +1,80 @@
 <template>
   <main>
     <div class="camada">
+      <!-- Ativação Alerta -->
+       <div id="modal" v-if="this.pass != 1">
+        <!-- Container Principal do Modal -->
+        <div class="info-modal">
+          <!-- Background Icone -->
+          <div class="icon">
+            <!-- Background Ghost -->
+            <div class="ghost">
+              <!-- Inserindo Imagem Ghost -->
+              <div class="img-modal">
+              </div>
+            </div>
+            <!-- Background Erros -->
+            <div class="error">
+              <!-- Exibindo Primeiro erro Disparado na Array -->
+              <p>{{this.errors[0]}}</p>
+            </div>
+          </div>
+          <!-- Underline Vermelho no Alerta -->
+          <div class="line">
+          </div>
+        </div>
+      </div>
+
+      
       <section>
+        <!-- Parte Superior Acima do Primeiro Input -->
         <div class="logo">
+          <!-- Parte onde Ficaria a Imagem -->
           <div class="img">
+             <!-- Camada -->
             <div class="background">
+              <!-- Container com Rotação de Imagens -->
               <div class="containerimg">
+                 <!-- Imagem1 -->
                 <div class="box box1"></div>
+                <!-- Imagem 2 -->
                 <div class="box box2"></div>
               </div>
             </div>
           </div>
+          <!-- Descrição da Tela -->
           <div class="descricao">
             <h1>Sua Jornada começa aqui</h1>
             <p>Um único login para o Customer Relationship Management da 3C Plus</p>
           </div>
         </div>
 
+        <!-- Container Formularios -->
         <div class="input">
-          <form action="" method="post">
+          <!-- Previnindo Ativação Antecipada do checkdata -->
+          <form @submit.prevent="checkdata">
             <div>
               <div>
+                <!-- Input Email -->
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off">
+                  <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="email">
                   <label for="floatingInput">Email</label>
                 </div>
               </div>
+              <!-- Input Senha -->
               <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input type="password" class="form-control" id="floatingPassword" v-model="password">
                 <label for="floatingPassword">Senha</label>
               </div>
+              <!-- Informações Extras Abaixo dos Input -->
               <div class="extra_info">
+                <!-- Redefinir Senha -->
                 <div class="forgot">
                   <a href="/redefine">
                     <p>Esqueceu sua senha?</p>
                   </a>
                 </div>
+                <!-- Registrar Usuario -->
                 <div class="forgot">
                   <a href="/register">
                     <p>Não tem uma conta? Crie já</p>
@@ -43,9 +82,10 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-primary">
+               <!-- Submit -->
+              <a id="send" class="btn btn-primary" @click="checkdata">
                 Entrar
-              </button>
+              </a>
             </div>
           </form>
         </div>
@@ -95,9 +135,177 @@
     </div>
     </main>
 </template>
-<script ></script>
+
+<script>
+import { SendUser } from '../services/HttpService';
+
+export default {
+  data() {
+    // Parametros que serão passados ao BackEnd e Validações
+    return {
+      email: "",
+      password: "",
+      errors: [],
+      data: {},
+      pass: true
+    };
+  },
+
+  // Validando Email
+  methods: {
+    ValidateEmail()
+    {
+      if (this.email.length == 0)
+      {
+        // Push caso não valide
+        this.errors.push('O campo Email é obrigatório!')
+        // Redefine Passagem como falsa
+        this.pass = false;
+        // Após Aparecer Erro Reseta os Parametros
+        setTimeout(() => {
+          this.pass = true;
+          this.errors = [];
+        }, 8000); 
+      }
+    },
+
+    // Validando Senha
+    ValidatePassword()
+    {
+      if (this.password.length == 0)
+      {
+        // Push caso não valide
+         this.errors.push('O Campo senha é obrigatório!')   
+         // Redefine Passagem como falsa
+         this.pass = false;
+         // Após Aparecer Erro Reseta os Parametros
+         setTimeout(() => {
+          this.pass = true;
+          this.errors = [];
+        }, 8000); 
+      }
+    },
+    // Validando Formulario
+    ValidateForm()
+    {
+      this.ValidateEmail();
+      this.ValidatePassword();
+    },
+
+    // Enviando Dados 
+    checkdata()
+    {
+      // Passar Dados
+      this.ValidateForm();
+      if (this.pass === true) {
+        this.data = {
+          email: this.email,
+          password: this.password
+        }
+      }
+    }
+  }
+};
+</script>
+
 
 <style>
+/* DEFINIÇÕES ALERTA */
+/* Animação Aparecer e Sumir */
+@keyframes moveUpDown {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  5%, 10% {
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(110px); 
+  }
+  30%, 90% {
+    opacity: 1; 
+    transform: translateY(110px);
+  }
+  100% {
+    opacity: 0; 
+    transform: translateY(0);
+  }
+}
+
+/* Background Alerta */
+#modal {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+    z-index: 1;
+    }
+
+  /* Principal Elemento Visual Modal */
+.info-modal {
+  position: relative;
+  opacity: 0;
+  animation: moveUpDown 8s ease-in-out 1;
+  margin-right:65vw;
+}
+
+/* Configuração Texto */
+.error p {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* Imagem Ghost */
+.img-modal {
+  background-image: url('../assets/images/modal.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+}
+
+/* Redefinições Extras Modal */
+.info-modal {
+  background-color: rgb(255, 255, 255);
+  width: 15vw;
+  height: 10vh;
+  border-radius: 10px;
+  position: absolute;
+}
+
+/* Tamanho Background icon ghost */
+.icon {
+  height: 8vh;
+  display: flex;
+}
+
+/* Linha */
+.line {
+  background-color: red;
+  height: 2vh;
+  border-radius: 0px 0px 10px 10px;
+}
+
+/* Background Ghost */
+.ghost {
+  width: 6vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background Erro */
+.error {
+  width: 9vw;
+  height: 8vh;
+}
+
 /* DEFINIÇÕES FUNDO */
 /* Animação Sentido Horário */
   @keyframes rotate {
@@ -226,7 +434,7 @@
     justify-content: center;
     height: 100vh;
     width: 100vw;
-    z-index: 1;
+    z-index: 2;
   }
 
     /* Criando Base do Login */
@@ -240,6 +448,7 @@
     -5px -5px 20px rgba(0, 0, 0, 0.048); 
     padding: 15px; 
     position: absolute;
+    z-index: 3;
   }
 
   /* Região Superior Abrangindo Animação e Descrição */
@@ -405,4 +614,10 @@
   .form-control:focus {
     box-shadow: none; 
   } 
+
+  /* Enviar Button */
+  #send {
+    width: 30vw;
+    margin-top: 1vw;
+  }
 </style>
