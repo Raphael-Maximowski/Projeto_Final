@@ -43,4 +43,5 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
 }
