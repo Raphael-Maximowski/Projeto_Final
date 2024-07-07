@@ -137,7 +137,6 @@
 </template>
 
 <script>
-import { SendUser } from '../services/HttpService';
 
 export default {
   data() {

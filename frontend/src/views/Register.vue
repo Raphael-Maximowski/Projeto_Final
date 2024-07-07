@@ -294,7 +294,6 @@ export default {
       this.ValidateConfirmPassword(),
       this.CheckPassword(),
       this.sendForm()
-      console.log("Teste" . this.pass);
     },
 
     // Disparando pra API
