@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\EmailController;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;  
@@ -35,4 +36,5 @@ Route::post('reset_password', [EmailController::class, 'resetPassword'])
 Route::post('email/verify', [ValidateEmailcontroller::class, 'verifyEmail'])
 ->middleware('guest') 
 ->name('verification.verify');
+
 

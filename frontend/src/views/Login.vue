@@ -137,6 +137,7 @@
 </template>
 
 <script>
+import { login } from '../services/HttpService';
 
 export default {
   data() {
@@ -192,15 +193,34 @@ export default {
     },
 
     // Enviando Dados 
-    checkdata()
+    async checkdata()
     {
       // Passar Dados
       this.ValidateForm();
       if (this.pass === true) {
-        this.data = {
+        try {
+          const data = {
           email: this.email,
           password: this.password
         }
+
+        const response = await login(data);
+
+          if (response.status === 200) {
+          this.$router.push('/dashboard');
+        }
+        else if (error.response && error.response.status === 401) {
+          this.error = 'Invalid credentials. Please try again.';
+        } else {
+          this.error = 'An error occurred. Please try again later.';
+        }
+        console.log('Resposta da API:', response)
+        }  catch (error) { console.error('Erro ao cadastrar usuário:', error);}
+
+        
+
+
+
       }
     }
   }

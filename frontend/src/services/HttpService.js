@@ -9,6 +9,15 @@ const HttpService = axios.create({
   },
 });
 
+export const login = async(data) => {
+  try {
+    const response = await HttpService.post('login', data);
+    return response;
+  } catch (error) {
+    console.log('Login Invalido');
+  }
+}
+
 export const SendUser = async (user) => {
   try {
     const response = await HttpService.post('register', user);
