@@ -3,7 +3,7 @@
 
     <!-- Menu -->
     <div class="menu">
-        <div class="colection" v-if="this.modal == false">
+        <div class="colection" v-if="this.modal == true">
             <div class="content">
                 <div class="title">
                     <div style="display:flex">

@@ -30,10 +30,4 @@ class ValidateEmailcontroller extends Controller
             return response()->json(['message' => 'Email já verificado ou não encontrado.'], 400);
         }
     }
-
-    public function verify(EmailVerificationRequest $request)
-    {
-        $request->fulfill();
-        return response()->json(['message' => 'Email verificado com sucesso.'], 200);
-    }
 }
