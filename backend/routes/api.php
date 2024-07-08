@@ -8,6 +8,7 @@ use App\Http\Controllers\EmailController;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;  
 use App\Http\Controllers\ValidateEmailcontroller;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -31,8 +32,4 @@ Route::post('reset_password', [EmailController::class, 'resetPassword'])
 ->middleware('guest')
 ->name('password.update');
 
-// Rota de validação de email
-Route::post('email/verify', [ValidateEmailcontroller::class, 'verifyEmail'])
-->middleware('guest') 
-->name('verification.verify');
-
+Route::post('email/send-verification', [ValidateEmailController::class, 'sendVerificationLink']);
