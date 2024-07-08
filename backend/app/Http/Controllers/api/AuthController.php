@@ -17,7 +17,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
         ]);
 
         if ($validator->fails()) {
@@ -62,10 +62,22 @@ class AuthController extends Controller
         ]);
     }
 
-    public function verify(EmailVerificationRequest $request)
+    public function verify(Request $request, $id, $hash)
     {
-        $request->fulfill();
-        return response()->json(['message' => 'Email verificado com sucesso.'], 200);
+        // Localize o usuário pelo ID fornecido
+        $user = User::findOrFail($id);
+
+        // Verifique se o hash na URL é válido
+        if (! hash_equals(sha1($user->getEmailForVerification()), $hash)) {
+            return response()->json(['message' => 'Link de verificação inválido'], 403);
+        }
+
+        // Verifique o e-mail do usuário
+        if (!$user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+
+        return response()->json(['message' => 'E-mail verificado']);
     }
 
     public function logout(Request $request)
