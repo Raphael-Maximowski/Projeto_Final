@@ -64,6 +64,7 @@
         </div>
         <!-- Funil Por meio de Componentes -->
         <div class="funis">
+            <funil />
         </div>
         
     </div>
@@ -142,7 +143,7 @@ main {
     padding: 15px 0px;
     border-radius: 0px 10px 10px 0px;
     background-color: #FFBB28;
-    margin-right: 4.3vw;
+    margin-right: 53px;
 }
 
 .principal {
@@ -185,7 +186,8 @@ main {
     padding: 5px 15px;
     border-radius: 8px;
     color: white;
-    font-size: 13px;
+    font-size: 17px;
+    margin-left: 6vw;
 }
 
 .colection {
@@ -299,12 +301,14 @@ input {
 
 .cancel {
     padding-top: 10px;
-    margin-left: 12vw;
+    margin-left: 19vw;
 }
 </style>
 
 <script>
+import Funil from '../components/Funil.vue';
 export default {
+  components: { Funil },
   data() {
     // Parametros que serão passados ao BackEnd e Validações
     return {
