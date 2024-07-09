@@ -77,8 +77,8 @@ class AuthController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return response()->json(['message' => 'E-mail verificado']);
-       // return redirect('/login')->with('message', 'E-mail verificado com sucesso. Faça login para continuar.');
+        //return response()->json(['message' => 'E-mail verificado']);
+        return redirect('/')->with('message', 'E-mail verificado com sucesso. Faça login para continuar.');
     }
 
     public function logout(Request $request)
