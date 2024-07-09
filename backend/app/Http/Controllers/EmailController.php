@@ -19,20 +19,21 @@ class EmailController extends Controller
         );
 
         // Após o envio do link
-        return Password::RESET_LINK_SENT;   
+        return Password::RESET_LINK_SENT;
     }
 
     public function resetPassword(Request $request) {
         $request->validate([
             'token' => 'required',
             'password' => 'required|min:8',
+            'email' => 'required|email'
         ]);
 
-        $hashedToken = hash_hmac('sha256', $request->token, config('app.key'));
+        $passwordReset = DB::table('password_reset_tokens')->where('email', $request->email)->first();
 
-        $passwordReset = DB::table('password_reset_tokens')->where('token', $hashedToken)->first();
+        $validate = Hash::check($request->token, $passwordReset->token);
 
-        if (!$passwordReset) {
+        if (!$validate) {
             return response()->json(['message' => 'Token inválido.'], 400);
         }
 
