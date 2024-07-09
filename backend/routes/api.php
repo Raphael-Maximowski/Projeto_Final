@@ -17,6 +17,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=> 'crm', 'middleware'=> 'auth:sanctum'], function() {
     Route::post('logout', [AuthController::class, 'logout']);
+
+    Route::get('users/{authuser}', [UserController::class, 'getAuthenticatedUser']);
+    
 });
 Route::post('register',[AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
