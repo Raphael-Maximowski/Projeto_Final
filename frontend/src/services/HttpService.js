@@ -1,7 +1,5 @@
 import axios from "axios";
 
-
-
 const HttpService = axios.create({
   baseURL: "http://localhost:8000/api/",
   headers: {
@@ -9,6 +7,7 @@ const HttpService = axios.create({
   },
 });
 
+// Realizando login
 export const login = async(data) => {
   try {
     const response = await HttpService.post('login', data);
@@ -18,6 +17,7 @@ export const login = async(data) => {
   }
 }
 
+// Registrando
 export const SendUser = async (user) => {
   try {
     const response = await HttpService.post('register', user);
@@ -28,19 +28,7 @@ export const SendUser = async (user) => {
   }
 };
 
-export const SendEmail = async(user) => {
-  try {
-    const response = await HttpService.post('email/verify', user);
-    return response;
-  } catch (error) {
-    console.error('Erro ao enviar usuário:', error.response ? error.response.data : error.message);
-  }
-    
-}
-
-
-///////
-
+// Enviando Email Novo Password
 export const ResetPassword = async(data) => {
   try {
     const response = await HttpService.post('forget_password', data);
@@ -51,8 +39,16 @@ export const ResetPassword = async(data) => {
   }
   }
 
+  // Trocando senha no Banco
 
-//forget_password
+  export const SendPassword = async(data) => {
+    try {
+      const response = await HttpService.post('reset_password', data);
+      return response;
+    } catch (error) {
+      console.error('Erro');
+    }
+  }
 export default HttpService;
 
 

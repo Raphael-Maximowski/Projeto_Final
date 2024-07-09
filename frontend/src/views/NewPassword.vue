@@ -121,6 +121,7 @@
     </main>
 </template>
 <script>
+import { SendPassword } from '../services/HttpService';
 export default {
     components: {
     },
@@ -129,12 +130,16 @@ export default {
     return {
       password: "",
       confirmpassword: "",
+      token: '',
       errors: [],
       data: {},
       pass: true
     };
   },
 
+  mounted() {
+    this.token = this.$route.params.token;
+  },
 
   methods: {
     // Validando Senha
@@ -224,12 +229,20 @@ export default {
     },
 
     // Enviando Dados Após Validação
-    sendForm() {
+    async sendForm() {
       // Validação OK
         if (this.pass === true) {
-            this.data = {
-              password: this.password
+          try {
+              const data = {
+              password: this.password,
+              token: this.token
             }
+
+            const response = await SendPassword(data);
+            console.log('Resposta da API:', response);
+            } catch (error) {
+            console.error('Erro ao Trocar Password:', error);
+          }
         }
 
         // Redefine Passagem como falsa

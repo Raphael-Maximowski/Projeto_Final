@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\api\AuthController;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class EmailController extends Controller
 {   // Rota para verificar se o usuário está no banco de dados para enviar o email
@@ -24,20 +25,24 @@ class EmailController extends Controller
     public function resetPassword(Request $request) {
         $request->validate([
             'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8',
         ]);
-    
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) {
-                $user->password = Hash::make($password);
-                $user->save();
-    
-            }
-        );
 
-        return Password::PASSWORD_RESET;
+        $hashedToken = hash_hmac('sha256', $request->token, config('app.key'));
+        dd($hashedToken);
+
+        $passwordReset = DB::table('password_reset_tokens')->where('token', $hashedToken)->first();
+
+        if (!$passwordReset) {
+            return response()->json(['message' => 'Token inválido.'], 400);
+        }
+
+        $user = User::where('email', $passwordReset->email)->first();
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json(['message' => 'Senha redefinida com sucesso.'], 200);
     }
 
     };
