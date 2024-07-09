@@ -4,13 +4,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\FunilController;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ValidateEmailcontroller;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
+
+
 
 
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
@@ -42,5 +45,13 @@ Route::post('email/send-verification', [ValidateEmailController::class, 'sendVer
 
 // a rota para mostrar o usuário autenticado
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('users/{authuser}', [UserController::class, 'getAuthenticatedUser']);
+    Route::get('users/', [UserController::class, 'getAuthenticatedUser']);
 });
+
+//rotas coleção 
+
+Route::post('collections', [CollectionController::class, 'collection'])->middleware('auth:sanctum');
+
+//rotas funil
+
+Route::post('funil', [FunilController::class, 'funil'])->middleware('auth:sanctum');
