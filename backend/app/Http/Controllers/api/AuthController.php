@@ -78,6 +78,7 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => 'E-mail verificado']);
+       // return redirect('/login')->with('message', 'E-mail verificado com sucesso. Faça login para continuar.');
     }
 
     public function logout(Request $request)
