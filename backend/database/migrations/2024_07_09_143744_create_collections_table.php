@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(App\Models\User::class);
-            $table->string('name');
-            $table->string('descricao');
             $table->timestamps();
+            $table->string('name');
+            $table->string('color');
+            $table->string('description');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+
         });
     }
 
@@ -25,6 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('collections', function (Blueprint $table) {
+            $table->dropForeign(['user_id']); 
+        });
+
         Schema::dropIfExists('collections');
     }
 };
