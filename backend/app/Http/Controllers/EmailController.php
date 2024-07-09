@@ -29,7 +29,6 @@ class EmailController extends Controller
         ]);
 
         $hashedToken = hash_hmac('sha256', $request->token, config('app.key'));
-        dd($hashedToken);
 
         $passwordReset = DB::table('password_reset_tokens')->where('token', $hashedToken)->first();
 

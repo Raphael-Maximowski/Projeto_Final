@@ -1,48 +1,34 @@
 <template>
-<div class="base">
-  <div class="info">
-    <div class="title">Teste</div>
-    <div class="desc">Test2</div>
-    <div class="creation">10/12/2023</div>
-  </div>
+<div class="base-funil">
+    <div class="title">Vendas Chinelos</div>
+    <div><img src="../assets/images/DashBoard/funil.png" alt=""></div>
 </div>
 </template>
 <script>
 export default {
-  name: 'funil',
+  name: 'Funil',
   data ()
   {
     return {
-
+ 
     }
   }
 }
 </script>
-
 <style scoped>
-.base {
-  height: 150px;
-  margin: 30px 45px;
-  border-radius: 5px;
-  border: 2px solid black;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+
+.base-funil {
+    background-color: #FEBC28;
+    width: 15vw;
+    padding: 5px 0px;
+    justify-content: center;
+    margin: 10px 20px;
+    display: flex;
+    border-radius: 10px;
 }
 
-h1 {
-  font-size: 25px;
-  margin-top: 10px;
-  margin-left: 20px;
+.base-funil img {
+    width: 20px;
+    margin: 0px 20px;
 }
-
-.info {
-  background-color: black;
-  width: 89.6vw;
-  height: 40px;
-  display: flex;
-}
-
-
-
-
-
 </style>

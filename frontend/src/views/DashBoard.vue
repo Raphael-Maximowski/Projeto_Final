@@ -64,7 +64,10 @@
         </div>
         <!-- Funil Por meio de Componentes -->
         <div class="funis">
-            <funil />
+            <Collection />
+            <Collection />
+            <Collection />
+            
         </div>
         
     </div>
@@ -168,11 +171,13 @@ main {
     margin-left: 3vw;
     margin-top: 10px;
     color: #222738;
+    font-weight: bold;
 }
 .welcome p {
     margin-left: 3vw;
     font-size: 15px;
         color: #222738;
+        font-weight: bold;
 }
 .create {
     width: 20.7vw;
@@ -204,7 +209,7 @@ main {
 
 .content {
     width: 50vw;
-    background-color: rgba(255, 255, 255, 0.905);
+    background-color: rgb(255, 255, 255);
     height: 53vh;
     filter: blur(0px);
     border-radius: 10px;
@@ -306,9 +311,9 @@ input {
 </style>
 
 <script>
-import Funil from '../components/Funil.vue';
+import Collection from '../components/Collection.vue';
 export default {
-  components: { Funil },
+  components: { Collection },
   data() {
     // Parametros que serão passados ao BackEnd e Validações
     return {
