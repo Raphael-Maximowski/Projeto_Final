@@ -48,10 +48,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('users/', [UserController::class, 'getAuthenticatedUser']);
 });
 
-//rotas coleção 
+//rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
 
-Route::post('collections', [CollectionController::class, 'collection'])->middleware('auth:sanctum');
+Route::get('collections', 'App\Http\Controllers\CollectionController@index');
+Route::post('collections', 'App\Http\Controllers\CollectionController@store');
+Route::get('collections/{id}', 'App\Http\Controllers\CollectionController@show');
+Route::put('collections/{id}', 'App\Http\Controllers\CollectionController@update');
+Route::delete('collections/{id}', 'App\Http\Controllers\CollectionController@destroy');
 
 //rotas funil
 
-Route::post('funil', [FunilController::class, 'funil'])->middleware('auth:sanctum');
+Route::get('funnels', 'App\Http\Controllers\FunnelController@index');
+Route::post('funnels', 'App\Http\Controllers\FunnelController@store');
+Route::get('funnels/{id}', 'App\Http\Controllers\FunnelController@show');
+Route::patch('funnels/{id}', 'App\Http\Controllers\FunnelController@update');
+Route::delete('funnels/{id}', 'App\Http\Controllers\FunnelController@destroy');
