@@ -42,7 +42,7 @@
         </div>
         <div class="dashboard">
             <div class="border"></div>
-            <img src="../assets/images/DashBoard/dashboard.png" alt="">
+            <img src="../assets/images/DashBoard/dashboard-active.png" alt="">
         </div>
         <div class="user">
             <img src="../assets/images/DashBoard/user.png" alt="">

@@ -100,7 +100,75 @@ h1 {
   
 }
 
+.modal3 {
+  position: absolute;
+  width: 90vw;
+  display: flex;
+  justify-content: end;
+}
+
+.create {
+  background-color: white;
+  margin-right: 12vw;
+  border: 1px solid grey;
+  height: 167px;
+  width: 20vw;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.create h3 {
+  font-size: 15px;
+  margin-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+floatingInput, #floatingPassword{
+  height: 1vh;
+  width: 5vw;
+  min-height: 30px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  font-size:10px;
+}
+
+/*Configueações Label BootStrap*/
+.form-floating > label {
+  padding: 0px 5px;
+  font-size: 12px;
+  margin-left: 10px;
+  background-color: white;
+  color: grey;
+}
+
+/*Configueações Label BootStrap*/
 
 
+.form-control:focus {
+  box-shadow: none;
+}
+
+form-control:not(:placeholder-shown) {
+  padding-top: 20px;
+  padding-bottom: 0px;
+}
+.form-floating > .form-control, .form-floating > .form-control-plaintext {
+  padding: 5px;
+}
+
+input {
+  font-size: 10px;
+  margin-bottom: 20px;
+  z-index: 100000;
+}
+label {
+  margin-bottom: 1000px;
+}
+
+.form-control {
+  width: 18vw;
+  margin-left: 10px;
+}
 
 </style>
