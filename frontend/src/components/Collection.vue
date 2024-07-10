@@ -3,10 +3,10 @@
   <div class="info">
     <div class="title">
       <div>Novas Vendas</div>
-      <div class="more-info"><img src="../assets/images/DashBoard/info.png" alt=""></div>
+      <div class="more-info" @click="showinfo"><img src="../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
-      <div class="funil">
+      <div class="funil" @click="showfunil">
         <p>Novo Funil</p>
       </div>
     </div>
@@ -30,10 +30,32 @@ import Funil from '../components/Funil.vue';
 export default {
   components: { Funil },
   name: 'Collection',
+
+  props: {
+    modal2: {
+      type: Boolean,
+      default: false
+    },
+    modal3: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   data ()
   {
     return {
-
+    }
+  },
+  methods: {
+    showfunil() {
+      this.$emit('update-modal2', !this.modal2);
+      console.log(this.modal2);
+    },
+    showinfo()
+    {
+      this.$emit('update-modal3', !this.modal3);
+      console.log(this.modal3);
     }
   }
 }
@@ -97,7 +119,6 @@ h1 {
 .group {
   display: flex;
   flex-wrap: wrap;
-  
 }
 
 

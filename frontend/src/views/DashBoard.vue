@@ -3,6 +3,7 @@
 
     <!-- Menu -->
     <div class="menu">
+      <!-- Configurando Coleção -->
         <div class="colection" v-if="this.modal == true">
             <div class="content">
                 <div class="title">
@@ -37,12 +38,77 @@
                     </div>
                 </div>
         </div>
+
+      <!-- Configurando Funil -->
+      <div class="colection" v-if="this.modal2 == true">
+        <div class="content2">
+          <div class="title">
+            <div style="display:flex">
+              <div>
+                <h3>Configurando Funil</h3>
+                <p>Preencha os Dados e em Poucos segundo utilize seu Funil</p>
+                <hr>
+              </div>
+              <div class="cancel">
+                <img @click="toggleModal2" src="../assets/images/DashBoard/cruz.png" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="form">
+            <div class="form-floating mb-3">
+              <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-modal="email">
+              <label for="floatingInput">Nome do Funil</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-modal="email">
+              <label for="floatingInput">Descrição do Funil</label>
+            </div>
+            <div class="submit">Criar</div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal3" v-if="modal3 == true">
+        <div class="base-modal3">
+          <div class="return">
+            <div class="return-img" @click="toggleModal3"><img src="../assets/images/DashBoard/return.png"></div>
+            <div class="header-info">Informações da Coleção</div>
+          </div>
+          <div class="main-info">
+            <form>
+              <div>
+                <label>Nome Associado a Coleção</label>
+                <br><input type="text" value="Novas Vendas">
+              </div>
+              <div>
+                <label>Descrição Associada a Coleção<br></label>
+                <div class="textarea-container">
+                  <textarea id="message" name="message" placeholder="Digite sua mensagem aqui...">Esta coleção foi criada para aprimorar a eficiência e a eficácia dos processos de vendas no seu CRM. Cada funil é cuidadosamente desenvolvido para otimizar diferentes etapas do ciclo de vendas, desde a prospecção até o fechamento e pós-venda, garantindo um fluxo de trabalho mais organizado e produtivo.</textarea>
+                </div>
+              </div>
+              <div class="color-colection">
+                <div>Cor Associada a Coleção</div>
+                <div class="box-color"></div>
+              </div>
+            </form>
+
+            <div class="funil-info">
+              <div>Funis Associados a Coleção</div>
+              <div class="extra-info">
+                <Funil/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
         <div class="img">
          <img src="../assets/images/logoamarelo.png" alt="">
         </div>
         <div class="dashboard">
             <div class="border"></div>
-            <img src="../assets/images/DashBoard/dashboard.png" alt="">
+            <img src="../assets/images/DashBoard/active_dashboard.png" alt="">
         </div>
         <div class="user">
             <img src="../assets/images/DashBoard/user.png" alt="">
@@ -51,6 +117,8 @@
             <img src="../assets/images/DashBoard/sair.png" alt="">
         </div>
     </div>
+
+
 
     <!-- Main -->
     <div class="principal">
@@ -64,10 +132,9 @@
         </div>
         <!-- Funil Por meio de Componentes -->
         <div class="funis">
-            <Collection />
-            <Collection />
-            <Collection />
-            
+          <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
+          <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
+          <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
         </div>
         
     </div>
@@ -76,6 +143,119 @@
 </template>
 
 <style scoped>
+
+.extra-info {
+  background-color: red;
+  width: 25vw;
+  height: 300px;
+}
+.color-colection {
+  font-size: 17px;
+  display: flex;
+}
+
+.textarea-container {
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+}
+label {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+}
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  white-space: pre-line;
+  color: grey;
+  margin-bottom: 20px;
+
+}
+
+.main-info label {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+
+.main-info input {
+  height: 4vh;
+  font-size: 13px;
+  padding-left: 10px;
+  width: 20vw;
+  margin-bottom: 20px;
+  color: grey;
+  border: 1px solid #ccc;
+}
+.return img {
+  width: 25px;
+  margin-left: 25px;
+}
+
+.return {
+  display: flex;
+  padding-top: 10px;
+  align-items: center;
+}
+
+.return-img
+{
+  width: 5vw;
+  z-index: 999;
+}
+.header-info {
+  position: absolute;
+  width: 30vw;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.main-info {
+  margin-top: 25px;
+  height: 80vh;
+  padding-left: 30px;
+}
+
+.color-colection {
+  display: flex;
+  height: 40px;
+  align-items: center;
+}
+.box-color {
+  width: 2vw;
+  height: 2vw;
+  border: 3px solid lightgray;
+  border-radius: 50%;
+  background-color: #FEBC28;
+  margin-left:20px;
+}
+
+.modal3 {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.384);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: end;
+  z-index: 1000;
+}
+
+.base-modal3 {
+  background-color: white;
+  width: 30vw;
+  height: 100vh;
+  border-radius: 10px 0px 0px 10px;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
 
 * {
     margin: 0;
@@ -216,6 +396,15 @@ main {
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
+.content2 {
+  width: 50vw;
+  background-color: rgb(255, 255, 255);
+  height: 40vh;
+  filter: blur(0px);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
 .title {
     margin-left: 2vw;
     margin-right: 2vw;
@@ -312,12 +501,15 @@ input {
 
 <script>
 import Collection from '../components/Collection.vue';
+import Funil from '../components/Funil.vue';
 export default {
-  components: { Collection },
+  components: { Collection, Funil },
   data() {
     // Parametros que serão passados ao BackEnd e Validações
     return {
-        modal: false
+        modal: false,
+        modal2: false,
+        modal3: false,
     };
   },
 
@@ -327,7 +519,20 @@ export default {
     {
         this.modal = !this.modal
         console.log(this.modal)
+    },
+    toggleModal2() {
+      this.modal2 = !this.modal2;
+    },
+    updateModal2(newValue) {
+      this.modal2 = newValue;
+    },
+    toggleModal3() {
+      this.modal3 = !this.modal3;
+    },
+    updateModal3(newValue) {
+      this.modal3 = newValue;
     }
+
   }
 };
 </script>
