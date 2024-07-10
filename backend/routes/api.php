@@ -4,13 +4,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\api\AuthController;
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\FunilController;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ValidateEmailcontroller;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
+
+
 
 
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
@@ -42,5 +45,21 @@ Route::post('email/send-verification', [ValidateEmailcontroller::class, 'sendVer
 
 // a rota para mostrar o usuário autenticado
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('users/{authuser}', [UserController::class, 'getAuthenticatedUser']);
+    Route::get('users/', [UserController::class, 'getAuthenticatedUser']);
 });
+
+//rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
+
+Route::get('collections', 'App\Http\Controllers\CollectionController@index');
+Route::post('collections', 'App\Http\Controllers\CollectionController@store');
+Route::get('collections/{id}', 'App\Http\Controllers\CollectionController@show');
+Route::put('collections/{id}', 'App\Http\Controllers\CollectionController@update');
+Route::delete('collections/{id}', 'App\Http\Controllers\CollectionController@destroy');
+
+//rotas funil
+
+Route::get('funnels', 'App\Http\Controllers\FunnelController@index');
+Route::post('funnels', 'App\Http\Controllers\FunnelController@store');
+Route::get('funnels/{id}', 'App\Http\Controllers\FunnelController@show');
+Route::patch('funnels/{id}', 'App\Http\Controllers\FunnelController@update');
+Route::delete('funnels/{id}', 'App\Http\Controllers\FunnelController@destroy');

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(App\Models\User::class);
-            $table->string('name');
-            $table->string('descricao');
             $table->timestamps();
+            $table->string('name');
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

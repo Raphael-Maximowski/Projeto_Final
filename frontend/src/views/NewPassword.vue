@@ -131,6 +131,7 @@ export default {
       password: "",
       confirmpassword: "",
       token: '',
+      email: '',
       errors: [],
       data: {},
       pass: true
@@ -139,6 +140,7 @@ export default {
 
   mounted() {
     this.token = this.$route.params.token;
+    this.email = this.$route.params.email;
   },
 
   methods: {
@@ -235,7 +237,8 @@ export default {
           try {
               const data = {
               password: this.password,
-              token: this.token
+              token: this.token,
+              email: this.email
             }
 
             const response = await SendPassword(data);

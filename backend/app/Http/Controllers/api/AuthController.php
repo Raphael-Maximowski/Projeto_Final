@@ -46,17 +46,17 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->firstOrFail();
 
         if (!Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return response()->json(['message' => 'Credenciais inválidas'], 401);
         }
 
         if (!$user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Please verify your email before logging in.'], 403);
+            return response()->json(['message' => 'Verifique seu email para poder realizar o login'], 403);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Login success',
+            'message' => 'Login executado com sucesso',
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
@@ -77,8 +77,8 @@ class AuthController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return response()->json(['message' => 'E-mail verificado']);
-       // return redirect('/login')->with('message', 'E-mail verificado com sucesso. Faça login para continuar.');
+        //return response()->json(['message' => 'E-mail verificado']);
+        return redirect('http://localhost:8085/')->with('message', 'E-mail verificado com sucesso. Faça login para continuar.');
     }
 
     public function logout(Request $request)
@@ -86,6 +86,6 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
 
-        return response()->json(['message' => 'Logout successful']);
+        return response()->json(['message' => 'Logout executado com sucesso']);
     }
 }

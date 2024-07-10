@@ -7,7 +7,6 @@
       <div class="part2"><img src="../assets/images/DashBoard/pontos.png"></div>
     </div>
   </div>
-
 </div>
 </template>
 <script>
