@@ -16,7 +16,8 @@ class CollectionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required', // Validação dos dados recebidos no request
+            'name' => 'required', 
+            'description' => 'required' // Validação dos dados recebidos no request
         ]);
 
         $collection = Collection::create([
@@ -36,7 +37,8 @@ class CollectionController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',  // Validação dos campos para atualização
+            'name' => 'required',
+            'description' => 'required'   // Validação dos campos para atualização
         ]);
 
         $collection = Collection::findOrFail($id);
