@@ -1,7 +1,10 @@
 <template>
 <div class="base-funil">
     <div class="title">Vendas Chinelos</div>
+  <div class="img">
     <div><img src="../assets/images/DashBoard/funil.png" alt=""></div>
+    <div class="crud-funil"><img src="../assets/images/DashBoard/pontos.png"></div>
+  </div>
 </div>
 </template>
 <script>
@@ -28,7 +31,25 @@ export default {
 }
 
 .base-funil img {
-    width: 20px;
-    margin: 0px 20px;
+    width: 15px;
+    margin: 0px 10px;
 }
+
+.title {
+  width: 30vw;
+  text-align: center;
+}
+
+.img {
+
+  width: 6vw;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+
+
+
+
 </style>
