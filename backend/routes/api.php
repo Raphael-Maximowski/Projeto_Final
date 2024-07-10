@@ -41,7 +41,7 @@ Route::get('email/verify/{id}/{hash}', [AuthController::class, 'verify'])
     ->middleware(['signed'])
     ->name('verification.verify');
 
-Route::post('email/send-verification', [ValidateEmailController::class, 'sendVerificationLink']);
+Route::post('email/send-verification', [ValidateEmailcontroller::class, 'sendVerificationLink']);
 
 // a rota para mostrar o usuário autenticado
 Route::middleware('auth:sanctum')->group(function () {

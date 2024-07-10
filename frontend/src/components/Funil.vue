@@ -1,9 +1,11 @@
 <template>
 <div class="base-funil">
+  <div class="info-funil">
     <div class="title">Vendas Chinelos</div>
-  <div class="img">
-    <div><img src="../assets/images/DashBoard/funil.png" alt=""></div>
-    <div class="crud-funil"><img src="../assets/images/DashBoard/pontos.png"></div>
+    <div class="images-funil">
+      <div class="part1"><img src="../assets/images/DashBoard/funil.png"></div>
+      <div class="part2"><img src="../assets/images/DashBoard/pontos.png"></div>
+    </div>
   </div>
 </div>
 </template>
@@ -24,32 +26,48 @@ export default {
     background-color: #FEBC28;
     width: 15vw;
     padding: 5px 0px;
-    justify-content: center;
     margin: 10px 20px;
-    display: flex;
     border-radius: 10px;
 }
 
-.base-funil img {
-    width: 15px;
-    margin: 0px 10px;
-}
-
 .title {
-  width: 30vw;
+  width: 15vw;
   text-align: center;
 }
 
-.img {
-
-  width: 6vw;
+.info-funil {
   display: flex;
-  justify-content: space-evenly;
 }
 
+.images-funil {
+  position: absolute;
+  width: 15vw;
+  display: flex;
+}
 
+.images-funil img {
+  width: 15px;
+  margin-right: 10px;
+}
 
+.part1 {
+  width: 7.5vw;
+}
 
+.part1 img {
+  margin-left: 10px;
+}
 
+.part2 {
+  width: 7.5vw;
+  display: flex;
+  justify-content: end;
+}
+
+.part2 img {
+  width: 15px;
+  height: 18px;
+  margin-top: 4px;
+}
 
 </style>
