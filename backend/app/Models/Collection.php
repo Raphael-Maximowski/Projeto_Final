@@ -9,9 +9,15 @@ class Collection extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'descripton',
-        'color',
-    ];
+    protected $fillable = ['name'];
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class); //uma coleção para vários users
+    }
+
+    public function funnels()
+    {
+        return $this->hasMany(Funnel::class); //pode ter varios funis associados a uma coleção
+    }
 }

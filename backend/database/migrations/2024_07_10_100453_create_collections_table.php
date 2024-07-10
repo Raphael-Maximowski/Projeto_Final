@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('color');
-            $table->string('description');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -27,10 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('collections', function (Blueprint $table) {
-            $table->dropForeign(['user_id']); 
-        });
-
         Schema::dropIfExists('collections');
     }
 };
