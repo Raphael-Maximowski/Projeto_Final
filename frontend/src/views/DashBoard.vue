@@ -69,6 +69,7 @@
         </div>
       </div>
 
+      <!-- Informações Collection -->
       <div class="modal3" v-if="modal3 == true">
         <div class="base-modal3">
           <div class="return">
@@ -76,7 +77,26 @@
             <div class="header-info">Informações da Coleção</div>
           </div>
           <div class="main-info">
-            <form>
+            <div v-if="edit_collection == false">
+              <div class="title_edit_collection">
+                Nome Associado a Coleção
+              </div>
+              <div class="info_edit_collection">
+                Novas Vendas
+              </div>
+              <div class="title_edit_collection">Descrição Associada a Coleção</div>
+              <div class="info_edit_collection">
+                <p>Esta coleção foi criada para aprimorar a eficiência e a eficácia dos processos de vendas no seu CRM. Cada funil é cuidadosamente desenvolvido para otimizar diferentes etapas do ciclo de vendas, desde a prospecção até o fechamento e pós-venda, garantindo um fluxo de trabalho mais organizado e produtivo.</p>
+                <div style="margin-top: 15px; display: flex" class="title_edit_collection">
+                  Cor Associada a Coleção
+                  <div class="box-color"></div>
+                </div>
+                <div class="edit_collection" @click="edit_collectionfn">Editar</div>
+                <div class="delete"><p>Excluir Coleção</p></div>
+              </div>
+
+            </div>
+            <form v-if="edit_collection == true">
               <div>
                 <label>Nome Associado a Coleção</label>
                 <br><input type="text" value="Novas Vendas">
@@ -88,17 +108,60 @@
                 </div>
               </div>
               <div class="color-colection">
-                <div>Cor Associada a Coleção</div>
+                <div><label>Cor Associada a Coleção</label></div>
                 <div class="box-color"></div>
               </div>
+              <div class="edit_collection" @click="edit_collectionfn">Atualizar</div>
+              <div class="delete"><p>Excluir Coleção</p></div>
             </form>
+          </div>
+        </div>
+      </div>
 
-            <div class="funil-info">
-              <div>Funis Associados a Coleção</div>
-              <div class="extra-info">
-                <Funil/>
+      <div class="modal3" v-if="modal4 == false">
+        <div class="base-modal3">
+          <div class="return">
+            <div class="return-img" @click="toggleModal4"><img src="../assets/images/DashBoard/return.png"></div>
+            <div class="header-info">Informações do Funil</div>
+          </div>
+          <div class="main-info">
+            <div v-if="edit_funil == false">
+              <div class="title_edit_collection">
+                Nome Associado ao Funil
               </div>
+              <div class="info_edit_collection">
+                Vendas Chinelo
+              </div>
+              <div class="title_edit_collection">Descrição Associada ao Funil</div>
+              <div class="info_edit_collection">
+                <p>O funil de vendas será utilizado para vender nossa plataforma de gestão de projetos, impulsionando o reconhecimento da marca, engajamento dos leads e conversão em clientes leais. Este funil é essencial para otimizar nossas estratégias de marketing e vendas, garantindo que cada etapa do processo seja eficaz e direcionada.</p>
+                <div style="margin-top: 15px; display: flex" class="title_edit_collection">
+                  Cor Associada ao Funil
+                  <div class="box-color"></div>
+                </div>
+                <div class="edit_collection" @click="edit_funilfn">Editar</div>
+                <div class="delete"><p>Excluir Funil</p></div>
+              </div>
+
             </div>
+            <form v-if="edit_funil == true">
+              <div>
+                <label>Nome Associado ao Funil</label>
+                <br><input type="text" value="Novas Vendas">
+              </div>
+              <div>
+                <label>Descrição Associada ao Funil<br></label>
+                <div class="textarea-container">
+                  <textarea id="message" name="message" placeholder="Digite sua mensagem aqui...">O funil de vendas será utilizado para vender nossa plataforma de gestão de projetos, impulsionando o reconhecimento da marca, engajamento dos leads e conversão em clientes leais. Este funil é essencial para otimizar nossas estratégias de marketing e vendas, garantindo que cada etapa do processo seja eficaz e direcionada.</textarea>
+                </div>
+              </div>
+              <div class="color-colection">
+                <div><label>Cor Associada ao Funil</label></div>
+                <div class="box-color"></div>
+              </div>
+              <div class="edit_collection" @click="edit_funilfn">Atualizar</div>
+              <div class="delete"><p>Excluir Funil</p></div>
+            </form>
           </div>
         </div>
       </div>
@@ -136,16 +199,54 @@
           <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
           <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
         </div>
-        
     </div>
 
 </main>
 </template>
 
 <style scoped>
+.delete {
+  width: 26vw;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.delete p {
+  background-color: red;
+  padding: 5px 50px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+}
+.title_edit_collection {
+  margin-bottom: 5px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #333;
+}
+
+.info_edit_collection {
+  text-align: justify;
+  height: 4vh;
+  font-size: 15px;
+  width: 20vw;
+  margin-bottom: 5px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+
+
+.edit_collection {
+  background-color: #FEBC28;
+  width: 7vw;
+  padding: 3px 5px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
 
 .extra-info {
-  background-color: red;
   width: 25vw;
   height: 300px;
 }
@@ -157,20 +258,21 @@
 .textarea-container {
   display: flex;
   flex-direction: column;
-  width: 25vw;
+  width: 20vw;
 }
 label {
   margin-bottom: 5px;
   font-size: 14px;
   color: #333;
+  font-weight: bold;
 }
 textarea {
   width: 100%;
-  height: 150px;
+  height: 165px;
   padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s, box-shadow 0.3s;
   white-space: pre-line;
@@ -193,6 +295,7 @@ textarea {
   margin-bottom: 20px;
   color: grey;
   border: 1px solid #ccc;
+  border-radius: 5px;
 }
 .return img {
   width: 25px;
@@ -510,6 +613,9 @@ export default {
         modal: false,
         modal2: false,
         modal3: false,
+        modal4: false,
+        edit_collection: false,
+        edit_funil: false
     };
   },
 
@@ -520,17 +626,37 @@ export default {
         this.modal = !this.modal
         console.log(this.modal)
     },
+
     toggleModal2() {
       this.modal2 = !this.modal2;
     },
     updateModal2(newValue) {
       this.modal2 = newValue;
     },
+
     toggleModal3() {
       this.modal3 = !this.modal3;
     },
     updateModal3(newValue) {
       this.modal3 = newValue;
+    },
+
+    toggleModal4()
+    {
+      this.modal4 =  !this.modal4;
+    },
+    updateModal4(newValue) {
+      this.modal4 =  newValue;
+    },
+
+    edit_collectionfn()
+    {
+      this.edit_collection =  !this.edit_collection
+      console.log(this.edit_collection)
+    },
+    edit_funilfn()
+    {
+      this.edit_funil = !this.edit_funil;
     }
 
   }

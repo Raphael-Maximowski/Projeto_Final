@@ -12,10 +12,21 @@
 <script>
 export default {
   name: 'Funil',
+  props: {
+    modal4: {
+      type: Boolean,
+      default: false
+    }
+  },
   data ()
   {
     return {
- 
+    }
+  },
+  methods: {
+    show_modal(){
+      this.$emit('update-modal2', !this.modal2);
+      console.log(this.modal2);
     }
   }
 }
