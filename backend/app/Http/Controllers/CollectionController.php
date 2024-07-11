@@ -16,14 +16,17 @@ class CollectionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required', 
+            'user_id' => 'required',
+            'name' => 'required',
             'description' => 'required', // Validação dos dados recebidos no request
             'color' => 'required'
         ]);
 
+
         $collection = Collection::create([
             'name' => $request->name,
-            'user_id' => Auth::id(),  // Criação de uma nova coleção
+            'description' => $request->description,
+            'user_id' => $request->user_id,
             'color' => $request->color
         ]);
 

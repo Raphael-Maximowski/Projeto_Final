@@ -20,20 +20,20 @@
                 </div>
                     <div class="form">
                         <div class="form-floating mb-3">
-                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-modal="email">
+                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="collection_name">
                         <label for="floatingInput">Nome da Coleção</label>
                         </div>
                         <div class="form-floating mb-3">
-                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-modal="email">
+                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="collection_desc">
                         <label for="floatingInput">Descrição da Coleção</label>
                         </div>
                         <div class="color">
                             <div
                             ><p>Insira a cor referencial da sua Coleção</p></div>
-                            <div class="choosecolor"><input type="color" id="colorPicker" name="colorPicker" value="#FEBB25">
+                            <div class="choosecolor"><input type="color" id="colorPicker" name="colorPicker" value="#FEBB25" v-model="collection_color">
                             </div>
                         </div>
-                        <div class="submit">Criar</div>
+                        <div class="submit" @click="sendCollection">Criar</div>
 
                     </div>
                 </div>
@@ -617,12 +617,26 @@ export default {
         modal3: false,
         modal4: false,
         edit_collection: false,
-        edit_funil: false
+        edit_funil: false,
+
+      // Dados Collection
+      collection_name: "",
+      collection_desc: "",
+      collection_color: "",
     };
   },
 
   // Validando Email
   methods: {
+    sendCollection(){
+      const data = {
+        name : this.collection_name,
+        description: this.collection_desc,
+        color: this.collection_color
+      }
+      console.log(data);
+    },
+
     PushProfile(){
       this.$router.push('/UserProfile');
     },
