@@ -43,7 +43,11 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->firstOrFail();
+        $user = User::where('email', $request->email)->first();
+        if ($user == null)
+        {
+            return response()->json(['message' => 'Usuario não Encontrado'], 404);
+        }
 
         if (!Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Credenciais inválidas'], 401);
