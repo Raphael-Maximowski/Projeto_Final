@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <div class="modal3" v-if="modal4 == false">
+      <div class="modal3" v-if="modal4 == true">
         <div class="base-modal3">
           <div class="return">
             <div class="return-img" @click="toggleModal4"><img src="../assets/images/DashBoard/return.png"></div>
@@ -605,6 +605,8 @@ input {
 <script>
 import Collection from '../components/Collection.vue';
 import Funil from '../components/Funil.vue';
+import {GetUser} from "@/services/HttpService.js";
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   components: { Collection, Funil },
   data() {
@@ -624,7 +626,6 @@ export default {
     ActiveModal()
     {
         this.modal = !this.modal
-        console.log(this.modal)
     },
 
     toggleModal2() {
@@ -652,13 +653,27 @@ export default {
     edit_collectionfn()
     {
       this.edit_collection =  !this.edit_collection
-      console.log(this.edit_collection)
     },
     edit_funilfn()
     {
       this.edit_funil = !this.edit_funil;
-    }
+    },
+    async ShowUser()
+    {
+      const response = await GetUser();
+      console.log(response);
+      this.updateUserId(response.data.id);
+      this.updateUserName(response.data.name);
+      this.updateUserEmail(response.data.email);
+      this.updateUserValidate(response.data.email_verified_at);
+      this.updateUserCreated(response.data.created_at);
+    },
+    ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated'])
 
-  }
+  },
+  created() {
+    this.ShowUser();
+  },
+
 };
 </script>

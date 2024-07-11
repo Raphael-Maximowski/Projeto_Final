@@ -1,4 +1,6 @@
 import axios from "axios";
+import store from '../store/index.js';
+
 
 const HttpService = axios.create({
   baseURL: "http://localhost:8000/api/",
@@ -6,6 +8,7 @@ const HttpService = axios.create({
     "Content-type": "application/json",
   },
 });
+
 
 // Realizando login
 export const login = async(data) => {
@@ -15,13 +18,8 @@ export const login = async(data) => {
 
 // Registrando
 export const SendUser = async (user) => {
-  try {
     const response = await HttpService.post('register', user);
-    console.log(response.data);
     return response;
-  } catch (error) {
-    console.error('Erro ao enviar usuário:', error.response ? error.response.data : error.message);
-  }
 };
 
 // Enviando Email Novo Password
@@ -33,12 +31,18 @@ export const ResetPassword = async(data) => {
   // Trocando senha no Banco
 
   export const SendPassword = async(data) => {
-    try {
       const response = await HttpService.post('reset_password', data);
       return response;
-    } catch (error) {
-      console.error('Erro');
+  }
+
+  export const GetUser = async() => {
+    const user = store.getters.logged_in;
+    console.log(user)
+    const headers = {
+        Authorization: `Bearer ${user.token}`
     }
+  const response = await HttpService.get('user', { headers });
+  return response;
   }
 export default HttpService;
 

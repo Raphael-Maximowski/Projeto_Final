@@ -10,12 +10,12 @@ class UserController extends Controller
 {
         public function getAuthenticatedUser(Request $request)
         {
-            $user = $request->user();
-            
+            $user = Auth::user();
+
             if (!$user) {
                 return response()->json(['message' => 'User not found'], 404);
             }
-    
+
             return response()->json($user, 200);
         }
 }

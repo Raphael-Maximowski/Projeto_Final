@@ -45,8 +45,9 @@ Route::post('email/send-verification', [ValidateEmailcontroller::class, 'sendVer
 
 // a rota para mostrar o usuário autenticado
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('users/', [UserController::class, 'getAuthenticatedUser']);
+    Route::get('user', [UserController::class, 'getAuthenticatedUser']);
 });
+
 
 //rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
 

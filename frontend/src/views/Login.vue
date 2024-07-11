@@ -136,10 +136,14 @@
     </main>
 </template>
 
-<script>
+<<script>
 import { login } from '../services/HttpService';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
+  computed: {
+    ...mapGetters(['user_token']),
+  },
   data() {
     return {
       email: "",
@@ -179,34 +183,36 @@ export default {
           password: this.password
         };
 
-        login(data)
-            .then(response => {
-              if (response.status === 200) {
-                this.$router.push('/dashboard');
-              }
-            })
-            .catch(error => {
-              if (error.response) {
-                console.log('Status do erro:', error.response.status);
-                if (error.response.status === 401) {
-                  this.errors.push('Credenciais Invalidas!');
-                } else if (error.response.status === 403) {
-                  this.errors.push('Verifique seu email para poder realizar o login');
-                } else if (error.response.status === 404) {
-                  this.errors.push('Usuario não encontrado');
-                } else {
-                  this.errors.push('Erro desconhecido ao tentar realizar o login.');
-                }
-                this.pass = false
-              }
+        try {
+          const response = await login(data);
+          if (response.status === 200) {
+            const token = response.data.access_token;
+            this.updateUserToken(token);
+            this.$router.push('/dashboard');
+          }
+        } catch (error) {
+          if (error.response) {
+            console.log('Status do erro:', error.response.status);
+            if (error.response.status === 401) {
+              this.errors.push('Credenciais Invalidas!');
+            } else if (error.response.status === 403) {
+              this.errors.push('Verifique seu email para poder realizar o login');
+            } else if (error.response.status === 404) {
+              this.errors.push('Usuario não encontrado');
+            } else {
+              this.errors.push('Erro desconhecido ao tentar realizar o login.');
+            }
+            this.pass = false;
+          }
 
-              setTimeout(() => {
-                this.pass = true;
-                this.errors = [];
-              }, 8000);
-            });
+          setTimeout(() => {
+            this.pass = true;
+            this.errors = [];
+          }, 8000);
+        }
       }
-    }
+    },
+    ...mapMutations(['updateUserToken'])
   }
 };
 </script>
