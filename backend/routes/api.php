@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
 });
 
+Route::put('users/{id}/make-admin', [UserController::class, 'makeAdmin']);
+
 
 //rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
 
@@ -64,3 +66,9 @@ Route::post('funnels', 'App\Http\Controllers\FunnelController@store');
 Route::get('funnels/{id}', 'App\Http\Controllers\FunnelController@show');
 Route::patch('funnels/{id}', 'App\Http\Controllers\FunnelController@update');
 Route::delete('funnels/{id}', 'App\Http\Controllers\FunnelController@destroy');
+
+
+//rotas filtro de busca
+Route::get('funnels', [FunnelController::class, 'search']);
+Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"
+

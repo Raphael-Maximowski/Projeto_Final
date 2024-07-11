@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
