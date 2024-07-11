@@ -173,7 +173,7 @@
             <div class="border"></div>
             <img src="../assets/images/DashBoard/active_dashboard.png" alt="">
         </div>
-        <div class="user">
+        <div class="user" @click="PushProfile">
             <img src="../assets/images/DashBoard/user.png" alt="">
         </div>
         <div class="logout">
@@ -623,6 +623,9 @@ export default {
 
   // Validando Email
   methods: {
+    PushProfile(){
+      this.$router.push('/UserProfile');
+    },
     ActiveModal()
     {
         this.modal = !this.modal

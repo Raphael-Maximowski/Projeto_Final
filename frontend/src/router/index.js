@@ -47,7 +47,15 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component:()=>import('../views/DashBoard.vue'),
+      component: () => import('../views/DashBoard.vue'),
+      meta: {
+        title: '3C Plus'
+      }
+    },
+    {
+      path: '/UserProfile',
+      name: 'UserProfile',
+      component: () => import('../views/UserProfile.vue'),
       meta: {
         title: '3C Plus'
       }
