@@ -52,23 +52,25 @@ Route::put('users/{id}/make-admin', [UserController::class, 'makeAdmin']);
 
 
 //rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
-
-Route::get('collections', 'App\Http\Controllers\CollectionController@index');
-Route::post('collections', 'App\Http\Controllers\CollectionController@store');
-Route::get('collections/{id}', 'App\Http\Controllers\CollectionController@show');
-Route::put('collections/{id}', 'App\Http\Controllers\CollectionController@update');
-Route::delete('collections/{id}', 'App\Http\Controllers\CollectionController@destroy');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('collections', [CollectionController::class, 'index']); // Rota para listar todas as coleções 
+    Route::post('collections', [CollectionController::class, 'store']);
+    Route::get('collections/{id}', [CollectionController::class, 'show']);
+    Route::put('collections/{id}', [CollectionController::class, 'update']);
+    Route::delete('collections/{id}', [CollectionController::class, 'destroy']);
+});
 
 //rotas funil
 
-Route::get('funnels', 'App\Http\Controllers\FunnelController@index');
-Route::post('funnels', 'App\Http\Controllers\FunnelController@store');
-Route::get('funnels/{id}', 'App\Http\Controllers\FunnelController@show');
-Route::patch('funnels/{id}', 'App\Http\Controllers\FunnelController@update');
-Route::delete('funnels/{id}', 'App\Http\Controllers\FunnelController@destroy');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('funnels', [FunnelController::class, 'index']); 
+    Route::post('funnels', [FunnelController::class, 'store']);
+    Route::get('funnels/{id}', [FunnelController::class, 'show']);
+    Route::patch('funnels/{id}', [FunnelController::class, 'update']);
+    Route::delete('funnels/{id}', [FunnelController::class, 'destroy']);
 
+    Route::get('funnels/search', [FunnelController::class, 'search']); // Rota para busca de funis
+});
 
-//rotas filtro de busca
-Route::get('funnels', [FunnelController::class, 'search']);
 Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"
 
