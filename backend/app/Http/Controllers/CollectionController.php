@@ -17,12 +17,14 @@ class CollectionController extends Controller
     {
         $request->validate([
             'name' => 'required', 
-            'description' => 'required' // Validação dos dados recebidos no request
+            'description' => 'required', // Validação dos dados recebidos no request
+            'color' => 'required'
         ]);
 
         $collection = Collection::create([
             'name' => $request->name,
             'user_id' => Auth::id(),  // Criação de uma nova coleção
+            'color' => $request->color
         ]);
 
         return response()->json($collection, 201);
