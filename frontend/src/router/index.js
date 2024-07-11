@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import store from '../store/index.js';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,8 +58,20 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title;
-  next();
+  const user = store.getters.user_token;
+  const rotasIndependentes = ['Login', 'register','redefine', 'newpassword'];
+  if (rotasIndependentes.includes(to.name)) {
+    next();
+  } else {
+    if (user == "") {
+      next({
+        path: '/',
+        query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  }
 });
 
 export default router

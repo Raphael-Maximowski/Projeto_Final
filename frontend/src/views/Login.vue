@@ -186,6 +186,7 @@ export default {
         try {
           const response = await login(data);
           if (response.status === 200) {
+
             const token = response.data.access_token;
             this.updateUserToken(token);
             this.$router.push('/dashboard');
