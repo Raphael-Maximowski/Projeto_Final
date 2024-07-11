@@ -56,4 +56,17 @@ class FunnelController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function search(Request $request)
+{
+    $query = Funnel::query(); // inicia a consulta
+
+    if ($request->has('name')) { 
+        $query->where('name', 'like', '%' . $request->input('name') . '%'); // Aplicar filtros
+    }
+
+    $funnels = $query->get(); // Executar a busca
+
+    return response()->json(['funnels' => $funnels], 200);
+}
 }
