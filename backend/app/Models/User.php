@@ -46,4 +46,7 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
         'password' => 'hashed',
     ];
 
+    public function team() {
+        return $this->belongsToMany(Team::class);
+    }
 }
