@@ -1,5 +1,19 @@
 <template>
   <main>
+    <div class="modal2" v-if="succes == true">
+      <div class="container-modal">
+        <div class="email">
+          <div class="img-up"><img src="../assets/images/icones_coloridos.png"></div>
+          <h3>Nova senha Cadastrada</h3>
+          <p>Seu acesso ao sistema foi liberado novamente</p>
+          <div class="router-email">
+            <div class="content-modal2" @click="push">Login</div>
+          </div>
+          <div class="img-down"><img src="../assets/images/icones_coloridos.png"></div>
+        </div>
+      </div>
+    </div>
+
     <div id="modal" v-if="this.pass != 1">
         <!-- Container Principal do Modal -->
         <div class="info-modal">
@@ -132,6 +146,7 @@ export default {
       confirmpassword: "",
       token: '',
       email: '',
+      succes: false,
       errors: [],
       data: {},
       pass: true
@@ -210,7 +225,7 @@ export default {
       if (this.password != this.confirmpassword)
       {
         // Push caso não valide
-        this.errors.push('Alguma das Senhas esta incorreta, insira novamente')
+        this.errors.push('Senhas Divergentes')
         // Redefine Passagem como falsa
         this.pass = false;
         // Após Aparecer Erro Reseta os Parametros
@@ -242,6 +257,7 @@ export default {
             }
 
             const response = await SendPassword(data);
+              this.succes = true;
             console.log('Resposta da API:', response);
             } catch (error) {
             console.error('Erro ao Trocar Password:', error);
@@ -253,12 +269,103 @@ export default {
         {
             this.pass = false; 
         }
+    },
+    push()
+    {
+      this.$router.push('/');
     }
   }
 };
 </script>
 
 <style>
+.img-up img {
+  width: 150px;
+  position: absolute;
+  margin-right: 10px;
+}
+
+.img-down img {
+  width: 150px;
+  position: absolute;
+  margin-left: 10px;
+}
+
+.img-up {
+  background-color: red;
+  width: 50vw;
+  display: flex;
+  justify-content: end;
+}
+
+.img-down {
+  background-color: red;
+  width: 50vw;
+  display: flex;
+  justify-content: start;
+  margin-top: 25px;
+}
+a {
+  text-decoration: none;
+}
+
+.content-modal2 {
+  color: white;
+  font-size: 18px;
+  width: 15vw;
+  margin-top: 20px;
+  padding: 10px 0px;
+  border-radius: 10px;
+  background-color: #2336C7;
+  cursor: pointer;
+}
+
+.container-modal {
+  background-color: white;
+  width: 50vw;
+  height: 45vh;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.email h3 {
+  font-size: 35px;
+  color: #1a202c;
+  margin: 75px 0px 10px 0px
+}
+
+.router-email {
+  display: flex;
+  justify-content: center;
+}
+
+
+.router-email img {
+  margin-right: 10px;
+}
+
+.router-email p {
+  color: white;
+  position: absolute;
+}
+
+.email p {
+  font-size: 18px;
+  color: black;
+}
+
+.modal2 {
+  position: absolute;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.384);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* DEFINIÇÕES ALERTA */
 /* Animação Aparecer e Sumir */
 @keyframes moveUpDown {

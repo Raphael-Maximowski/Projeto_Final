@@ -1,5 +1,20 @@
 <template>
   <main>
+    <div class="modal2" v-if="succes == true">
+      <div class="container-modal">
+        <div class="email">
+          <div class="img-up"><img src="../assets/images/icones_coloridos.png"></div>
+          <h3>Usuario Cadastrado  com Sucesso</h3>
+          <p>Valide o seu Email para Acessar o Sistema</p>
+          <div class="router-email">
+           <a href="http://localhost:8025/"><div class="content-modal2"><img src="../assets/images/email.png"> Conferir Email</div></a>
+          </div>
+          <div class="img-down"><img src="../assets/images/icones_coloridos.png"></div>
+        </div>
+
+
+      </div>
+    </div>
    <div id="modal" v-if="this.pass != true">
         <!-- Container Principal do Modal -->
         <div class="info-modal">
@@ -85,7 +100,7 @@
                 </div>
               </div>
               <!-- Dispara pra API -->
-                <a class="btn btn-primary" @click="ValidateForm">Entrar</a>
+                <a id="send" class="btn btn-primary" @click="ValidateForm">Registrar Usuario</a>
             </div>
           </form>
         </div>
@@ -148,6 +163,7 @@ export default {
       email: "",
       password: "",
       confirmpassword: "",
+      succes: false,
       errors: [],
       user: {},
       pass: true
@@ -299,7 +315,7 @@ export default {
     // Disparando pra API
     async sendForm() {
   if (this.pass === true) {
-    alert('Usuário Cadastrado');
+    this.succes = true;
 
     // Armazenando Usuario em um Objeto
     try {
@@ -311,6 +327,7 @@ export default {
 
     // Chamando Método do Service e passando User
       const response = await SendUser(user);
+      this.succes = true;
       console.log('Resposta da API:', response);
       console.log('Dados do usuário:', this.ValidateName, this.email, this.password); 
     } catch (error) {
@@ -328,6 +345,93 @@ export default {
 
 
 <style>
+.img-up img {
+  width: 150px;
+  position: absolute;
+  margin-right: 10px;
+}
+
+.img-down img {
+  width: 150px;
+  position: absolute;
+  margin-left: 10px;
+}
+
+.img-up {
+  background-color: red;
+  width: 50vw;
+  display: flex;
+  justify-content: end;
+}
+
+.img-down {
+  background-color: red;
+  width: 50vw;
+  display: flex;
+  justify-content: start;
+  margin-top: 25px;
+}
+a {
+  text-decoration: none;
+}
+
+.content-modal2 {
+  color: white;
+  font-size: 18px;
+  width: 15vw;
+  margin-top: 20px;
+  padding: 10px 0px;
+  border-radius: 10px;
+  background-color: #2336C7;
+}
+
+.container-modal {
+  background-color: white;
+  width: 50vw;
+  height: 45vh;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.email h3 {
+  font-size: 35px;
+  color: #1a202c;
+  margin: 75px 0px 10px 0px
+}
+
+.router-email {
+  display: flex;
+  justify-content: center;
+}
+
+
+.router-email img {
+  margin-right: 10px;
+}
+
+.router-email p {
+  color: white;
+  position: absolute;
+}
+
+.email p {
+  font-size: 18px;
+  color: black;
+}
+
+.modal2 {
+  position: absolute;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.384);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* DEFINIÇÕES ALERTA */
 /* Animação Aparecer e Sumir */
 @keyframes moveUpDown {
@@ -727,7 +831,7 @@ export default {
   }
 
   /*Configueações Botão BootStrap*/
-  button {
+  #send {
     width: 30vw;
     margin-top: 1em;
   }

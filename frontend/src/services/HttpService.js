@@ -9,12 +9,8 @@ const HttpService = axios.create({
 
 // Realizando login
 export const login = async(data) => {
-  try {
     const response = await HttpService.post('login', data);
     return response;
-  } catch (error) {
-    console.log('Login Invalido');
-  }
 }
 
 // Registrando
@@ -30,13 +26,8 @@ export const SendUser = async (user) => {
 
 // Enviando Email Novo Password
 export const ResetPassword = async(data) => {
-  try {
     const response = await HttpService.post('forget_password', data);
-    console.log(response.data);
     return response;
-  } catch (error) {
-    console.error('Erro');
-  }
   }
 
   // Trocando senha no Banco

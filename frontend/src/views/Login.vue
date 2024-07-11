@@ -2,7 +2,7 @@
   <main>
     <div class="camada">
       <!-- Ativação Alerta -->
-       <div id="modal" v-if="this.pass != 1">
+       <div id="modal" v-if="!this.pass">
         <!-- Container Principal do Modal -->
         <div class="info-modal">
           <!-- Background Icone -->
@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      
+
       <section>
         <!-- Parte Superior Acima do Primeiro Input -->
         <div class="logo">
@@ -110,7 +110,7 @@
           <div class="circle2"></div>
         </div>
       </div>
-            
+
     </div>
 
     <!-- Container com 50% da Tela Verticalmente -->
@@ -141,91 +141,76 @@ import { login } from '../services/HttpService';
 
 export default {
   data() {
-    // Parametros que serão passados ao BackEnd e Validações
     return {
       email: "",
       password: "",
       errors: [],
-      data: {},
       pass: true
     };
   },
 
-  // Validando Email
   methods: {
-    ValidateEmail()
-    {
-      if (this.email.length == 0)
-      {
-        // Push caso não valide
-        this.errors.push('O campo Email é obrigatório!')
-        // Redefine Passagem como falsa
+    ValidateEmail() {
+      if (this.email.length === 0) {
+        this.errors.push('O campo Email é obrigatório!');
         this.pass = false;
-        // Após Aparecer Erro Reseta os Parametros
-        setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000); 
       }
     },
 
-    // Validando Senha
-    ValidatePassword()
-    {
-      if (this.password.length == 0)
-      {
-        // Push caso não valide
-         this.errors.push('O Campo senha é obrigatório!')   
-         // Redefine Passagem como falsa
-         this.pass = false;
-         // Após Aparecer Erro Reseta os Parametros
-         setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000); 
+    ValidatePassword() {
+      if (this.password.length === 0) {
+        this.errors.push('O Campo senha é obrigatório!');
+        this.pass = false;
       }
     },
-    // Validando Formulario
-    ValidateForm()
-    {
+
+    ValidateForm() {
+      this.errors = [];
+      this.pass = true;
       this.ValidateEmail();
       this.ValidatePassword();
     },
 
-    // Enviando Dados 
-    async checkdata()
-    {
-      // Passar Dados
+    async checkdata() {
       this.ValidateForm();
-      if (this.pass === true) {
-        try {
-          const data = {
+      if (this.pass) {
+        const data = {
           email: this.email,
           password: this.password
-        }
+        };
 
-        const response = await login(data);
+        login(data)
+            .then(response => {
+              if (response.status === 200) {
+                this.$router.push('/dashboard');
+              }
+            })
+            .catch(error => {
+              if (error.response) {
+                console.log('Status do erro:', error.response.status);
+                if (error.response.status === 401) {
+                  this.errors.push('Credenciais Invalidas!');
+                } else if (error.response.status === 403) {
+                  this.errors.push('Verifique seu email para poder realizar o login');
+                } else if (error.response.status === 404) {
+                  this.errors.push('Usuario não encontrado');
+                } else {
+                  this.errors.push('Erro desconhecido ao tentar realizar o login.');
+                }
+                this.pass = false
+              }
 
-          if (response.status === 200) {
-          this.$router.push('/dashboard');
-        }
-        else if (error.response && error.response.status === 401) {
-          this.error = 'Invalid credentials. Please try again.';
-        } else {
-          this.error = 'An error occurred. Please try again later.';
-        }
-        console.log('Resposta da API:', response)
-        }  catch (error) { console.error('Erro ao cadastrar usuário:', error);}
-
-        
-
-
-
+              setTimeout(() => {
+                this.pass = true;
+                this.errors = [];
+              }, 8000);
+            });
       }
     }
   }
 };
 </script>
+
 
 
 <style>
@@ -237,19 +222,19 @@ export default {
     transform: translateY(0);
   }
   5%, 10% {
-    opacity: 1; 
-    transform: translateY(0); 
+    opacity: 1;
+    transform: translateY(0);
   }
   20% {
     opacity: 1;
-    transform: translateY(110px); 
+    transform: translateY(110px);
   }
   30%, 90% {
-    opacity: 1; 
+    opacity: 1;
     transform: translateY(110px);
   }
   100% {
-    opacity: 0; 
+    opacity: 0;
     transform: translateY(0);
   }
 }
@@ -383,7 +368,7 @@ export default {
     height: 300px;
     border-radius: 50%;
     background-color: lightblue;
-    animation: rotate 60s linear infinite; 
+    animation: rotate 60s linear infinite;
     filter: blur(150px);
   }
 
@@ -393,7 +378,7 @@ export default {
     height: 300px;
     border-radius: 50%;
     background-color: rgb(255, 192, 203);
-    animation: rotate 60s linear infinite; 
+    animation: rotate 60s linear infinite;
     filter: blur(150px);
   }
 
@@ -441,7 +426,7 @@ export default {
 
   /* Alinhando */
   .limitador4 {
-    margin-top: 20vh;   
+    margin-top: 20vh;
   }
 
   /* DEFINIÇÕES FORMULARIO */
@@ -462,10 +447,10 @@ export default {
     width: 45vw;
     height: 70vh;
     border-radius: 5px;
-    box-shadow: 
-    5px 5px 20px rgba(0, 0, 0, 0.055), 
-    -5px -5px 20px rgba(0, 0, 0, 0.048); 
-    padding: 15px; 
+    box-shadow:
+    5px 5px 20px rgba(0, 0, 0, 0.055),
+    -5px -5px 20px rgba(0, 0, 0, 0.048);
+    padding: 15px;
     position: absolute;
     z-index: 3;
   }
@@ -504,9 +489,9 @@ export default {
   /* Box1 com Fundo e Animação */
   .box1 {
     background-image: url('../assets/images/icones_coloridos.png');
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     animation: box1Animation 6s infinite;
     display: flex;
   }
@@ -515,7 +500,7 @@ export default {
   .box2 {
     background-image: url('../assets/images/logo.png');
     background-size: cover;
-    background-position: center; 
+    background-position: center;
     background-repeat: no-repeat;
     animation: box2Animation 6s infinite;
   }
@@ -609,7 +594,7 @@ export default {
   }
 
   /*Configueações Informaçoes Extras (Senha/Nova Conta) BootStrap*/
-  .extra_info 
+  .extra_info
   {
     display: flex;
     justify-content: space-between;
@@ -631,8 +616,8 @@ export default {
 
   /*Configueações Input BootStrap*/
   .form-control:focus {
-    box-shadow: none; 
-  } 
+    box-shadow: none;
+  }
 
   /* Enviar Button */
   #send {

@@ -11,15 +11,18 @@ use Illuminate\Support\Facades\DB;
 
 class EmailController extends Controller
 {   // Rota para verificar se o usuário está no banco de dados para enviar o email
-    public function emailValidated(Request $request) {
+    public function emailValidated(Request $request)
+    {
         $request->validate(['email' => 'required|email']);
 
         $status = Password::sendResetLink(
             $request->only('email')   // Esta mandando o link
         );
 
-        // Após o envio do link
-        return Password::RESET_LINK_SENT;
+        if ($status == "passwords.user") {
+            return response()->json(['message' => 'Usuario não Encontrado'], 404);
+        }
+        return response()->json(['message' => 'Password Reset Sent'], 200);
     }
 
     public function resetPassword(Request $request) {
