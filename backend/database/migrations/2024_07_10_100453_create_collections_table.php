@@ -16,10 +16,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->unsignedBigInteger('user_id')->nullable;
+            $table->string('description');
+            $table->foreignIdFor(App\Models\User::class)->constrained();
             $table->string('color');
-            
-
         });
     }
 
