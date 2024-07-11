@@ -56,13 +56,10 @@ class AuthController extends Controller
         if (!$user->hasVerifiedEmail()) {
             return response()->json(['message' => 'Verifique seu email para poder realizar o login'], 403);
         }
-
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Login executado com sucesso',
             'access_token' => $token,
-            'token_type' => 'Bearer',
         ]);
     }
 
