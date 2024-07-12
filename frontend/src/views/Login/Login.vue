@@ -2,30 +2,7 @@
   <main>
     <div class="camada">
       <!-- Ativação Alerta -->
-       <div id="modal" v-if="!this.pass">
-        <!-- Container Principal do Modal -->
-        <div class="info-modal">
-          <!-- Background Icone -->
-          <div class="icon">
-            <!-- Background Ghost -->
-            <div class="ghost">
-              <!-- Inserindo Imagem Ghost -->
-              <div class="img-modal">
-              </div>
-            </div>
-            <!-- Background Erros -->
-            <div class="error">
-              <!-- Exibindo Primeiro erro Disparado na Array -->
-              <p>{{this.errors[0]}}</p>
-            </div>
-          </div>
-          <!-- Underline Vermelho no Alerta -->
-          <div class="line">
-          </div>
-        </div>
-      </div>
-
-
+      <Alert :pass="this.pass" :errors="[this.errors[0]]" />
       <section>
         <!-- Parte Superior Acima do Primeiro Input -->
         <div class="logo">
@@ -70,11 +47,7 @@
                   </a>
                 </div>
               </div>
-
-               <!-- Submit -->
-              <a id="send" class="btn btn-primary" @click="checkdata">
-                Entrar
-              </a>
+              <Button text="Entrar" @click="checkdata"/>
             </div>
           </form>
         </div>
@@ -88,15 +61,15 @@
 import { login } from '../../services/HttpService.js';
 import Background from '../../components/Login/Background.vue';
 import CenterAnimation from "@/components/Login/CenterAnimation.vue";
+import Alert from "@/components/Login/Alert.vue";
 import { mapGetters, mapMutations } from 'vuex';
-import Collection from "@/components/Collection.vue";
-import Funil from "@/components/Funil.vue";
+import Button from "@/components/Login/Button.vue";
 
 export default {
   computed: {
     ...mapGetters(['user_token']),
   },
-  components: { Background, CenterAnimation },
+  components: {Alert, Button, Background, CenterAnimation},
   data() {
     return {
       email: "",
@@ -111,6 +84,8 @@ export default {
       if (this.email.length === 0) {
         this.errors.push('O campo Email é obrigatório!');
         this.pass = false;
+        this.pass = true;
+        console.log(this.pass)
       }
     },
 
@@ -168,7 +143,8 @@ export default {
     },
     ...mapMutations(['updateUserToken'])
   }
-};
+}
+
 </script>
 
 
@@ -386,11 +362,5 @@ export default {
   /*Configueações Input BootStrap*/
   .form-control:focus {
     box-shadow: none;
-  }
-
-  /* Enviar Button */
-  #send {
-    width: 30vw;
-    margin-top: 1vw;
   }
 </style>

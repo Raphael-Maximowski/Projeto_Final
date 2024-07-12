@@ -1,30 +1,28 @@
 <template>
-<div id="modal" v-if="this.pass != true">
-<!-- Container Principal do Modal -->
-<div class="info-modal">
-  <!-- Background Icone -->
-  <div class="icon">
-    <!-- Background Ghost -->
-    <div class="ghost">
-      <!-- Inserindo Image Ghost -->
-      <div class="img-modal">
+  <div id="modal" v-if="this.pass != true">
+    <!-- Container Principal do Modal -->
+    <div class="info-modal">
+      <!-- Background Icone -->
+      <div class="icon">
+        <!-- Background Ghost -->
+        <div class="ghost">
+          <!-- Inserindo Image Ghost -->
+          <div class="img-modal">
+          </div>
+        </div>
+        <!-- Background Erros -->
+        <div class="error">
+          <!-- Exibindo Primeiro erro Disparado na Array -->
+          <p>{{errors[0]}}</p>
+        </div>
+      </div>
+      <!-- Underline Vermelho no Alerta -->
+      <div class="line">
       </div>
     </div>
-    <!-- Background Erros -->
-    <div class="error">
-      <!-- Exibindo Primeiro erro Disparado na Array -->
-      <p>{{this.errors[0]}}</p>
-    </div>
   </div>
-  <!-- Underline Vermelho no Alerta -->
-  <div class="line">
-  </div>
-</div>
-</div>
 </template>
 <style>
-/* DEFINIÇÕES ALERTA */
-/* Animação Aparecer e Sumir */
 @keyframes moveUpDown {
   0% {
     opacity: 0;
@@ -74,7 +72,7 @@
 
 /* Imagem Ghost */
 .img-modal {
-  background-image: url('../assets/images/Login/modal.png');
+  background-image: url('../../assets/images/Login/modal.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -122,13 +120,19 @@
 </style>
 <script>
 export default {
-  name: 'Button',
+  name: 'Alert',
   props: {
     pass: {
       type: Boolean,
     },
     errors: {
       type: Array
+    },
+    methods: {
+      setTrue(){
+        this.pass = true;
+        console.log(this.pass)
+      }
     }
   }
 }

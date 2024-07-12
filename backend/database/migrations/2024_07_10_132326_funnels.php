@@ -15,14 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->unsignedBigInteger('collection_id')->nullable();
-            $table->unsignedBigInteger('user_id');
-
-            // Chave estrangeira para a tabela collections
-            $table->foreign('collection_id')->references('id')->on('collections')->onDelete('set null');
-
-            // Chave estrangeira para a tabela users
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('description');
+            $table->foreignIdFor(App\Models\User::class)->constrained();
         });
     }
 
