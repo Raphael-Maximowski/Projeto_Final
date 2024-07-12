@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Login',
-      component: () => import('../views/Login.vue'),
+      component: () => import('../views/Login/Login.vue'),
       meta: {
         title: '3C Plus'
       }
@@ -15,15 +15,7 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: () => import('../views/Register.vue'),
-      meta: {
-        title: '3C Plus'
-      }
-    },
-    {
-      path: '/email',
-      name: 'email',
-      component: () => import('../views/ConfirmEmail.vue'),
+      component: () => import('../views/Login/Register.vue'),
       meta: {
         title: '3C Plus'
       }
@@ -31,7 +23,7 @@ const router = createRouter({
     {
       path: '/redefine',
       name: 'redefine',
-      component: () => import('../views/Redefine.vue'),
+      component: () => import('../views/Login/Redefine.vue'),
       meta: {
         title: '3C Plus'
       }
@@ -39,7 +31,7 @@ const router = createRouter({
     {
       path: '/reset-password/:token/:email',
       name: 'newpassword',
-      component: () => import('../views/NewPassword.vue'),
+      component: () => import('../views/Login/NewPassword.vue'),
       meta: {
         title: '3C Plus'
       }
@@ -47,7 +39,7 @@ const router = createRouter({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('../views/DashBoard.vue'),
+      component: () => import('../views/DashBoard/DashBoard.vue'),
       meta: {
         title: '3C Plus'
       }
@@ -55,10 +47,15 @@ const router = createRouter({
     {
       path: '/UserProfile',
       name: 'UserProfile',
-      component: () => import('../views/UserProfile.vue'),
+      component: () => import('../views/DashBoard/UserProfile.vue'),
       meta: {
         title: '3C Plus'
       }
+    },
+    {
+      path: '/teste',
+      name: 'teste',
+      component:() => import('../views/teste.vue'),
     }
   ]
 })
