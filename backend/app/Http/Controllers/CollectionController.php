@@ -33,31 +33,45 @@ class CollectionController extends Controller
         return response()->json($collection, 201);
     }
 
-    public function show($id)
+    public function show(Request $request)
     {
-        $collection = Collection::where('id', $id)->where('user_id', Auth::id())->firstOrFail(); // Busca uma coleção específica pelo ID (autenticado)
+        $request->validate([
+            'id' => 'required',
+        ]);
+        $id = request('id');
+        $collection = Collection::where('user_id', $id)->get(); // Busca uma coleção específica pelo ID (autenticado)
         return response()->json($collection);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $request->validate([
+            'id' => 'required',
             'name' => 'required',
-            'description' => 'required'   // Validação dos campos para atualização
+            'description' => 'required',
+            'user_id' => 'required',
+            'color' => 'required'
         ]);
 
-        $collection = Collection::findOrFail($id);
+        $id = request('id');
+        $collection = Collection::find($id);
         $collection->update([
-            'name' => $request->name,  // Busca e atualiza a coleção pelo ID
+            'name' => $request->name,
+            'description' => $request->description,
+            'color' => $request->color
         ]);
 
         return response()->json($collection, 200);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $collection = Collection::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-        $collection->delete(); // Busca e deleta a coleção pelo ID
+        $request->validate([
+            'id' => 'required',
+        ]);
+        $id = request('id');
+        $collection = Collection::find($id);
+        $collection->delete();
 
         return response()->json(null, 204);
     }

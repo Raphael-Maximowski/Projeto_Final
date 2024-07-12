@@ -2,7 +2,7 @@
 <div class="base">
   <div class="info">
     <div class="title">
-      <div>Novas Vendas</div>
+      <div>{{collection.name}}</div>
       <div class="more-info" @click="showinfo"><img src="../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
@@ -12,16 +12,6 @@
     </div>
   </div>
   <div class="group">
-    <Funil/>
-    <Funil/>
-    <Funil/>
-    <Funil/>
-    <Funil/>
-    <Funil/>
-    <Funil/>
-    <Funil/>
-    <Funil/>
-    <Funil/>
   </div>
 </div>
 </template>
@@ -39,23 +29,45 @@ export default {
     modal3: {
       type: Boolean,
       default: false
-    }
+    },
+    collection: {
+      type: Object,
+      required: true
+    },
   },
 
   data ()
   {
     return {
+      name_collection : '',
+      desc_collection: '',
+      color_collection: '',
+      id_collection: '',
     }
   },
+  created() {
+    this.name_collection = this.collection.name;
+    this.desc_collection = this.collection.description;
+    this.color_collection = this.collection.color;
+    this.id_collection = this.collection.id;
+  },
   methods: {
+    showData(){
+      const data = [
+          this.name_collection,
+          this.desc_collection,
+          this.color_collection,
+          this.id_collection
+      ]
+      this.$emit('values_collection', data);
+    },
     showfunil() {
       this.$emit('update-modal2', !this.modal2);
-      console.log(this.modal2);
     },
     showinfo()
     {
       this.$emit('update-modal3', !this.modal3);
-      console.log(this.modal3);
+      this.showData();
     }
   }
 }
