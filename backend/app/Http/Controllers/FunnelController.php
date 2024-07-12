@@ -9,21 +9,22 @@ use App\Models\Funnel;
 class FunnelController extends Controller
 {
     public function index()
-    { 
-        return Funnel::where('user_id', Auth::id())->get(); // Retorna todos os funis do usuário 
+    {
+        return Funnel::where('user_id', Auth::id())->get(); // Retorna todos os funis do usuário
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required',
+            'user_id' => 'required',
             'collection_id' => 'nullable|exists:collections,id', // Validação dos dados recebidos no request (collection_id é opcional)
         ]);
 
-    
+
         $funnel = Funnel::create([
             'name' => $request->name,
-            'user_id' => Auth::id(),
+            'user_id' => $request->user_id,
             'collection_id' => $request->collection_id,  // Criação de um novo funil
         ]);
 
@@ -61,7 +62,7 @@ class FunnelController extends Controller
 {
     $query = Funnel::query(); // inicia a consulta
 
-    if ($request->has('name')) { 
+    if ($request->has('name')) {
         $query->where('name', 'like', '%' . $request->input('name') . '%'); // Aplicar filtros
     }
 

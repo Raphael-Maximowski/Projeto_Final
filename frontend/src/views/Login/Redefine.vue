@@ -68,10 +68,7 @@
                 <div class="extra_info">
                 </div>
 
-                <!-- Disparando pra API e Validando -->
-                <a id="send" class="btn btn-primary" @click="Validator">
-                  Enviar Redefinição de Senha
-                </a>
+                <Button text="Enviar redefinição de senha" @click="Validator"/>
               </div>
             </form>
           </div>
@@ -85,8 +82,10 @@
   import {ResetPassword} from '@/services/HttpService.js';
   import Background from '../../components/Login/Background.vue'
   import CenterAnimation from "@/components/Login/CenterAnimation.vue";
+  import Button from "@/components/Login/Button.vue";
   export default {
     components: {
+      Button,
       CenterAnimation,
       Background
     },

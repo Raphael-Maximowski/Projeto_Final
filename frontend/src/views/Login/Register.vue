@@ -89,7 +89,7 @@
                 </div>
               </div>
               <!-- Dispara pra API -->
-                <a id="send" class="btn btn-primary" @click="ValidateForm">Registrar Usuario</a>
+                <Button text="Registrar usuario" @click="ValidateForm"/>
             </div>
           </form>
         </div>
@@ -102,9 +102,11 @@
 import { SendUser } from '../../services/HttpService.js';
 import Background from '../../components/Login/Background.vue'
 import CenterAnimation from "@/components/Login/CenterAnimation.vue";
+import Button from "@/components/Login/Button.vue";
 
 export default {
     components: {
+      Button,
       CenterAnimation,
       Background
     },
@@ -588,12 +590,6 @@ a {
     font-size: 13px;
     color: grey;
     text-decoration: underline;
-  }
-
-  /*Configueações Botão BootStrap*/
-  #send {
-    width: 30vw;
-    margin-top: 1em;
   }
 
   /*Configueações Input BootStrap*/

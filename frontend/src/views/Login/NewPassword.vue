@@ -68,12 +68,7 @@
                 <label for="floatingPassword">Confirme sua nova senha</label>
               </div>
 
-              <!-- Disparando pra API e Validando -->
-              <a class="button">
-                  <a id="send" class="btn btn-primary" @click="ValidateForm">
-                    Alterar Senha
-                  </a>
-              </a>
+              <Button text="Alterar Senha" @click="ValidateForm"/>
             </div>
           </form>
         </div>
@@ -86,8 +81,10 @@
 import { SendPassword } from '../../services/HttpService.js';
 import Background from "../../components/Login/Background.vue"
 import CenterAnimation from "@/components/Login/CenterAnimation.vue";
+import Button from "@/components/Login/Button.vue";
 export default {
     components: {
+      Button,
       CenterAnimation,
       Background
     },
@@ -533,7 +530,7 @@ a {
     box-shadow: none; 
   } 
 
-  /* Enviar Button */
+  /* Enviar Button.vue */
   #send {
     width: 30vw;
     margin-top: 2vw;
