@@ -10,7 +10,7 @@ class CollectionController extends Controller
 {
     public function index()
     {
-        return Collection::where('user_id', Auth::id())->paginate(5); // Retorna todas as coleções do usuário autenticado
+        return Collection::where('user_id', Auth::id())->get(); // Retorna todas as coleções do usuário autenticado
     }
 
     public function store(Request $request)
