@@ -82,37 +82,37 @@
                 Nome Associado a Coleção
               </div>
               <div class="info_edit_collection">
-                Novas Vendas
+                {{ data_collection[0]}}
               </div>
               <div class="title_edit_collection">Descrição Associada a Coleção</div>
               <div class="info_edit_collection">
-                <p>Esta coleção foi criada para aprimorar a eficiência e a eficácia dos processos de vendas no seu CRM. Cada funil é cuidadosamente desenvolvido para otimizar diferentes etapas do ciclo de vendas, desde a prospecção até o fechamento e pós-venda, garantindo um fluxo de trabalho mais organizado e produtivo.</p>
+                <p>{{ data_collection[1] }}</p>
                 <div style="margin-top: 15px; display: flex" class="title_edit_collection">
                   Cor Associada a Coleção
                   <div class="box-color"></div>
                 </div>
                 <div class="edit_collection" @click="edit_collectionfn">Editar</div>
-                <div class="delete"><p>Excluir Coleção</p></div>
+                <div class="delete"  @click="DeleteCollection"><p>Excluir Coleção</p></div>
               </div>
 
             </div>
             <form v-if="edit_collection == true">
               <div>
                 <label>Nome Associado a Coleção</label>
-                <br><input type="text" value="Novas Vendas">
+                <br><input type="text" v-model="update_name_collection">
               </div>
               <div>
                 <label>Descrição Associada a Coleção<br></label>
                 <div class="textarea-container">
-                  <textarea id="message" name="message" placeholder="Digite sua mensagem aqui...">Esta coleção foi criada para aprimorar a eficiência e a eficácia dos processos de vendas no seu CRM. Cada funil é cuidadosamente desenvolvido para otimizar diferentes etapas do ciclo de vendas, desde a prospecção até o fechamento e pós-venda, garantindo um fluxo de trabalho mais organizado e produtivo.</textarea>
+                  <textarea id="message" name="message" placeholder="Digite sua mensagem aqui..." v-model="update_desc_collection">{{ update_desc_collection }}</textarea>
                 </div>
               </div>
               <div class="color-colection">
                 <div><label>Cor Associada a Coleção</label></div>
                 <div class="box-color"></div>
               </div>
-              <div class="edit_collection" @click="edit_collectionfn">Atualizar</div>
-              <div class="delete"><p>Excluir Coleção</p></div>
+              <div class="edit_collection" @click="UpdateCollection">Atualizar</div>
+              <div class="delete" @click="DeleteCollection"><p>Excluir Coleção</p></div>
             </form>
           </div>
         </div>
@@ -195,9 +195,7 @@
         </div>
         <!-- Funil Por meio de Componentes -->
         <div class="funis">
-          <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
-          <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
-          <Collection :modal2="modal2" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" />
+          <div v-for="collection in collections"><Collection :collection="collection" :modal2="modal2" @values_collection="DataCollection" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" /></div>
         </div>
     </div>
 
@@ -605,10 +603,16 @@ input {
 <script>
 import Collection from '../components/Collection.vue';
 import Funil from '../components/Funil.vue';
-import {GetUser} from "@/services/HttpService.js";
-import { mapGetters, mapMutations } from 'vuex';
+import {DeleteCollection, GetCollection, GetUser, SendCollection, UpdateCollection} from "@/services/HttpService.js";
+import { mapState, mapMutations } from 'vuex';
 export default {
   components: { Collection, Funil },
+  computed:
+      {
+        ...mapState({
+          id_user: state => state.user.id
+})
+},
   data() {
     // Parametros que serão passados ao BackEnd e Validações
     return {
@@ -623,18 +627,65 @@ export default {
       collection_name: "",
       collection_desc: "",
       collection_color: "",
+      collections: [],
+      data_collection: [],
+
+      // Update Collection
+      update_name_collection: "",
+      update_desc_collection: "",
+      update_color_collection: "",
     };
   },
 
   // Validando Email
   methods: {
-    sendCollection(){
+    async DeleteCollection() {
+      const data = {
+        id : this.data_collection[3],
+      }
+
+      const response = DeleteCollection(data);
+      return response;
+    },
+    async UpdateCollection(){
+      const data = {
+        id: this.data_collection[3],
+        name: this.update_name_collection,
+        description: this.update_desc_collection,
+        user_id : this.id_user,
+        color: 'teste'
+      }
+      this.edit_collection = false;
+      this.modal3 = false;
+      const response = await UpdateCollection(data);
+      console.log(response);
+      window.location.reload();
+
+    },
+    DataCollection(value){
+      this.data_collection = value
+      this.update_name_collection =  this.data_collection[0];
+      this.update_desc_collection = this.data_collection[1];
+      this.update_color_collection = this.data_collection[2]
+    },
+    async GetCollection()
+    {
+      const data = {
+        id :  this.id_user
+      }
+
+      const response = await GetCollection(data);
+      this.collections = response.data;
+    },
+    async sendCollection(){
       const data = {
         name : this.collection_name,
         description: this.collection_desc,
+        user_id: this.id_user,
         color: this.collection_color
       }
-      console.log(data);
+      const response = await SendCollection(data);
+      window.location.reload();
     },
 
     PushProfile(){
@@ -678,7 +729,6 @@ export default {
     async ShowUser()
     {
       const response = await GetUser();
-      console.log(response);
       this.updateUserId(response.data.id);
       this.updateUserName(response.data.name);
       this.updateUserEmail(response.data.email);
@@ -690,7 +740,7 @@ export default {
   },
   created() {
     this.ShowUser();
+    this.GetCollection();
   },
-
 };
 </script>
