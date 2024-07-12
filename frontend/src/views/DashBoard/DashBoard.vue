@@ -14,7 +14,7 @@
                             <hr>
                         </div>
                         <div class="cancel">
-                            <img @click="ActiveModal" src="../assets/images/DashBoard/cruz.png" alt="">
+                            <img @click="ActiveModal" src="../../assets/images/DashBoard/cruz.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                 <hr>
               </div>
               <div class="cancel">
-                <img @click="toggleModal2" src="../assets/images/DashBoard/cruz.png" alt="">
+                <img @click="toggleModal2" src="../../assets/images/DashBoard/cruz.png" alt="">
               </div>
             </div>
           </div>
@@ -73,7 +73,7 @@
       <div class="modal3" v-if="modal3 == true">
         <div class="base-modal3">
           <div class="return">
-            <div class="return-img" @click="toggleModal3"><img src="../assets/images/DashBoard/return.png"></div>
+            <div class="return-img" @click="toggleModal3"><img src="../../assets/images/DashBoard/return.png"></div>
             <div class="header-info">Informações da Coleção</div>
           </div>
           <div class="main-info">
@@ -121,7 +121,7 @@
       <div class="modal3" v-if="modal4 == true">
         <div class="base-modal3">
           <div class="return">
-            <div class="return-img" @click="toggleModal4"><img src="../assets/images/DashBoard/return.png"></div>
+            <div class="return-img" @click="toggleModal4"><img src="../../assets/images/DashBoard/return.png"></div>
             <div class="header-info">Informações do Funil</div>
           </div>
           <div class="main-info">
@@ -167,17 +167,17 @@
       </div>
 
         <div class="img">
-         <img src="../assets/images/logoamarelo.png" alt="">
+         <img src="../../assets/images/Login/logoamarelo.png" alt="">
         </div>
         <div class="dashboard">
             <div class="border"></div>
-            <img src="../assets/images/DashBoard/active_dashboard.png" alt="">
+            <img src="../../assets/images/DashBoard/active_dashboard.png" alt="">
         </div>
         <div class="user" @click="PushProfile">
-            <img src="../assets/images/DashBoard/user.png" alt="">
+            <img src="../../assets/images/DashBoard/user.png" alt="">
         </div>
         <div class="logout">
-            <img src="../assets/images/DashBoard/sair.png" alt="">
+            <img src="../../assets/images/DashBoard/sair.png" alt="">
         </div>
     </div>
 
@@ -601,8 +601,8 @@ input {
 </style>
 
 <script>
-import Collection from '../components/Collection.vue';
-import Funil from '../components/Funil.vue';
+import Collection from '../../components/Collection.vue';
+import Funil from '../../components/Funil.vue';
 import {DeleteCollection, GetCollection, GetUser, SendCollection, UpdateCollection} from "@/services/HttpService.js";
 import { mapState, mapMutations } from 'vuex';
 export default {
