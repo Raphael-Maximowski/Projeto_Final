@@ -1,5 +1,5 @@
 <template>
-  <div id="modal" v-if="this.pass != true">
+  <div id="modal" v-if="pass != true">
     <!-- Container Principal do Modal -->
     <div class="info-modal">
       <!-- Background Icone -->
@@ -7,21 +7,41 @@
         <!-- Background Ghost -->
         <div class="ghost">
           <!-- Inserindo Image Ghost -->
-          <div class="img-modal">
-          </div>
+          <div class="img-modal"></div>
         </div>
         <!-- Background Erros -->
         <div class="error">
           <!-- Exibindo Primeiro erro Disparado na Array -->
-          <p>{{errors[0]}}</p>
+          <p>{{ errors[0] }}</p>
         </div>
       </div>
       <!-- Underline Vermelho no Alerta -->
-      <div class="line">
-      </div>
+      <div class="line"></div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Alert',
+  props: {
+    pass: {
+      type: Boolean,
+      required: true
+    },
+    errors: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    setTrue() {
+      this.$emit('update:pass', true);
+    }
+  }
+};
+</script>
+
 <style>
 @keyframes moveUpDown {
   0% {
@@ -61,7 +81,7 @@
   position: relative;
   opacity: 0;
   animation: moveUpDown 8s ease-in-out 1;
-  margin-right:65vw;
+  margin-right: 65vw;
 }
 
 /* Configuração Texto */
@@ -116,24 +136,4 @@
   width: 9vw;
   height: 8vh;
 }
-
 </style>
-<script>
-export default {
-  name: 'Alert',
-  props: {
-    pass: {
-      type: Boolean,
-    },
-    errors: {
-      type: Array
-    },
-    methods: {
-      setTrue(){
-        this.pass = true;
-        console.log(this.pass)
-      }
-    }
-  }
-}
-</script>
