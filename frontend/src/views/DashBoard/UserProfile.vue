@@ -3,20 +3,7 @@
 
     <!-- Menu -->
     <div class="menu">
-      <div class="img">
-        <img src="../../assets/images/Login/logoamarelo.png" alt="">
-      </div>
-      <div style="margin-top: 20px" class="dashboard" @click="PushDashBoard">
-        <div></div>
-        <img src="../../assets/images/DashBoard/dashboard.png" alt="">
-      </div>
-      <div class="user">
-        <div class="border"></div>
-        <img src="../../assets/images/DashBoard/active-user.png" alt="">
-      </div>
-      <div class="logout">
-        <img src="../../assets/images/DashBoard/sair.png" alt="">
-      </div>
+      <MenuDash/>
     </div>
     <div class="main-user">teste</div>
   </main>
@@ -425,13 +412,14 @@ input {
 }
 </style>
 <script>
-import Collection from '../../components/Collection.vue';
-import Funil from '../../components/Funil.vue';
+import Collection from '../../components/DashBoard/Collection.vue';
+import Funil from '../../components/DashBoard/Funil.vue';
 import {GetUser} from "@/services/HttpService.js";
 import {mapGetters, mapMutations} from 'vuex';
+import MenuDash from "@/components/DashBoard/Menu.vue";
 
 export default {
-  components: {Collection, Funil},
+  components: {MenuDash, Collection, Funil},
   data() {
     return {};
   },

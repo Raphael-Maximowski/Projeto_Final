@@ -166,21 +166,8 @@
         </div>
       </div>
 
-        <div class="img">
-         <img src="../../assets/images/Login/logoamarelo.png" alt="">
-        </div>
-        <div class="dashboard">
-            <div class="border"></div>
-            <img src="../../assets/images/DashBoard/active_dashboard.png" alt="">
-        </div>
-        <div class="user" @click="PushProfile">
-            <img src="../../assets/images/DashBoard/user.png" alt="">
-        </div>
-        <div class="logout">
-            <img src="../../assets/images/DashBoard/sair.png" alt="">
-        </div>
+    <MenuDash/>
     </div>
-
 
 
     <!-- Main -->
@@ -380,56 +367,6 @@ main {
     border-right: 2px solid #E1E9F4;
 }
 
-.img img {
-    width: 60px;
-}
-
-.dashboard {
-    width: 60px;
-    padding: 15px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dashboard img {
-    width: 20px;
-    position: absolute;
-}
-.user {
-    width: 60px;
-    padding: 30px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.user img {
-    width: 20px;
-        position: absolute;
-}
-.logout {
-    width: 60px;
-    padding: 30px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logout img {
-    width: 20px;
-        position: absolute;
-}
-
-.border {
-    height: 20px;
-    width: 15px;
-    padding: 15px 0px;
-    border-radius: 0px 10px 10px 0px;
-    background-color: #FFBB28;
-    margin-right: 53px;
-}
-
 .principal {
     width: 95.7vw;
 }
@@ -601,12 +538,13 @@ input {
 </style>
 
 <script>
-import Collection from '../../components/Collection.vue';
-import Funil from '../../components/Funil.vue';
+import Collection from '../../components/DashBoard/Collection.vue';
+import Funil from '../../components/DashBoard/Funil.vue';
 import {DeleteCollection, GetCollection, GetUser, SendCollection, UpdateCollection} from "@/services/HttpService.js";
 import { mapState, mapMutations } from 'vuex';
+import MenuDash from "@/components/DashBoard/Menu.vue";
 export default {
-  components: { Collection, Funil },
+  components: {MenuDash, Collection, Funil },
   computed:
       {
         ...mapState({
