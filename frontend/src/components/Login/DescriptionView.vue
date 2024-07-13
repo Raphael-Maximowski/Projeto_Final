@@ -1,7 +1,7 @@
 <template>
   <div class="descricao">
-    <h1>Redefinindo Senha</h1>
-    <p>Em poucos passos iremos recuperar seu acesso</p>
+    <h1>{{title}}</h1>
+    <p>{{description}}</p>
   </div>
 </template>
 <style>
@@ -18,4 +18,15 @@
 }
 </style>
 <script>
+export default {
+  name: 'Description',
+  props: {
+    title: {
+      type: String
+    },
+    description: {
+      type: String
+    }
+  }
+}
 </script>
