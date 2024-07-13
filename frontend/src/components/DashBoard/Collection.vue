@@ -3,7 +3,7 @@
   <div class="info">
     <div class="title">
       <div>{{collection.name}}</div>
-      <div class="more-info" @click="showinfo"><img src="../assets/images/DashBoard/info.png" alt=""></div>
+      <div class="more-info" @click="showinfo"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
       <div class="funil" @click="showfunil">
@@ -16,7 +16,7 @@
 </div>
 </template>
 <script>
-import Funil from '../components/Funil.vue';
+import Funil from './Funil.vue';
 export default {
   components: { Funil },
   name: 'Collection',

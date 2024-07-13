@@ -3,8 +3,8 @@
   <div class="info-funil">
     <div class="title">Vendas Chinelos</div>
     <div class="images-funil">
-      <div class="part1"><img src="../assets/images/DashBoard/funil.png"></div>
-      <div class="part2"><img src="../assets/images/DashBoard/pontos.png"></div>
+      <div class="part1"><img src="../../assets/images/DashBoard/funil.png"></div>
+      <div class="part2"><img src="../../assets/images/DashBoard/pontos.png"></div>
     </div>
   </div>
 </div>

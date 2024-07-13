@@ -1,6 +1,6 @@
 <template>
   <div class="img">
-    <img src="../assets/images/Login/logoamarelo.png" alt="">
+    <img src="../../assets/images/Login/logoamarelo.png" alt="">
   </div>
   <div>
     <Icones v-if="active_dash" imageSrc="/src/assets/images/DashBoard/active_dashboard.png"/>
@@ -25,7 +25,7 @@ import Icones from "@/components/DashBoard/Icones.vue";
 import DefaultIcon from "@/components/DashBoard/DefaultIcon.vue";
 
 export default {
-  name: 'Menu',
+  name: 'MenuDash',
   components: {DefaultIcon, Icones },
   data() {
     return {
@@ -41,6 +41,7 @@ export default {
       this.active_user = false
       this.active_team = false
       this.active_logout = false
+      this.$router.push('/dashboard');
     },
     SetUser(){
       this.active_dash = false
@@ -69,13 +70,6 @@ export default {
   width: 60px;
 }
 
-.dashboard {
-  width: 60px;
-  padding: 15px 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .dashboard img {
   width: 20px;
