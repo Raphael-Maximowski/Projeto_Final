@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\EmailController;
-use App\Http\Controllers\FunilController;
+use App\Http\Controllers\FunnelController;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ValidateEmailcontroller;
@@ -61,7 +61,7 @@ Route::put('users/{id}/make-admin', [UserController::class, 'makeAdmin']);
 
 //rotas funil
 
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
     Route::get('funnels', [FunnelController::class, 'index']);
     Route::post('funnels', [FunnelController::class, 'store']);
     Route::get('funnels/{id}', [FunnelController::class, 'show']);
@@ -69,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('funnels/{id}', [FunnelController::class, 'destroy']);
 
     Route::get('funnels/search', [FunnelController::class, 'search']); // Rota para busca de funis
-});
+//});
 
 Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"
 

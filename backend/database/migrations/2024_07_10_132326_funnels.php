@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->foreignIdFor(App\Models\User::class)->constrained();
+            $table->foreignIdFor(App\Models\Collection::class);
         });
     }
 

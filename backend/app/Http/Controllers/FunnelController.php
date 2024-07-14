@@ -17,13 +17,14 @@ class FunnelController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'description' => 'required',
             'user_id' => 'required',
-            'collection_id' => 'nullable|exists:collections,id', // Validação dos dados recebidos no request (collection_id é opcional)
+            'collection_id' => 'required', // Validação dos dados recebidos no request (collection_id é opcional)
         ]);
-
 
         $funnel = Funnel::create([
             'name' => $request->name,
+            'description' => $request->description,
             'user_id' => $request->user_id,
             'collection_id' => $request->collection_id,  // Criação de um novo funil
         ]);

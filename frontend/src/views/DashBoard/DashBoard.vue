@@ -1,75 +1,24 @@
 <template>
 <main>
 
-    <!-- Menu -->
     <div class="menu">
-      <!-- Configurando Coleção -->
-        <div class="colection" v-if="this.modal == true">
-            <div class="content">
-                <div class="title">
-                    <div style="display:flex">
-                        <div>
-                            <h3>Configurando Coleção</h3>
-                            <p>Preencha os Dados e em Poucos segundo utilize seu Funil</p>
-                            <hr>
-                        </div>
-                        <div class="cancel">
-                            <img @click="ActiveModal" src="../../assets/images/DashBoard/cruz.png" alt="">
-                        </div>
-                    </div>
-                </div>
-                    <div class="form">
-                        <div class="form-floating mb-3">
-                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="collection_name">
-                        <label for="floatingInput">Nome da Coleção</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                        <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-model="collection_desc">
-                        <label for="floatingInput">Descrição da Coleção</label>
-                        </div>
-                        <div class="color">
-                            <div
-                            ><p>Insira a cor referencial da sua Coleção</p></div>
-                            <div class="choosecolor"><input type="color" id="colorPicker" name="colorPicker" value="#FEBB25" v-model="collection_color">
-                            </div>
-                        </div>
-                        <div class="submit" @click="sendCollection">Criar</div>
+      <div v-if="modal">
+        <CreateModal
+            @closeModal="closeModal"
+            title="Configurando Coleção"
+            content="Preencha os dados e em crie sua coleção"
+            header="Nome da Coleção"
+            secondheader="Descrição da Coleção"
+            :activecollection="activecollection"
+            title2="Configurando Funil"
+            content2="Preencha os Dados e em Poucos segundo utilize seu Funil"
+            header2="Nome do Funil"
+            thidheader="Descrição do Funil"
+            @SendData="SendData"
+        />
 
-                    </div>
-                </div>
-        </div>
-
-      <!-- Configurando Funil -->
-      <div class="colection" v-if="this.modal2 == true">
-        <div class="content2">
-          <div class="title">
-            <div style="display:flex">
-              <div>
-                <h3>Configurando Funil</h3>
-                <p>Preencha os Dados e em Poucos segundo utilize seu Funil</p>
-                <hr>
-              </div>
-              <div class="cancel">
-                <img @click="toggleModal2" src="../../assets/images/DashBoard/cruz.png" alt="">
-              </div>
-            </div>
-          </div>
-          <div class="form">
-            <div class="form-floating mb-3">
-              <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-modal="email">
-              <label for="floatingInput">Nome do Funil</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="name" class="form-control" id="floatingInput" autocomplete="off" v-modal="email">
-              <label for="floatingInput">Descrição do Funil</label>
-            </div>
-            <div class="submit">Criar</div>
-
-          </div>
-        </div>
       </div>
 
-      <!-- Informações Collection -->
       <div class="modal3" v-if="modal3 == true">
         <div class="base-modal3">
           <div class="return">
@@ -182,12 +131,176 @@
         </div>
         <!-- Funil Por meio de Componentes -->
         <div class="funis">
-          <div v-for="collection in collections"><Collection :collection="collection" :modal2="modal2" @values_collection="DataCollection" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" /></div>
+          <div v-for="collection in collections"><Collection :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" /></div>
         </div>
     </div>
 
 </main>
 </template>
+
+<script>
+import Collection from '../../components/DashBoard/Collection.vue';
+import Funil from '../../components/DashBoard/Funil.vue';
+import CreateModal from '../../components/DashBoard/CreateModal.vue';
+import {
+  DeleteCollection,
+  GetCollection,
+  GetUser,
+  SendCollection,
+  SendFunnel,
+  UpdateCollection
+} from "@/services/HttpService.js";
+import { mapState, mapMutations } from 'vuex';
+import MenuDash from "@/components/DashBoard/Menu.vue";
+export default {
+  components: {CreateModal, MenuDash, Collection, Funil },
+  computed:
+      {
+        ...mapState({
+          id_user: state => state.user.id
+        })
+      },
+  data() {
+    // Parametros que serão passados ao BackEnd e Validações
+    return {
+      modal: false,
+      activecollection: false,
+      modal2: false,
+      modal3: false,
+      modal4: false,
+      edit_collection: false,
+      edit_funil: false,
+
+      // Dados Collection
+      collection_name: "",
+      collection_desc: "",
+      collection_color: "",
+      collections: [],
+      data_collection: [],
+
+      // Update Collection
+      update_name_collection: "",
+      update_desc_collection: "",
+      update_color_collection: "",
+    };
+  },
+
+  // Validando Email
+  methods: {
+    closeModal(){
+      this.modal = false
+      this.activecollection = false
+    },
+    async DeleteCollection() {
+      const data = {
+        id : this.data_collection[3],
+      }
+
+      const response = DeleteCollection(data);
+      return response;
+    },
+    async UpdateCollection(){
+      const data = {
+        id: this.data_collection[3],
+        name: this.update_name_collection,
+        description: this.update_desc_collection,
+        user_id : this.id_user,
+        color: 'teste'
+      }
+      this.edit_collection = false;
+      this.modal3 = false;
+      const response = await UpdateCollection(data);
+      console.log(response);
+      window.location.reload();
+
+    },
+    DataCollection(value){
+      this.data_collection = value
+      this.update_name_collection =  this.data_collection[0];
+      this.update_desc_collection = this.data_collection[1];
+      this.update_color_collection = this.data_collection[2]
+    },
+    async GetCollection()
+    {
+      const data = {
+        id :  this.id_user
+      }
+
+      const response = await GetCollection(data);
+      this.collections = response.data;
+    },
+    async SendData(value){
+      const data = value
+      if (data.type === true)
+      {
+        const response = await SendCollection(data);
+        return response;
+      } else {
+        const response = await SendFunnel(data);
+        return response;
+      }
+    },
+
+    PushProfile(){
+      this.$router.push('/UserProfile');
+    },
+    ActiveModal()
+    {
+      this.activecollection = true
+      this.modal = true
+      console.log(this.activecollection)
+    },
+    ActiveFunil(){
+      this.activecollection = false
+      this.modal = true
+    },
+
+    updateModal2(newValue) {
+      this.modal2 = newValue;
+    },
+
+    toggleModal3() {
+      this.modal3 = !this.modal3;
+    },
+    updateModal3(newValue) {
+      this.modal3 = newValue;
+    },
+
+    toggleModal4()
+    {
+      this.modal4 =  !this.modal4;
+    },
+    updateModal4(newValue) {
+      this.modal4 =  newValue;
+    },
+
+    edit_collectionfn()
+    {
+      this.edit_collection =  !this.edit_collection
+    },
+    edit_funilfn()
+    {
+      this.edit_funil = !this.edit_funil;
+    },
+    async ShowUser()
+    {
+      const response = await GetUser();
+      this.updateUserId(response.data.id);
+      this.updateUserName(response.data.name);
+      this.updateUserEmail(response.data.email);
+      this.updateUserValidate(response.data.email_verified_at);
+      this.updateUserCreated(response.data.created_at);
+    },
+    ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated'])
+
+  },
+  created() {
+    this.ShowUser();
+    this.GetCollection();
+  },
+};
+</script>
+
 
 <style scoped>
 .delete {
@@ -231,10 +344,6 @@
   font-weight: bold;
 }
 
-.extra-info {
-  width: 25vw;
-  height: 300px;
-}
 .color-colection {
   font-size: 17px;
   display: flex;
@@ -412,273 +521,4 @@ main {
     font-size: 17px;
     margin-left: 6vw;
 }
-
-.colection {
-    background: rgba(0, 0, 0, 0.384);
-    position: absolute;
-    z-index: 3;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-.content {
-    width: 50vw;
-    background-color: rgb(255, 255, 255);
-    height: 53vh;
-    filter: blur(0px);
-    border-radius: 10px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.content2 {
-  width: 50vw;
-  background-color: rgb(255, 255, 255);
-  height: 40vh;
-  filter: blur(0px);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.title {
-    margin-left: 2vw;
-    margin-right: 2vw;
-    display: flex;
-}
-
-.title img {
-    width: 30px;
-}
-
-.title h3 {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.title p {
-    font-size: 15px;
-    margin-bottom: 10px;
-}
-
- #floatingInput, #floatingPassword{
-    height: 6vh;
-    width: 30vw;
-    min-height: 30px;
-    border-radius: 5px;
-    border: 1px solid lightgrey;
-    font-size:10px
-  }
-
-  /*Configueações Label BootStrap*/
-  .form-floating > label {
-    padding: 0px;
-    padding-top: 8px;
-    font-size: 12px;
-    padding-left: 10px;
-    background-color: rgba(0, 0, 0, 0);
-    color: grey;
-  }
-
-  /*Configueações Label BootStrap*/
-
-
-   .form-control:focus {
-    box-shadow: none; 
-  } 
-
-  .color {
-    display: flex;
-    font-size: 12px;
-  }
-
-.color p {
-    margin-top: 5px;
-}
-
-  .form {
-    margin-left: 2vw;
-    margin-top: 20px;
-  }
-
-  .choosecolor {
-    margin-left: 20px;
-  }
-
-.submit {
-    margin-top: 15px;
-    background-color: #FFBB28;
-    color: white;
-    text-align: center;
-    width: 10vw;
-    padding: 2px 0px;
-    border-radius: 10px;
-}
-
-input {
-    font-size: 10px;
-}
-
-.form-floating > label[data-v-df256515] {
-    padding-top: 8px;
-    font-size: 12px;
-    padding-left: 10px;
-    background-color: rgba(0, 0, 0, 0);
-    color: grey;
-}
-
-.cancel {
-    padding-top: 10px;
-    margin-left: 19vw;
-}
 </style>
-
-<script>
-import Collection from '../../components/DashBoard/Collection.vue';
-import Funil from '../../components/DashBoard/Funil.vue';
-import {DeleteCollection, GetCollection, GetUser, SendCollection, UpdateCollection} from "@/services/HttpService.js";
-import { mapState, mapMutations } from 'vuex';
-import MenuDash from "@/components/DashBoard/Menu.vue";
-export default {
-  components: {MenuDash, Collection, Funil },
-  computed:
-      {
-        ...mapState({
-          id_user: state => state.user.id
-})
-},
-  data() {
-    // Parametros que serão passados ao BackEnd e Validações
-    return {
-        modal: false,
-        modal2: false,
-        modal3: false,
-        modal4: false,
-        edit_collection: false,
-        edit_funil: false,
-
-      // Dados Collection
-      collection_name: "",
-      collection_desc: "",
-      collection_color: "",
-      collections: [],
-      data_collection: [],
-
-      // Update Collection
-      update_name_collection: "",
-      update_desc_collection: "",
-      update_color_collection: "",
-    };
-  },
-
-  // Validando Email
-  methods: {
-    async DeleteCollection() {
-      const data = {
-        id : this.data_collection[3],
-      }
-
-      const response = DeleteCollection(data);
-      return response;
-    },
-    async UpdateCollection(){
-      const data = {
-        id: this.data_collection[3],
-        name: this.update_name_collection,
-        description: this.update_desc_collection,
-        user_id : this.id_user,
-        color: 'teste'
-      }
-      this.edit_collection = false;
-      this.modal3 = false;
-      const response = await UpdateCollection(data);
-      console.log(response);
-      window.location.reload();
-
-    },
-    DataCollection(value){
-      this.data_collection = value
-      this.update_name_collection =  this.data_collection[0];
-      this.update_desc_collection = this.data_collection[1];
-      this.update_color_collection = this.data_collection[2]
-    },
-    async GetCollection()
-    {
-      const data = {
-        id :  this.id_user
-      }
-
-      const response = await GetCollection(data);
-      this.collections = response.data;
-    },
-    async sendCollection(){
-      const data = {
-        name : this.collection_name,
-        description: this.collection_desc,
-        user_id: this.id_user,
-        color: this.collection_color
-      }
-      const response = await SendCollection(data);
-      window.location.reload();
-    },
-
-    PushProfile(){
-      this.$router.push('/UserProfile');
-    },
-    ActiveModal()
-    {
-        this.modal = !this.modal
-    },
-
-    toggleModal2() {
-      this.modal2 = !this.modal2;
-    },
-    updateModal2(newValue) {
-      this.modal2 = newValue;
-    },
-
-    toggleModal3() {
-      this.modal3 = !this.modal3;
-    },
-    updateModal3(newValue) {
-      this.modal3 = newValue;
-    },
-
-    toggleModal4()
-    {
-      this.modal4 =  !this.modal4;
-    },
-    updateModal4(newValue) {
-      this.modal4 =  newValue;
-    },
-
-    edit_collectionfn()
-    {
-      this.edit_collection =  !this.edit_collection
-    },
-    edit_funilfn()
-    {
-      this.edit_funil = !this.edit_funil;
-    },
-    async ShowUser()
-    {
-      const response = await GetUser();
-      this.updateUserId(response.data.id);
-      this.updateUserName(response.data.name);
-      this.updateUserEmail(response.data.email);
-      this.updateUserValidate(response.data.email_verified_at);
-      this.updateUserCreated(response.data.created_at);
-    },
-    ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated'])
-
-  },
-  created() {
-    this.ShowUser();
-    this.GetCollection();
-  },
-};
-</script>
