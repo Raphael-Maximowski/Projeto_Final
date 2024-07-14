@@ -9,7 +9,7 @@ class Funnel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    public $guarded = [];
 
     public function users()
     {

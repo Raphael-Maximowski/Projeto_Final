@@ -62,7 +62,8 @@ export default {
       this.$emit('values_collection', data);
     },
     showfunil() {
-      this.$emit('update-modal2', !this.modal2);
+      console.log('Evento ShowFunil emitido'); // Adicione este log
+      this.$emit('ShowFunil');
     },
     showinfo()
     {
@@ -96,13 +97,14 @@ h1 {
 }
 
 .title {
+  margin-top: 15px;
   height: 50px;
-  width: 75vw;
+  width: 94vw;
   display: flex;
   align-items: center;
   font-size: 18px;
   font-weight: bold;
-  padding-left: 20px
+  padding-left: 0px
 }
 
 .crud {
@@ -111,6 +113,11 @@ h1 {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.funil {
+  cursor: pointer;
+  margin-top: 15px;
 }
 
 .funil p {
@@ -126,28 +133,12 @@ h1 {
 .title img {
   width: 23px;
   margin-left: 20px;
+  margin-bottom: 2px;
 }
 
 .group {
   display: flex;
   flex-wrap: wrap;
-}
-
-.modal3 {
-  position: absolute;
-  width: 90vw;
-  display: flex;
-  justify-content: end;
-}
-
-.create {
-  background-color: white;
-  margin-right: 12vw;
-  border: 1px solid grey;
-  height: 167px;
-  width: 20vw;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
 .create h3 {
@@ -157,7 +148,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-floatingInput, #floatingPassword{
+floatingInput{
   height: 1vh;
   width: 5vw;
   min-height: 30px;
@@ -166,7 +157,6 @@ floatingInput, #floatingPassword{
   font-size:10px;
 }
 
-/*Configueações Label BootStrap*/
 .form-floating > label {
   padding: 0px 5px;
   font-size: 12px;
@@ -175,19 +165,9 @@ floatingInput, #floatingPassword{
   color: grey;
 }
 
-/*Configueações Label BootStrap*/
-
-
-.form-control:focus {
-  box-shadow: none;
-}
-
 form-control:not(:placeholder-shown) {
   padding-top: 20px;
   padding-bottom: 0px;
-}
-.form-floating > .form-control, .form-floating > .form-control-plaintext {
-  padding: 5px;
 }
 
 input {
@@ -199,9 +179,5 @@ label {
   margin-bottom: 1000px;
 }
 
-.form-control {
-  width: 18vw;
-  margin-left: 10px;
-}
 
 </style>

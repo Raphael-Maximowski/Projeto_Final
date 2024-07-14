@@ -82,6 +82,10 @@ export const DeleteCollection = async(data) => {
     const response = await HttpService.post('collectionsd', data)
     return response;
 }
+
+export const SendFunnel = async(data)=> {
+    const response = await HttpService.post('funnels', data)
+}
 export default HttpService;
 
 

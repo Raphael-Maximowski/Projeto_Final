@@ -207,7 +207,6 @@ export default {
     };
 
       const response = await SendUser(user);
-      this.succes = true;
       console.log('Resposta da API:', response);
       console.log('Dados do usuário:', this.ValidateName, this.email, this.password); 
     } catch (error) {
