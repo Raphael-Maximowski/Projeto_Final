@@ -53,10 +53,11 @@ Route::put('users/{id}/make-admin', [UserController::class, 'makeAdmin']);
 
 //rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
 //Route::middleware('auth:sanctum')->group(function () {
-    Route::post('collection', [CollectionController::class, 'store']);
-    Route::post('collections', [CollectionController::class, 'show']);
-    Route::patch('collections', [CollectionController::class, 'update']);
-    Route::post('collectionsd', [CollectionController::class, 'destroy']);
+    Route::get('collections', [CollectionController::class, 'index']);
+    Route::post('collections', [CollectionController::class, 'store']);
+    Route::get('collections/{id}', [CollectionController::class, 'show']);
+    Route::put('collections/{id}', [CollectionController::class, 'update']);
+    Route::delete('collections/{id}', [CollectionController::class, 'destroy']);
 //});
 
 //rotas funil
