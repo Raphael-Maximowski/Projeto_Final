@@ -10,25 +10,26 @@ class FunnelController extends Controller
 {
     public function index()
     {
-        return Funnel::where('user_id', request()->user_id)->get(); // Retorna todos os funis do usuário
+        $user = Auth::user();
+
+        return Funnel::where('user_id', $user->id)->get(); // Retorna todos os funis do usuário
     }
 
     public function store(Request $request)
     {
         $request->validate([
-
-            'name' => 'required',
-            'description' => 'required',
-            'user_id' => 'required',
-            'collection_id' => 'required', // Validação dos dados recebidos no request (collection_id é opcional)
-
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'collection_id' => 'required|integer', // Validação dos dados recebidos no request
         ]);
+
+        $user = Auth::user();
 
         $funnel = Funnel::create([
             'name' => $request->name,
             'description' => $request->description,
-            'user_id' => $request->user_id,
-            'collection_id' => $request->collection_id,  // Criação de um novo funil
+            'user_id' => $user->id,
+            'collection_id' => $request->collection_id, // Criação de um novo funil
         ]);
 
         return response()->json($funnel, 201);
@@ -36,18 +37,22 @@ class FunnelController extends Controller
 
     public function show($id)
     {
-        $funnel = Funnel::where('id', $id)->where('user_id', request()->user_id)->firstOrFail();  // Busca um funil específico pelo ID
+        $user = Auth::user();
+
+        $funnel = Funnel::where('id', $id)->where('user_id', $user->id)->firstOrFail(); // Busca um funil específico pelo ID
         return response()->json($funnel);
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'description' => 'sometimes|string|max:255',  // Validação dos campos para atualizar
+            'name' => 'sometimes|string',
+            'description' => 'sometimes|string', // Validação dos campos para atualizar
         ]);
 
-        $funnel = Funnel::findOrFail($id);
+        $user = Auth::user();
+        $funnel = Funnel::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+
         $funnel->update($request->only(['name', 'description'])); // Busca e atualiza o funil pelo ID
 
         return response()->json($funnel, 200);
@@ -55,22 +60,24 @@ class FunnelController extends Controller
 
     public function destroy($id)
     {
-        $funnel = Funnel::where('id', $id)->where('user_id', request()->user_id)->firstOrFail(); // Busca e deleta o funil pelo ID
+        $user = Auth::user();
+        $funnel = Funnel::where('id', $id)->where('user_id', $user->id)->firstOrFail(); // Busca e deleta o funil pelo ID
         $funnel->delete();
 
         return response()->json(null, 204);
     }
 
     public function search(Request $request)
-{
-    $query = Funnel::query(); // inicia a consulta
+    {
+        $user = Auth::user();
+        $query = Funnel::where('user_id', $user->id); // inicia a consulta
 
-    if ($request->has('name')) {
-        $query->where('name', 'like', '%' . $request->input('name') . '%'); // Aplicar filtros
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%'); // Aplicar filtros
+        }
+
+        $funnels = $query->get(); // Executar a busca
+
+        return response()->json(['funnels' => $funnels], 200);
     }
-
-    $funnels = $query->get(); // Executar a busca
-
-    return response()->json(['funnels' => $funnels], 200);
-}
 }

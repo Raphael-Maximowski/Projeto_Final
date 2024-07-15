@@ -52,24 +52,24 @@ Route::put('users/{id}/make-admin', [UserController::class, 'makeAdmin']);
 
 
 //rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
-//Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('collections', [CollectionController::class, 'index']);
     Route::post('collections', [CollectionController::class, 'store']);
     Route::get('collections/{id}', [CollectionController::class, 'show']);
     Route::put('collections/{id}', [CollectionController::class, 'update']);
     Route::delete('collections/{id}', [CollectionController::class, 'destroy']);
-//});
+});
 
 //rotas funil
 
-//Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('funnels', [FunnelController::class, 'index']);
     Route::post('funnels', [FunnelController::class, 'store']);
     Route::get('funnels/{id}', [FunnelController::class, 'show']);
     Route::patch('funnels/{id}', [FunnelController::class, 'update']);
     Route::delete('funnels/{id}', [FunnelController::class, 'destroy']);
     Route::post('funnels/search', [FunnelController::class, 'search']); // Rota para busca de funis
-//});
+});
 
 Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"
 
