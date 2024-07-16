@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-
         $user = Auth::user();
 
         $itemsPerPage = 5; // itens por pag
@@ -88,8 +88,8 @@ class CollectionController extends Controller
 
     public function destroy($id, Request $request)
     {
-        $user = Auth::user();
-        $collection = Collection::where('user_id', $user->id)->where('id', $id)->first();
+        $collection = Collection::where('id', $id)->first();
+
 
         if ($collection) {
             $collection->delete();
