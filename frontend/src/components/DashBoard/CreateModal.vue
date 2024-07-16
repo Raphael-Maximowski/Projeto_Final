@@ -66,14 +66,16 @@ export default {
     content2: {type:String},
     header2:{type:String},
     thidheader:{type:String},
-    activecollection: {type: Boolean}
+    activecollection: {type: Boolean},
+    id_collection: {type:String}
   },
   data(){
     return{
       name: "",
       description: "",
       color: "#ffffff",
-      type: ""
+      type: "",
+      idcollection: ""
     }
   },
     methods: {
@@ -84,6 +86,7 @@ export default {
       SendData(){
         this.type = this.activecollection === true;
         const data = {
+          collection_id : this.id_collection,
           user_id : this.user_id,
           name : this.name,
           description : this.description,

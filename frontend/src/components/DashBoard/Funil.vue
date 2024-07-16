@@ -1,11 +1,6 @@
 <template>
 <div class="base-funil">
   <div class="info-funil">
-    <div class="title">Vendas Chinelos</div>
-    <div class="images-funil">
-      <div class="part1"><img src="../../assets/images/DashBoard/funil.png"></div>
-      <div class="part2"><img src="../../assets/images/DashBoard/pontos.png"></div>
-    </div>
   </div>
 </div>
 </template>
@@ -13,9 +8,8 @@
 export default {
   name: 'Funil',
   props: {
-    modal4: {
-      type: Boolean,
-      default: false
+    id_collection: {
+      type: String,
     }
   },
   data ()
@@ -24,10 +18,6 @@ export default {
     }
   },
   methods: {
-    show_modal(){
-      this.$emit('update-modal2', !this.modal2);
-      console.log(this.modal2);
-    }
   }
 }
 </script>
@@ -35,7 +25,7 @@ export default {
 
 .base-funil {
     background-color: #FEBC28;
-    width: 15vw;
+    width: 12vw;
     padding: 5px 0px;
     margin: 10px 20px;
     border-radius: 10px;
@@ -48,6 +38,8 @@ export default {
 
 .info-funil {
   display: flex;
+  background-color: #FEBC28;
+  height: 25px;
 }
 
 .images-funil {

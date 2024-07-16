@@ -8,26 +8,20 @@ const HttpService = axios.create({
   },
 });
 
-
-// Realizando login
 export const login = async(data) => {
     const response = await HttpService.post('login', data);
     return response;
 }
 
-// Registrando
 export const SendUser = async (user) => {
     const response = await HttpService.post('register', user);
     return response;
 };
 
-// Enviando Email Novo Password
 export const ResetPassword = async(data) => {
     const response = await HttpService.post('forget_password', data);
     return response;
   }
-
-  // Trocando senha no Banco
 
   export const SendPassword = async(data) => {
       const response = await HttpService.post('reset_password', data);
@@ -84,8 +78,19 @@ export const DeleteCollection = async(data) => {
     return response;
 }
 
-export const SendFunnel = async(data)=> {
-    const response = await HttpService.post('funnels', data)
+export const SendFunnel = async (data) => {
+    const token =  store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`}
+    const response = await HttpService.post('funnels', data, {headers})
+}
+
+export const GetFunnel =  async() => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`}
+    const response =  await HttpService.get('funnels', {headers})
+    return response;
 }
 export default HttpService;
 

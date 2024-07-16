@@ -156,9 +156,9 @@ export default{
 
 .title-info h1 {
   margin-top: 8px;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 18px;
   color: black;
+  font-weight: bold;
 }
 
 .main-info {
@@ -169,7 +169,6 @@ export default{
 
 .delete-info {
   width: 30vw;
-  height: 82px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -179,10 +178,11 @@ export default{
   margin-top: 15px;
   background-color: red;
   padding: 5px 60px;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 15px;
   cursor: pointer;
   color: white;
+  font-weight: bold;
 }
 
 .subtitle-info{
@@ -201,7 +201,7 @@ export default{
 }
 
 .subtitle-info h2{
-  font-size: 19px;
+  font-size: 15px;
   margin-left: 1.7vw;
   font-weight: bold;
 
@@ -210,7 +210,7 @@ export default{
 .content-info p {
   margin-left: 1.7vw;
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 12px;
   margin-right: 40px;
 }
 
@@ -226,7 +226,6 @@ export default{
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 10px;
-  font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
 }
@@ -237,7 +236,7 @@ input[type="text"] {
   width: 20vw;
   border-radius: 5px;
   border: 1px solid black;
-  font-size: 13px;
+  font-size: 9px;
   padding: 5px 0px;
   padding-left: 10px;
   color: grey;
