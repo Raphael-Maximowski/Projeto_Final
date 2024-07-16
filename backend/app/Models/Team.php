@@ -9,16 +9,17 @@ class Team extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'admin_id'];
-
-    public function admin()
-    {
-        return $this->belongsTo(Admin::class);
-    }
+    protected $fillable = ['name', 'description'];
 
     public function users()
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class, 'team_collection', 'team_id', 'collection_id');
+    }
 }
+
 

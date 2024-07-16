@@ -10,12 +10,25 @@ class CollectionController extends Controller
 {
     public function index(Request $request)
     {
+
         $user = Auth::user();
 
-        $collections = Collection::where('user_id', $user->id)->get(); // busca todas as coleções que pertencem ao usuário
+        $itemsPerPage = 5; // itens por pag
+        $page = $request->input('page', 1);
 
-        return response()->json($collections);
+        $startId = ($page - 1) * $itemsPerPage + 1;
+        $endId = $startId + $itemsPerPage - 1;
+
+        $collections = Collection::where('user_id', $user->id)->whereBetween('id', [$startId, $endId])->get();
+
+        return response()->json([
+            'current_page' => $page,
+            'start_id' => $startId,
+            'end_id' => $endId,
+            'collections' => $collections
+        ]);
     }
+
 
     public function store(Request $request)
     {

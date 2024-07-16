@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ValidateEmailcontroller;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TeamController;
 
 
 
@@ -73,3 +74,18 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('teams')->group(function () {
+        Route::get('', [TeamController::class, 'index']);
+        Route::post('', [TeamController::class, 'store']);
+        Route::get('/{id}', [TeamController::class, 'show']);
+        Route::put('/{id}', [TeamController::class, 'update']);
+        Route::delete('/{id}', [TeamController::class, 'destroy']);
+
+        Route::post('/{teamId}/add-user', [TeamController::class, 'addUserToTeam']);
+        Route::delete('/{teamId}/remove-user/{userId}', [TeamController::class, 'removeUserFromTeam']);
+
+        Route::post('/{teamId}/add-collection/{collectionId}', [TeamController::class, 'addCollectionToTeam']);
+        Route::delete('/teams/{teamId}/remove-collection/{collectionId}', [TeamController::class, 'removeCollectionFromTeam']);
+    });
+});
