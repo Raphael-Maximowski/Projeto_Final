@@ -2,7 +2,7 @@
 <div class="base">
   <div class="info">
     <div class="title">
-      <div>aaa</div>
+      <div>{{collection.name}}</div>
       <div class="more-info" @click="OpenModal"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
@@ -12,6 +12,9 @@
     </div>
   </div>
   <div class="group">
+    <div v-for="funil in funnel">
+      <Funil :funil="funil"/>
+    </div>
   </div>
 </div>
 </template>
@@ -35,6 +38,9 @@ export default {
       type: Object,
       required: true
     },
+    funnels: {
+      type: Object
+    }
   },
 
   data ()
@@ -48,30 +54,41 @@ export default {
       id_collection: '',
       data: [],
       receive_data: [],
+      funnel: [],
     }
   },
   created() {
     this.receive_data = this.collection
+    this.id_collection = this.collection.id
+
+    for(let i = 0; i < this.funnels.length; i++){
+      let id = this.funnels[i].collection_id;
+      console.log(id, this.funnels[i].collection_id)
+      if (id === this.id_collection){
+        this.funnel.push(this.funnels[i])
+      }
+    }
+    console.log(this.funnel)
   },
   methods: {
     OpenModal()
     {
       this.data = [
-        this.name_collection,
-        this.desc_collection,
-        this.color_collection,
-        this.id_collection,
+        this.name_collection = this.collection.name,
+        this.desc_collection = this.collection.description,
+        this.color_collection = this.collection.color,
+        this.id_collection = this.collection.id,
         this.open_info,
         this.open_info_collection,
       ]
-      console.log(this.open_info)
       this.$emit('OpenModal', this.data)
     },
     showfunil() {
-      console.log('Evento ShowFunil emitido'); // Adicione este log
-      this.$emit('ShowFunil');
+      this.id_collection = this.collection.id
+      this.$emit('ShowFunil', this.id_collection);
     },
   },
+
 }
 </script>
 
@@ -119,6 +136,7 @@ h1 {
 .funil {
   cursor: pointer;
   margin-top: 15px;
+  margin-right: 1vw;
 }
 
 .funil p {
@@ -128,7 +146,6 @@ h1 {
     font-size: 17px;
     margin-top: 17px;
     margin-left: 15px;
-  font-weight: bold;
 }
 
 .title img {
@@ -140,6 +157,7 @@ h1 {
 .group {
   display: flex;
   flex-wrap: wrap;
+  justify-content: left;
 }
 
 .create h3 {

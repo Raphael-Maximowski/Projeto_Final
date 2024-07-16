@@ -1,7 +1,7 @@
 <template>
 <main>
-
-    <div class="menu">
+  <Alert errors="" pass/>
+  <div class="menu">
       <div v-if="modal">
         <CreateModal
             @closeModal="closeModal"
@@ -15,10 +15,10 @@
             header2="Nome do Funil"
             thidheader="Descrição do Funil"
             @SendData="SendData"
+            :id_collection="id_collection"
         />
 
       </div>
-
       <InfoModal
           :data_collection="data_collection"
           @CloseModal="CloseInfo" v-if="OpenModal"
@@ -44,10 +44,10 @@
         </div>
       <div class="outer">
           <div class="funis">
-            <div v-for="collection in collections"><Collection :key="collection.id" :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @OpenModal="ShowInfo" /></div>
+            <div v-for="collection in collections.collections"><Collection :funnels="funnels" :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @OpenModal="ShowInfo" /></div>
           </div>
-          <div class="page">
-            <div class="center-page">
+          <div class="page" >
+            <div class="center-page" v-if="collections.length > 1">
               <div class="changepage"><p>Anterior</p></div>
               <div class="changepage"><p>Proxima</p></div>
             </div>
@@ -63,7 +63,7 @@ import Collection from '../../components/DashBoard/Collection.vue';
 import Funil from '../../components/DashBoard/Funil.vue';
 import CreateModal from '../../components/DashBoard/CreateModal.vue';
 import {
-  GetCollection,
+  GetCollection, GetFunnel,
   GetUser,
   SendCollection,
   SendFunnel,
@@ -71,8 +71,15 @@ import {
 import { mapState, mapMutations } from 'vuex';
 import MenuDash from "@/components/DashBoard/Menu.vue";
 import InfoModal from "@/components/DashBoard/InfoModal.vue";
+import Alert from "@/components/Login/Alert.vue";
+import collection from "@/components/DashBoard/Collection.vue";
 export default {
-  components: {InfoModal, CreateModal, MenuDash, Collection, Funil },
+  computed: {
+    collection() {
+      return collection
+    }
+  },
+  components: {Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
   data() {
     return {
       modal: false,
@@ -81,19 +88,22 @@ export default {
       activecollection: false,
       edit_collection: false,
       edit_funil: false,
-
+      id_collection: "",
       collections: {},
+      funnels: {},
       data_collection: [],
 
     };
   },
 
   methods: {
+
     closeModal(){
       this.modal = false
       this.activecollection = false
     },
-    ActiveFunil(){
+    ActiveFunil(value){
+      this.id_collection = value
       this.activecollection = false
       this.modal = true
     },
@@ -116,8 +126,14 @@ export default {
     {
       const response = await GetCollection();
       this.collections = response.data;
-      console.log(this.collections)
     },
+
+    async GetFunnels()
+    {
+      const response = await GetFunnel();
+      this.funnels =  response.data
+    },
+
     async SendData(value){
       const data = value
       if (data.type === true)
@@ -145,12 +161,15 @@ export default {
       this.updateUserValidate(response.data.email_verified_at);
       this.updateUserCreated(response.data.created_at);
     },
+
     ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated'])
 
   },
   created() {
     this.ShowUser();
+    this.GetFunnels()
     this.GetCollection();
+
   },
 };
 </script>
@@ -243,11 +262,18 @@ main {
 }
 
 .changepage p{
-  background-color: #FEBC28;
+  background-color: #3053F2;
   padding: 5px 20px;
-  font-weight: bold;
+  color: white;
   border-radius: 10px;
   cursor: pointer;
+}
 
+.changepage p:hover{
+  background-color: #2336C7;
+  padding: 5px 20px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
 }
 </style>
