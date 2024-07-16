@@ -42,10 +42,18 @@
             </div>
             <div class="create" @click="ActiveModal"><p>Nova Coleção</p></div>
         </div>
-        <div class="funis">
-          <div v-for="collection in collections"><Collection :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @OpenModal="ShowInfo" /></div>
+      <div class="outer">
+          <div class="funis">
+            <div v-for="collection in collections"><Collection :key="collection.id" :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @OpenModal="ShowInfo" /></div>
+          </div>
+          <div class="page">
+            <div class="center-page">
+              <div class="changepage"><p>Anterior</p></div>
+              <div class="changepage"><p>Proxima</p></div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
 </main>
 </template>
@@ -55,24 +63,16 @@ import Collection from '../../components/DashBoard/Collection.vue';
 import Funil from '../../components/DashBoard/Funil.vue';
 import CreateModal from '../../components/DashBoard/CreateModal.vue';
 import {
-  DeleteCollection,
   GetCollection,
   GetUser,
   SendCollection,
   SendFunnel,
-  UpdateCollection
 } from "@/services/HttpService.js";
 import { mapState, mapMutations } from 'vuex';
 import MenuDash from "@/components/DashBoard/Menu.vue";
 import InfoModal from "@/components/DashBoard/InfoModal.vue";
 export default {
   components: {InfoModal, CreateModal, MenuDash, Collection, Funil },
-  computed:
-      {
-        ...mapState({
-          id_user: state => state.user.id
-        })
-      },
   data() {
     return {
       modal: false,
@@ -82,13 +82,12 @@ export default {
       edit_collection: false,
       edit_funil: false,
 
-      collections: [],
+      collections: {},
       data_collection: [],
 
     };
   },
 
-  // Validando Email
   methods: {
     closeModal(){
       this.modal = false
@@ -117,6 +116,7 @@ export default {
     {
       const response = await GetCollection();
       this.collections = response.data;
+      console.log(this.collections)
     },
     async SendData(value){
       const data = value
@@ -154,159 +154,7 @@ export default {
   },
 };
 </script>
-
-
 <style scoped>
-.delete {
-  width: 26vw;
-  height: 40vh;
-  display: flex;
-  justify-content: center;
-  align-items: end;
-}
-.delete p {
-  background-color: red;
-  padding: 5px 50px;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-}
-.title_edit_collection {
-  margin-bottom: 5px;
-  font-size: 17px;
-  font-weight: bold;
-  color: #333;
-}
-
-.info_edit_collection {
-  text-align: justify;
-  height: 4vh;
-  font-size: 15px;
-  width: 20vw;
-  margin-bottom: 5px;
-  color: rgba(0, 0, 0, 0.87);
-}
-
-
-
-.edit_collection {
-  background-color: #FEBC28;
-  width: 7vw;
-  padding: 3px 5px;
-  border-radius: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.color-colection {
-  font-size: 17px;
-  display: flex;
-}
-
-.textarea-container {
-  display: flex;
-  flex-direction: column;
-  width: 20vw;
-}
-label {
-  margin-bottom: 5px;
-  font-size: 14px;
-  color: #333;
-  font-weight: bold;
-}
-textarea {
-  width: 100%;
-  height: 165px;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s, box-shadow 0.3s;
-  white-space: pre-line;
-  color: grey;
-  margin-bottom: 20px;
-
-}
-
-.main-info label {
-  font-size: 17px;
-  margin-bottom: 10px;
-}
-
-
-.main-info input {
-  height: 4vh;
-  font-size: 13px;
-  padding-left: 10px;
-  width: 20vw;
-  margin-bottom: 20px;
-  color: grey;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.return img {
-  width: 25px;
-  margin-left: 25px;
-}
-
-.return {
-  display: flex;
-  padding-top: 10px;
-  align-items: center;
-}
-
-.return-img
-{
-  width: 5vw;
-  z-index: 999;
-}
-.header-info {
-  position: absolute;
-  width: 30vw;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.main-info {
-  margin-top: 25px;
-  height: 80vh;
-  padding-left: 30px;
-}
-
-.color-colection {
-  display: flex;
-  height: 40px;
-  align-items: center;
-}
-.box-color {
-  width: 2vw;
-  height: 2vw;
-  border: 3px solid lightgray;
-  border-radius: 50%;
-  background-color: #FEBC28;
-  margin-left:20px;
-}
-
-.modal3 {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.384);
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: end;
-  z-index: 1000;
-}
-
-.base-modal3 {
-  background-color: white;
-  width: 30vw;
-  height: 100vh;
-  border-radius: 10px 0px 0px 10px;
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-}
 
 * {
     margin: 0;
@@ -319,7 +167,6 @@ main {
     height: 100vh;
     display: flex;
     overflow: hidden;
-
 }
 
 .menu {
@@ -374,5 +221,33 @@ main {
     color: white;
     font-size: 17px;
     margin-left: 6vw;
+}
+
+.page {
+  padding: 0px 0px 50px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.outer {
+  height: 95vh;
+  overflow-y: auto; /* Permitir rolagem no eixo Y */
+  overflow-x: hidden; /* Ocultar rolagem no eixo X */
+}
+
+.center-page {
+  width: 89.6vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.changepage p{
+  background-color: #FEBC28;
+  padding: 5px 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+
 }
 </style>

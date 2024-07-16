@@ -49,10 +49,7 @@ export default {
     }
   },
   created() {
-    this.name_collection = this.collection.name;
-    this.desc_collection = this.collection.description;
-    this.color_collection = this.collection.color;
-    this.id_collection = this.collection.id;
+
   },
   methods: {
     OpenModal()
@@ -72,7 +69,7 @@ export default {
       console.log('Evento ShowFunil emitido'); // Adicione este log
       this.$emit('ShowFunil');
     },
-  }
+  },
 }
 </script>
 
@@ -126,10 +123,10 @@ h1 {
     background-color: #FEBC28;
     padding: 5px 15px;
     border-radius: 8px;
-    color: white;
     font-size: 17px;
     margin-top: 17px;
-    margin-left: 27px;
+    margin-left: 15px;
+  font-weight: bold;
 }
 
 .title img {
