@@ -3,33 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
-
 {
     public function index()
     {
         $user = Auth::user();
-        $user = $user->id;
 
-        $collections = Collection::where('user_id', $user)->get(); // busca todas as coleções que pertencem ao usuário
+        $itemsPerPage = 5; // itens por pag
+        $page = $request->input('page', 1);
 
-        return response()->json($collections);
+        $startId = ($page - 1) * $itemsPerPage + 1;
+        $endId = $startId + $itemsPerPage - 1;
+
+        $collections = Collection::where('user_id', $user->id)->whereBetween('id', [$startId, $endId])->get();
+
+        return response()->json([
+            'current_page' => $page,
+            'start_id' => $startId,
+            'end_id' => $endId,
+            'collections' => $collections
+        ]);
     }
+
 
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
             'name' => 'required|string',
             'description' => 'required|string',
             'color' => 'required|string'
         ]);
 
+        $user = Auth::user();
+
         $collection = Collection::create([
-            'user_id' => $request->user_id,
+            'user_id' => $user->id,
             'name' => $request->name,
             'description' => $request->description,
             'color' => $request->color
@@ -40,13 +52,9 @@ class CollectionController extends Controller
 
     public function show($id, Request $request)
     {
-        $request->validate([
-            'user_id' => 'required',
-        ]);
+        $user = Auth::user();
 
-        $userId = $request->user_id;
-
-        $collection = Collection::where('user_id', $userId)->where('id', $id)->first();
+        $collection = Collection::where('user_id', $user->id)->where('id', $id)->first();
         if ($collection) {
             return response()->json($collection);
         } else {
@@ -57,14 +65,13 @@ class CollectionController extends Controller
     public function update($id, Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
             'name' => 'required|string',
             'description' => 'required|string',
             'color' => 'required|string'
         ]);
 
-        $userId = $request->user_id;
-        $collection = Collection::where('user_id', $userId)->where('id', $id)->first();
+        $user = Auth::user();
+        $collection = Collection::where('user_id', $user->id)->where('id', $id)->first();
 
         if ($collection) {
             $collection->update([
@@ -81,8 +88,8 @@ class CollectionController extends Controller
 
     public function destroy($id, Request $request)
     {
-
         $collection = Collection::where('id', $id)->first();
+
 
         if ($collection) {
             $collection->delete();

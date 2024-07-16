@@ -9,15 +9,20 @@ class Collection extends Model
 {
     use HasFactory;
 
-    public $guarded = [];
+    protected $guarded = []; 
 
     public function user()
     {
-        return $this->belongsToMany(User::class); //uma coleção para vários users
+        return $this->belongsTo(User::class); // uma coleção pertence a um usuário
     }
 
     public function funnels()
     {
-        return $this->hasMany(Funnel::class); //pode ter varios funis associados a uma coleção
+        return $this->hasMany(Funnel::class); // uma coleção pode ter vários funis
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_collection', 'collection_id', 'team_id');
     }
 }

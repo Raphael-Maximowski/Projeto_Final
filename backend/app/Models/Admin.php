@@ -11,8 +11,4 @@ class Admin extends Model
 
     protected $fillable = ['name'];
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class);
-    }
 }

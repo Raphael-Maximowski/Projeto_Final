@@ -13,7 +13,7 @@ class UserController extends Controller
             $user = Auth::user();
 
             if (!$user) {
-                return response()->json(['message' => 'User not found'], 404);
+                return response()->json(['message' => 'Usuário não encontrado'], 404);
             }
 
             return response()->json($user, 200);
@@ -21,16 +21,16 @@ class UserController extends Controller
 
         public function makeAdmin($id)
     {
-        $user = User::find($id);
+            $user = User::find($id);
 
-        if (!$user) {
-            return response()->json(['message' => 'Usuário não encontrado'], 404);
-        }
+            if (!$user) {
+                return response()->json(['message' => 'Usuário não encontrado'], 404);
+            }
 
-        $user->is_admin = true;
-        $user->save();
+            $user->is_admin = true;
+            $user->save();
 
-        return response()->json(['message' => 'O usuário foi atualizado para administrador'], 200);
+            return response()->json(['message' => 'O usuário foi atualizado para administrador'], 200);
     }
 
     public function search(Request $request)
