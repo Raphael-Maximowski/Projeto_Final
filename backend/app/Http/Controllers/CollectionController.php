@@ -4,19 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
 
 {
-    public function index(Request $request)
+    public function index()
     {
-        $request->validate([
-            'user_id' => 'required|integer',
-        ]);
+        $user = Auth::user();
+        $user = $user->id;
 
-        $userId = $request->user_id; //armazena o user_id em uma variável 
-
-        $collections = Collection::where('user_id', $userId)->get(); // busca todas as coleções que pertencem ao usuário
+        $collections = Collection::where('user_id', $user)->get(); // busca todas as coleções que pertencem ao usuário
 
         return response()->json($collections);
     }
@@ -83,12 +81,8 @@ class CollectionController extends Controller
 
     public function destroy($id, Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|integer',
-        ]);
 
-        $userId = $request->user_id;
-        $collection = Collection::where('user_id', $userId)->where('id', $id)->first();
+        $collection = Collection::where('id', $id)->first();
 
         if ($collection) {
             $collection->delete();

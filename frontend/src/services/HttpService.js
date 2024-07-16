@@ -1,7 +1,6 @@
 import axios from "axios";
 import store from '../store/index.js';
 
-
 const HttpService = axios.create({
   baseURL: "http://localhost:8000/api/",
   headers: {
@@ -36,50 +35,52 @@ export const ResetPassword = async(data) => {
   }
 
   export const GetUser = async() => {
-    const user = store.getters.logged_in;
-    console.log(user)
+    const token = store.getters.user_token
     const headers = {
-        Authorization: `Bearer ${user.token}`
+        Authorization: `Bearer ${token}`
     }
   const response = await HttpService.get('user', { headers });
   return response;
   }
 
   export const SendCollection = async(data) => {
-      const user = store.getters.logged_in;
-      console.log(user)
+      const token = store.getters.user_token
       const headers = {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${token}`
       }
-    const response = await HttpService.post('collection',data, {headers});
+    const response = await HttpService.post('collections',data, {headers});
       return response;
   }
 
   export const GetCollection = async(data) => {
-    const user = store.getters.logged_in;
-    console.log(user)
+    const token = store.getters.user_token;
+    console.log(token)
     const headers = {
-        Authorization: `Bearer ${user.token}`
+        Authorization: `Bearer ${token}`
     }
-    const response = await HttpService.post('collections', data);
-      return response;
+    const response = await HttpService.get('collections', {headers});
+    return response;
 }
 
 export const UpdateCollection = async(data) => {
-    const user = store.getters.logged_in;
-    console.log(user)
+    const token = store.getters.user_token;
     const headers = {
-        Authorization: `Bearer ${user.token}`}
-    const response = await HttpService.patch('collections', data);
+        Authorization: `Bearer ${token}`
+    }
+    const id =  data.id;
+    console.log('id:', id);
+    const url = `collections/${id}`;
+    const response = await HttpService.put(url, data, {headers});
     return response;
 }
 
 export const DeleteCollection = async(data) => {
-    const user = store.getters.logged_in;
-    console.log(user)
+    const token = store.getters.user_token;
+    const id =  data.id;
     const headers = {
-        Authorization: `Bearer ${user.token}`}
-    const response = await HttpService.post('collectionsd', data)
+        Authorization: `Bearer ${token}`}
+    const url = `collections/${id}`;
+    const response = await HttpService.delete(url, {headers})
     return response;
 }
 

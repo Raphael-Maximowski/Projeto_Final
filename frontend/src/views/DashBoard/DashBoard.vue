@@ -19,109 +19,22 @@
 
       </div>
 
-      <div class="modal3" v-if="modal3 == true">
-        <div class="base-modal3">
-          <div class="return">
-            <div class="return-img" @click="toggleModal3"><img src="../../assets/images/DashBoard/return.png"></div>
-            <div class="header-info">Informações da Coleção</div>
-          </div>
-          <div class="main-info">
-            <div v-if="edit_collection == false">
-              <div class="title_edit_collection">
-                Nome Associado a Coleção
-              </div>
-              <div class="info_edit_collection">
-                {{ data_collection[0]}}
-              </div>
-              <div class="title_edit_collection">Descrição Associada a Coleção</div>
-              <div class="info_edit_collection">
-                <p>{{ data_collection[1] }}</p>
-                <div style="margin-top: 15px; display: flex" class="title_edit_collection">
-                  Cor Associada a Coleção
-                  <div class="box-color"></div>
-                </div>
-                <div class="edit_collection" @click="edit_collectionfn">Editar</div>
-                <div class="delete"  @click="DeleteCollection"><p>Excluir Coleção</p></div>
-              </div>
-
-            </div>
-            <form v-if="edit_collection == true">
-              <div>
-                <label>Nome Associado a Coleção</label>
-                <br><input type="text" v-model="update_name_collection">
-              </div>
-              <div>
-                <label>Descrição Associada a Coleção<br></label>
-                <div class="textarea-container">
-                  <textarea id="message" name="message" placeholder="Digite sua mensagem aqui..." v-model="update_desc_collection">{{ update_desc_collection }}</textarea>
-                </div>
-              </div>
-              <div class="color-colection">
-                <div><label>Cor Associada a Coleção</label></div>
-                <div class="box-color"></div>
-              </div>
-              <div class="edit_collection" @click="UpdateCollection">Atualizar</div>
-              <div class="delete" @click="DeleteCollection"><p>Excluir Coleção</p></div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal3" v-if="modal4 == true">
-        <div class="base-modal3">
-          <div class="return">
-            <div class="return-img" @click="toggleModal4"><img src="../../assets/images/DashBoard/return.png"></div>
-            <div class="header-info">Informações do Funil</div>
-          </div>
-          <div class="main-info">
-            <div v-if="edit_funil == false">
-              <div class="title_edit_collection">
-                Nome Associado ao Funil
-              </div>
-              <div class="info_edit_collection">
-                Vendas Chinelo
-              </div>
-              <div class="title_edit_collection">Descrição Associada ao Funil</div>
-              <div class="info_edit_collection">
-                <p>O funil de vendas será utilizado para vender nossa plataforma de gestão de projetos, impulsionando o reconhecimento da marca, engajamento dos leads e conversão em clientes leais. Este funil é essencial para otimizar nossas estratégias de marketing e vendas, garantindo que cada etapa do processo seja eficaz e direcionada.</p>
-                <div style="margin-top: 15px; display: flex" class="title_edit_collection">
-                  Cor Associada ao Funil
-                  <div class="box-color"></div>
-                </div>
-                <div class="edit_collection" @click="edit_funilfn">Editar</div>
-                <div class="delete"><p>Excluir Funil</p></div>
-              </div>
-
-            </div>
-            <form v-if="edit_funil == true">
-              <div>
-                <label>Nome Associado ao Funil</label>
-                <br><input type="text" value="Novas Vendas">
-              </div>
-              <div>
-                <label>Descrição Associada ao Funil<br></label>
-                <div class="textarea-container">
-                  <textarea id="message" name="message" placeholder="Digite sua mensagem aqui...">O funil de vendas será utilizado para vender nossa plataforma de gestão de projetos, impulsionando o reconhecimento da marca, engajamento dos leads e conversão em clientes leais. Este funil é essencial para otimizar nossas estratégias de marketing e vendas, garantindo que cada etapa do processo seja eficaz e direcionada.</textarea>
-                </div>
-              </div>
-              <div class="color-colection">
-                <div><label>Cor Associada ao Funil</label></div>
-                <div class="box-color"></div>
-              </div>
-              <div class="edit_collection" @click="edit_funilfn">Atualizar</div>
-              <div class="delete"><p>Excluir Funil</p></div>
-            </form>
-          </div>
-        </div>
-      </div>
+      <InfoModal
+          :data_collection="data_collection"
+          @CloseModal="CloseInfo" v-if="OpenModal"
+          main1="Informações da Coleção"
+          main2="Informações do Funil"
+          title1="Nome Associado a Coleção"
+          title2="Nome Associado ao Funil"
+          description1="Descrição Associada a Coleção"
+          description2="Descrição Associada ao Funil"
+      />
 
     <MenuDash/>
     </div>
 
 
-    <!-- Main -->
     <div class="principal">
-        <!-- Welcome / Create / Modal -->
         <div class="header">
             <div class="welcome">
                 <h1>Bem vindo ao seu Customer Relationship Management</h1>
@@ -129,9 +42,8 @@
             </div>
             <div class="create" @click="ActiveModal"><p>Nova Coleção</p></div>
         </div>
-        <!-- Funil Por meio de Componentes -->
         <div class="funis">
-          <div v-for="collection in collections"><Collection :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @update-modal2="updateModal2" :modal3="modal3" @update-modal3="updateModal3" /></div>
+          <div v-for="collection in collections"><Collection :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @OpenModal="ShowInfo" /></div>
         </div>
     </div>
 
@@ -152,8 +64,9 @@ import {
 } from "@/services/HttpService.js";
 import { mapState, mapMutations } from 'vuex';
 import MenuDash from "@/components/DashBoard/Menu.vue";
+import InfoModal from "@/components/DashBoard/InfoModal.vue";
 export default {
-  components: {CreateModal, MenuDash, Collection, Funil },
+  components: {InfoModal, CreateModal, MenuDash, Collection, Funil },
   computed:
       {
         ...mapState({
@@ -161,27 +74,17 @@ export default {
         })
       },
   data() {
-    // Parametros que serão passados ao BackEnd e Validações
     return {
       modal: false,
+      OpenModal: false,
+      showinfo: false,
       activecollection: false,
-      modal2: false,
-      modal3: false,
-      modal4: false,
       edit_collection: false,
       edit_funil: false,
 
-      // Dados Collection
-      collection_name: "",
-      collection_desc: "",
-      collection_color: "",
       collections: [],
       data_collection: [],
 
-      // Update Collection
-      update_name_collection: "",
-      update_desc_collection: "",
-      update_color_collection: "",
     };
   },
 
@@ -191,42 +94,28 @@ export default {
       this.modal = false
       this.activecollection = false
     },
-    async DeleteCollection() {
-      const data = {
-        id : this.data_collection[3],
-      }
-
-      const response = DeleteCollection(data);
-      return response;
+    ActiveFunil(){
+      this.activecollection = false
+      this.modal = true
     },
-    async UpdateCollection(){
-      const data = {
-        id: this.data_collection[3],
-        name: this.update_name_collection,
-        description: this.update_desc_collection,
-        user_id : this.id_user,
-        color: 'teste'
-      }
-      this.edit_collection = false;
-      this.modal3 = false;
-      const response = await UpdateCollection(data);
-      console.log(response);
-      window.location.reload();
-
+    CloseInfo(){
+      this.OpenModal = false;
     },
+
     DataCollection(value){
       this.data_collection = value
-      this.update_name_collection =  this.data_collection[0];
-      this.update_desc_collection = this.data_collection[1];
-      this.update_color_collection = this.data_collection[2]
     },
+
+    ShowInfo(value){
+      if (value[4] === true){
+        this.OpenModal = true;
+      }
+      this.data_collection = value;
+    },
+
     async GetCollection()
     {
-      const data = {
-        id :  this.id_user
-      }
-
-      const response = await GetCollection(data);
+      const response = await GetCollection();
       this.collections = response.data;
     },
     async SendData(value){
@@ -241,47 +130,12 @@ export default {
       }
     },
 
-    PushProfile(){
-      this.$router.push('/UserProfile');
-    },
     ActiveModal()
     {
       this.activecollection = true
       this.modal = true
-      console.log(this.activecollection)
-    },
-    ActiveFunil(){
-      this.activecollection = false
-      this.modal = true
     },
 
-    updateModal2(newValue) {
-      this.modal2 = newValue;
-    },
-
-    toggleModal3() {
-      this.modal3 = !this.modal3;
-    },
-    updateModal3(newValue) {
-      this.modal3 = newValue;
-    },
-
-    toggleModal4()
-    {
-      this.modal4 =  !this.modal4;
-    },
-    updateModal4(newValue) {
-      this.modal4 =  newValue;
-    },
-
-    edit_collectionfn()
-    {
-      this.edit_collection =  !this.edit_collection
-    },
-    edit_funilfn()
-    {
-      this.edit_funil = !this.edit_funil;
-    },
     async ShowUser()
     {
       const response = await GetUser();

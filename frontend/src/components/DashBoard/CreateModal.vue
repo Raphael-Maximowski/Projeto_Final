@@ -80,6 +80,7 @@ export default {
       teste() {
         this.$emit('closeModal')
       },
+
       SendData(){
         this.type = this.activecollection === true;
         const data = {

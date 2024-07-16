@@ -3,7 +3,7 @@
   <div class="info">
     <div class="title">
       <div>{{collection.name}}</div>
-      <div class="more-info" @click="showinfo"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
+      <div class="more-info" @click="OpenModal"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
       <div class="funil" @click="showfunil">
@@ -39,10 +39,13 @@ export default {
   data ()
   {
     return {
+      open_info: true,
+      open_info_collection: true,
       name_collection : '',
       desc_collection: '',
       color_collection: '',
       id_collection: '',
+      data: []
     }
   },
   created() {
@@ -52,24 +55,23 @@ export default {
     this.id_collection = this.collection.id;
   },
   methods: {
-    showData(){
-      const data = [
-          this.name_collection,
-          this.desc_collection,
-          this.color_collection,
-          this.id_collection
+    OpenModal()
+    {
+      this.data = [
+        this.name_collection,
+        this.desc_collection,
+        this.color_collection,
+        this.id_collection,
+        this.open_info,
+        this.open_info_collection,
       ]
-      this.$emit('values_collection', data);
+      console.log(this.open_info)
+      this.$emit('OpenModal', this.data)
     },
     showfunil() {
       console.log('Evento ShowFunil emitido'); // Adicione este log
       this.$emit('ShowFunil');
     },
-    showinfo()
-    {
-      this.$emit('update-modal3', !this.modal3);
-      this.showData();
-    }
   }
 }
 </script>
@@ -179,5 +181,8 @@ label {
   margin-bottom: 1000px;
 }
 
+.more-info {
+  cursor:pointer;
+}
 
 </style>
