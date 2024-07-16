@@ -12,7 +12,9 @@
     </div>
   </div>
   <div class="group">
-    <div></div>
+    <div v-for="funil in funnel">
+      <Funil :funil="funil"/>
+    </div>
   </div>
 </div>
 </template>
@@ -52,13 +54,21 @@ export default {
       id_collection: '',
       data: [],
       receive_data: [],
+      funnel: [],
     }
   },
   created() {
     this.receive_data = this.collection
+    this.id_collection = this.collection.id
+
     for(let i = 0; i < this.funnels.length; i++){
-      let id = this.funnels[i].id;
+      let id = this.funnels[i].collection_id;
+      console.log(id, this.funnels[i].collection_id)
+      if (id === this.id_collection){
+        this.funnel.push(this.funnels[i])
+      }
     }
+    console.log(this.funnel)
   },
   methods: {
     OpenModal()
@@ -147,7 +157,7 @@ h1 {
 .group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: left;
 }
 
 .create h3 {

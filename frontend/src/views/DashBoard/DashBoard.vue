@@ -47,7 +47,7 @@
             <div v-for="collection in collections.collections"><Collection :funnels="funnels" :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @OpenModal="ShowInfo" /></div>
           </div>
           <div class="page" >
-            <div class="center-page">
+            <div class="center-page" v-if="collections.length > 1">
               <div class="changepage"><p>Anterior</p></div>
               <div class="changepage"><p>Proxima</p></div>
             </div>
@@ -167,8 +167,9 @@ export default {
   },
   created() {
     this.ShowUser();
-    this.GetCollection();
     this.GetFunnels()
+    this.GetCollection();
+
   },
 };
 </script>
