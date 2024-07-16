@@ -2,7 +2,7 @@
 <div class="base">
   <div class="info">
     <div class="title">
-      <div>{{collection.name}}</div>
+      <div>aaa</div>
       <div class="more-info" @click="OpenModal"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
@@ -17,6 +17,7 @@
 </template>
 <script>
 import Funil from './Funil.vue';
+import index from "vuex";
 export default {
   components: { Funil },
   name: 'Collection',
@@ -45,11 +46,12 @@ export default {
       desc_collection: '',
       color_collection: '',
       id_collection: '',
-      data: []
+      data: [],
+      receive_data: [],
     }
   },
   created() {
-
+    this.receive_data = this.collection
   },
   methods: {
     OpenModal()
