@@ -2,7 +2,7 @@
 <div class="base">
   <div class="info">
     <div class="title">
-      <div>{{collection.name}}</div>
+      <div>aaa</div>
       <div class="more-info" @click="OpenModal"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
@@ -17,6 +17,7 @@
 </template>
 <script>
 import Funil from './Funil.vue';
+import index from "vuex";
 export default {
   components: { Funil },
   name: 'Collection',
@@ -45,14 +46,12 @@ export default {
       desc_collection: '',
       color_collection: '',
       id_collection: '',
-      data: []
+      data: [],
+      receive_data: [],
     }
   },
   created() {
-    this.name_collection = this.collection.name;
-    this.desc_collection = this.collection.description;
-    this.color_collection = this.collection.color;
-    this.id_collection = this.collection.id;
+    this.receive_data = this.collection
   },
   methods: {
     OpenModal()
@@ -72,7 +71,7 @@ export default {
       console.log('Evento ShowFunil emitido'); // Adicione este log
       this.$emit('ShowFunil');
     },
-  }
+  },
 }
 </script>
 
@@ -126,10 +125,10 @@ h1 {
     background-color: #FEBC28;
     padding: 5px 15px;
     border-radius: 8px;
-    color: white;
     font-size: 17px;
     margin-top: 17px;
-    margin-left: 27px;
+    margin-left: 15px;
+  font-weight: bold;
 }
 
 .title img {
