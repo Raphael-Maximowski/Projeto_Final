@@ -9,16 +9,21 @@ class Funnel extends Model
 {
     use HasFactory;
 
-    public $guarded = [];
+    protected $guarded = []; 
 
     public function users()
     {
-        return $this->belongsToMany(User::class); //um funil pode pertencer a vários usuários
+        return $this->belongsToMany(User::class); // um funil pode pertencer a vários usuários
     }
 
-    public function collections()
+    public function collection()
     {
-        return $this->belongsToMany(Collection::class); //um funil pode estar associado a várias coleções
+        return $this->belongsTo(Collection::class); // um funil pertence a uma coleção
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
     }
 }
 
