@@ -107,11 +107,18 @@ export const UpdateFunnel = async(data) => {
 export const DeleteFunnel = async(data) => {
     const token = store.getters.user_token;
     const id = data.id
-    console.log(id)
     const headers = {
         Authorization: `Bearer ${token}`}
     const url = `funnels/${id}`;
     const response = await HttpService.delete(url, {headers})
+    return response;
+}
+
+export const SearchFunnel = async(data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`}
+    const response = await HttpService.post('funnels/search', data,{headers})
     return response;
 }
 

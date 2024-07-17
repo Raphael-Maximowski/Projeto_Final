@@ -66,7 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('funnels/{id}', [FunnelController::class, 'show']);
     Route::patch('funnels/{id}', [FunnelController::class, 'update']);
     Route::delete('funnels/{id}', [FunnelController::class, 'destroy']);
-    Route::post('funnels/search', [FunnelController::class, 'search']); // Rota para busca de funis
+    Route::post('funnels/search', [FunnelController::class, 'search']);
 });
 
 Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"

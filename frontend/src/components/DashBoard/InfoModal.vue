@@ -130,7 +130,7 @@ export default{
   }
 }
 </script>
-<style>
+<style scoped>
 .modal3 {
   position: absolute;
   background: rgba(0, 0, 0, 0.384);

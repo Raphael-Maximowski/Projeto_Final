@@ -5,7 +5,7 @@
   </div>
 
 </template>
-<style>
+<style scoped>
 .active {
   display: flex;
   overflow: hidden;

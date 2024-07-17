@@ -130,6 +130,7 @@ h1 {
 
 .title {
   margin-top: 15px;
+  margin-left: 1.5vw;
   height: 50px;
   width: 94vw;
   display: flex;
