@@ -15,6 +15,7 @@
   font-family: Arial, Helvetica, sans-serif;
   padding: 7px 0px;
   font-weight: bold;
+  margin-top: 20px;
 }
 </style>
 <script>

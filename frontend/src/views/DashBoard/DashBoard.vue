@@ -175,10 +175,10 @@ export default {
 
   },
   created() {
-    this.GetFunnels()
+    this.GetFunnels().then(() => {
+      this.GetCollection();
+    })
     this.ShowUser();
-    this.GetCollection();
-
   },
 };
 </script>
@@ -219,7 +219,7 @@ main {
 }
 
 .welcome {
-    width: 75vw;
+    width: 54vw;
 }
 
 .welcome h1 {
