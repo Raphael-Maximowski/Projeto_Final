@@ -2,16 +2,18 @@
   <main>
     <div><MenuDash/></div>
     <div class="content">
-
+      <div class="header">
+        <div>a</div>
+        <div>b</div>
+        <div>c</div>
+      </div>
     </div>
-
   </main>
 </template>
-
 <style scoped>
 main {
   display: flex;
-  }
+}
 
 .content {
   background-color: #F9FAFC;

@@ -121,7 +121,7 @@ hr {
   position: absolute;
   margin-left: 17vw;
   margin-top: 3px;
-  padding-right: 0.9vw;
+  padding-right: 0.8vw;
   padding-left: 0.7vw;
   padding-bottom: 2px;
   z-index: 2;

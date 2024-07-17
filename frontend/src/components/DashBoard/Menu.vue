@@ -48,6 +48,7 @@ export default {
       this.active_user = true
       this.active_team = false
       this.active_logout = false
+      this.$router.push('/UserProfile')
     },
     SetTeam(){
       this.active_dash = false
@@ -68,6 +69,10 @@ export default {
 <style scoped>
 .img img {
   width: 60px;
+}
+
+.img {
+  height: 60px;
 }
 
 
