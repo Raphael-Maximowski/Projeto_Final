@@ -103,7 +103,6 @@ export default {
           }
         } catch (error) {
           if (error.response) {
-            console.log('Status do erro:', error.response.status);
             if (error.response.status === 401) {
               this.errors.push('Credenciais Invalidas!');
             } else if (error.response.status === 403) {
@@ -120,7 +119,6 @@ export default {
         this.pass = true;
         this.errors = [];
       }, 8000);
-        console.log(this.pass)
       }
     },
     ...mapMutations(['updateUserToken'])

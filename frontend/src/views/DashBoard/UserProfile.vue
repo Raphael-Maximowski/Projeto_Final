@@ -462,7 +462,6 @@ export default {
     },
     async ShowUser() {
       const response = await GetUser();
-      console.log(response);
       this.updateUserId(response.data.id);
       this.updateUserName(response.data.name);
       this.updateUserEmail(response.data.email);

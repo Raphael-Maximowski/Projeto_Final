@@ -2,15 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FunnelController;
 use App\Models\User;
-use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ValidateEmailcontroller;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 

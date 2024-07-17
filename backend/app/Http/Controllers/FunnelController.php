@@ -51,7 +51,7 @@ class FunnelController extends Controller
         ]);
 
         $user = Auth::user();
-        $funnel = Funnel::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        $funnel = Funnel::where('id', $id)->firstOrFail();
 
         $funnel->update($request->only(['name', 'description'])); // Busca e atualiza o funil pelo ID
 
@@ -61,7 +61,7 @@ class FunnelController extends Controller
     public function destroy($id)
     {
         $user = Auth::user();
-        $funnel = Funnel::where('id', $id)->where('user_id', $user->id)->firstOrFail(); // Busca e deleta o funil pelo ID
+        $funnel = Funnel::where('id', $id)->firstOrFail(); // Busca e deleta o funil pelo ID
         $funnel->delete();
 
         return response()->json(null, 204);

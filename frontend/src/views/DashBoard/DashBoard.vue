@@ -166,8 +166,8 @@ export default {
 
   },
   created() {
-    this.ShowUser();
     this.GetFunnels()
+    this.ShowUser();
     this.GetCollection();
 
   },
