@@ -8,27 +8,27 @@ use App\Models\Collection;
 
 class CollectionController extends Controller
 {
-    public function index(Request $request)
-    {
-        $user = Auth::user();
 
-        $itemsPerPage = 5; // itens por pag
-        $page = $request->input('page', 1);
+    public function index($page = 1)
+{
+    $user = Auth::user();
+    $itemsPerPage = 5; // itens por pag
 
-        $startId = ($page - 1) * $itemsPerPage + 1;
-        $endId = $startId + $itemsPerPage - 1;
+    $collections = Collection::where('user_id', $user->id)
+        ->skip(($page - 1) * $itemsPerPage)
+        ->take($itemsPerPage)
+        ->get();
 
-        $collections = Collection::where('user_id', $user->id)->whereBetween('id', [$startId, $endId])->get();
+    $totalCollections = Collection::where('user_id', $user->id)->count();
+    $totalPages = ceil($totalCollections / $itemsPerPage);
 
-        return response()->json([
-            'current_page' => $page,
-            'start_id' => $startId,
-            'end_id' => $endId,
-            'collections' => $collections
-        ]);
-    }
-
-
+    return response()->json([
+        'current_page' => $page,
+        'total_pages' => $totalPages,
+        'collections' => $collections
+    ]);
+}
+  
     public function store(Request $request)
     {
         $request->validate([
