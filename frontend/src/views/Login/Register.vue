@@ -207,10 +207,7 @@ export default {
     };
 
       const response = await SendUser(user);
-      console.log('Resposta da API:', response);
-      console.log('Dados do usuário:', this.ValidateName, this.email, this.password); 
     } catch (error) {
-      console.error('Erro ao cadastrar usuário:', error);
     }
 
   } else {
@@ -222,7 +219,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
   * {
     margin: 0;
     padding: 0;

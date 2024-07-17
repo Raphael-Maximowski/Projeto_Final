@@ -1,11 +1,9 @@
 <template>
 <div class="base-funil">
   <div class="info-funil">
-    <div class="title">Vendas Chinelos</div>
-    <div class="images-funil">
-      <div class="part1"><img src="../../assets/images/DashBoard/funil.png"></div>
-      <div class="part2"><img src="../../assets/images/DashBoard/pontos.png"></div>
-    </div>
+    <div class="funil-img"><img src="../../assets/images/DashBoard/funil.png"></div>
+    <div class="name-funil">{{funil.name}}</div>
+    <div @click="OpenInfoFunnel" id="open-info-funnel" class="funil-img"><img src="../../assets/images/DashBoard/pontos.png"></div>
   </div>
 </div>
 </template>
@@ -13,9 +11,11 @@
 export default {
   name: 'Funil',
   props: {
-    modal4: {
-      type: Boolean,
-      default: false
+    id_collection: {
+      type: String,
+    },
+    funil: {
+      type: Object
     }
   },
   data ()
@@ -24,9 +24,8 @@ export default {
     }
   },
   methods: {
-    show_modal(){
-      this.$emit('update-modal2', !this.modal2);
-      console.log(this.modal2);
+    OpenInfoFunnel(){
+      this.$emit('OpenInformations', this.funil);
     }
   }
 }
@@ -35,50 +34,37 @@ export default {
 
 .base-funil {
     background-color: #FEBC28;
-    width: 15vw;
+    width: 12vw;
     padding: 5px 0px;
     margin: 10px 20px;
     border-radius: 10px;
 }
 
-.title {
-  width: 15vw;
-  text-align: center;
-}
-
 .info-funil {
   display: flex;
+  background-color: #FEBC28;
+  height: 25px;
 }
-
-.images-funil {
-  position: absolute;
-  width: 15vw;
+.funil-img {
+  width: 2.5vw;
+  height: 25px;
   display: flex;
-}
+  justify-content: center;
+  align-items: center;
 
-.images-funil img {
+}
+.funil-img img {
   width: 15px;
-  margin-right: 10px;
+  height: 15px;
+  z-index: 2;
 }
 
-.part1 {
-  width: 7.5vw;
+#open-info-funnel {
+  cursor: pointer;
 }
 
-.part1 img {
-  margin-left: 10px;
+.name-funil {
+  width: 7vw;
+  text-align: center;
 }
-
-.part2 {
-  width: 7.5vw;
-  display: flex;
-  justify-content: end;
-}
-
-.part2 img {
-  width: 15px;
-  height: 18px;
-  margin-top: 4px;
-}
-
 </style>

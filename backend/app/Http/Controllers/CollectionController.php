@@ -8,6 +8,7 @@ use App\Models\Collection;
 
 class CollectionController extends Controller
 {
+
     public function index($page = 1)
 {
     $user = Auth::user();
@@ -27,7 +28,7 @@ class CollectionController extends Controller
         'collections' => $collections
     ]);
 }
-
+  
     public function store(Request $request)
     {
         $request->validate([
@@ -86,8 +87,8 @@ class CollectionController extends Controller
 
     public function destroy($id, Request $request)
     {
-        $user = Auth::user();
-        $collection = Collection::where('user_id', $user->id)->where('id', $id)->first();
+        $collection = Collection::where('id', $id)->first();
+
 
         if ($collection) {
             $collection->delete();

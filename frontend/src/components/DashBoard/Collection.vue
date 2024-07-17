@@ -3,7 +3,7 @@
   <div class="info">
     <div class="title">
       <div>{{collection.name}}</div>
-      <div class="more-info" @click="showinfo"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
+      <div class="more-info" @click="OpenInfoCollection"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
       <div class="funil" @click="showfunil">
@@ -12,11 +12,15 @@
     </div>
   </div>
   <div class="group">
+    <div v-for="funil in funnel">
+      <Funil @OpenInformations="OpenInformations" :funil="funil"/>
+    </div>
   </div>
 </div>
 </template>
 <script>
 import Funil from './Funil.vue';
+import index from "vuex";
 export default {
   components: { Funil },
   name: 'Collection',
@@ -34,43 +38,71 @@ export default {
       type: Object,
       required: true
     },
+    funnels: {
+      type: Object
+    }
   },
 
   data ()
   {
     return {
-      name_collection : '',
-      desc_collection: '',
-      color_collection: '',
+      open_info: true,
+      open_info_collection: true,
+      name : '',
+      desc: '',
+      color: '',
       id_collection: '',
+      data: [],
+      receive_data: [],
+      funnel: [],
     }
   },
   created() {
-    this.name_collection = this.collection.name;
-    this.desc_collection = this.collection.description;
-    this.color_collection = this.collection.color;
-    this.id_collection = this.collection.id;
+    this.receive_data = this.collection
+    this.id_collection = this.collection.id
+
+    for(let i = 0; i < this.funnels.length; i++){
+      let id = this.funnels[i].collection_id;
+      if (id === this.id_collection){
+        this.funnel.push(this.funnels[i])
+      }
+    }
   },
   methods: {
-    showData(){
-      const data = [
-          this.name_collection,
-          this.desc_collection,
-          this.color_collection,
-          this.id_collection
-      ]
-      this.$emit('values_collection', data);
+    OpenModal()
+    {
+      this.$emit('OpenModal', this.data)
     },
     showfunil() {
-      console.log('Evento ShowFunil emitido'); // Adicione este log
-      this.$emit('ShowFunil');
+      this.id_collection = this.collection.id
+      this.$emit('ShowFunil', this.id_collection);
     },
-    showinfo()
-    {
-      this.$emit('update-modal3', !this.modal3);
-      this.showData();
+    OpenInformations(value){
+      const values = value
+      this.data = [
+          this.name =  values.name,
+          this.desc  = values.description,
+          this.color = this.collection.color,
+          this.id_collection = this.collection.id,
+          this.open_info,
+        this.open_info_collection = false,
+        this.id_funil = values.id
+      ]
+      this.OpenModal()
+    },
+    OpenInfoCollection(){
+      this.data = [
+        this.name = this.collection.name,
+        this.desc = this.collection.description,
+        this.color = this.collection.color,
+        this.id_collection = this.collection.id,
+        this.open_info,
+        this.open_info_collection = true
+      ]
+      this.OpenModal()
     }
-  }
+  },
+
 }
 </script>
 
@@ -98,6 +130,7 @@ h1 {
 
 .title {
   margin-top: 15px;
+  margin-left: 1.5vw;
   height: 50px;
   width: 94vw;
   display: flex;
@@ -118,16 +151,16 @@ h1 {
 .funil {
   cursor: pointer;
   margin-top: 15px;
+  margin-right: 1vw;
 }
 
 .funil p {
     background-color: #FEBC28;
     padding: 5px 15px;
     border-radius: 8px;
-    color: white;
     font-size: 17px;
     margin-top: 17px;
-    margin-left: 27px;
+    margin-left: 15px;
 }
 
 .title img {
@@ -139,6 +172,7 @@ h1 {
 .group {
   display: flex;
   flex-wrap: wrap;
+  justify-content: left;
 }
 
 .create h3 {
@@ -179,5 +213,8 @@ label {
   margin-bottom: 1000px;
 }
 
+.more-info {
+  cursor:pointer;
+}
 
 </style>
