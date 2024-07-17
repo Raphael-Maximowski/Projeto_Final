@@ -3,7 +3,7 @@
   <div class="info-funil">
     <div class="funil-img"><img src="../../assets/images/DashBoard/funil.png"></div>
     <div class="name-funil">{{funil.name}}</div>
-    <div id="open-info-funnel" class="funil-img"><img src="../../assets/images/DashBoard/pontos.png"></div>
+    <div @click="OpenInfoFunnel" id="open-info-funnel" class="funil-img"><img src="../../assets/images/DashBoard/pontos.png"></div>
   </div>
 </div>
 </template>
@@ -24,6 +24,9 @@ export default {
     }
   },
   methods: {
+    OpenInfoFunnel(){
+      this.$emit('OpenInformations', this.funil);
+    }
   }
 }
 </script>
@@ -37,49 +40,12 @@ export default {
     border-radius: 10px;
 }
 
-.title {
-  width: 15vw;
-  text-align: center;
-}
-
 .info-funil {
   display: flex;
   background-color: #FEBC28;
   height: 25px;
 }
-
-.images-funil {
-  position: absolute;
-  width: 15vw;
-  display: flex;
-}
-
-.images-funil img {
-  width: 15px;
-  margin-right: 10px;
-}
-
-.part1 {
-  width: 7.5vw;
-}
-
-.part1 img {
-  margin-left: 10px;
-}
-
-.part2 {
-  width: 7.5vw;
-  display: flex;
-  justify-content: end;
-}
-
-.part2 img {
-  width: 15px;
-  height: 18px;
-  margin-top: 4px;
-}
 .funil-img {
-
   width: 2.5vw;
   height: 25px;
   display: flex;
@@ -98,7 +64,6 @@ export default {
 }
 
 .name-funil {
-
   width: 7vw;
   text-align: center;
 }

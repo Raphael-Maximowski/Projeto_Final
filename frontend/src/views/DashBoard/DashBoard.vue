@@ -40,14 +40,22 @@
                 <h1>Bem vindo ao seu Customer Relationship Management</h1>
                 <p>Comece criando sua coleção</p>
             </div>
+          <div><SearchBar/></div>
             <div class="create" @click="ActiveModal"><p>Nova Coleção</p></div>
         </div>
       <div class="outer">
           <div class="funis">
-            <div v-for="collection in collections.collections"><Collection :funnels="funnels" :collection="collection" @ShowFunil="ActiveFunil" @values_collection="DataCollection" @OpenModal="ShowInfo" /></div>
+            <div v-for="collection in collections.collections">
+              <Collection
+                  :funnels="funnels"
+                  :collection="collection"
+                  @ShowFunil="ActiveFunil"
+                  @values_collection="DataCollection"
+                  @OpenModal="ShowInfo" />
+            </div>
           </div>
           <div class="page" >
-            <div class="center-page" v-if="collections.length > 1">
+            <div class="center-page">
               <div class="changepage"><p>Anterior</p></div>
               <div class="changepage"><p>Proxima</p></div>
             </div>
@@ -73,13 +81,14 @@ import MenuDash from "@/components/DashBoard/Menu.vue";
 import InfoModal from "@/components/DashBoard/InfoModal.vue";
 import Alert from "@/components/Login/Alert.vue";
 import collection from "@/components/DashBoard/Collection.vue";
+import SearchBar from "@/components/DashBoard/SearchBar.vue";
 export default {
   computed: {
     collection() {
       return collection
     }
   },
-  components: {Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
+  components: {SearchBar, Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
   data() {
     return {
       modal: false,
@@ -166,8 +175,8 @@ export default {
 
   },
   created() {
-    this.ShowUser();
     this.GetFunnels()
+    this.ShowUser();
     this.GetCollection();
 
   },

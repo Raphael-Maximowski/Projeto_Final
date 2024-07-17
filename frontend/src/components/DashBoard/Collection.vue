@@ -3,7 +3,7 @@
   <div class="info">
     <div class="title">
       <div>{{collection.name}}</div>
-      <div class="more-info" @click="OpenModal"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
+      <div class="more-info" @click="OpenInfoCollection"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
       <div class="funil" @click="showfunil">
@@ -13,7 +13,7 @@
   </div>
   <div class="group">
     <div v-for="funil in funnel">
-      <Funil :funil="funil"/>
+      <Funil @OpenInformations="OpenInformations" :funil="funil"/>
     </div>
   </div>
 </div>
@@ -48,9 +48,9 @@ export default {
     return {
       open_info: true,
       open_info_collection: true,
-      name_collection : '',
-      desc_collection: '',
-      color_collection: '',
+      name : '',
+      desc: '',
+      color: '',
       id_collection: '',
       data: [],
       receive_data: [],
@@ -63,30 +63,44 @@ export default {
 
     for(let i = 0; i < this.funnels.length; i++){
       let id = this.funnels[i].collection_id;
-      console.log(id, this.funnels[i].collection_id)
       if (id === this.id_collection){
         this.funnel.push(this.funnels[i])
       }
     }
-    console.log(this.funnel)
   },
   methods: {
     OpenModal()
     {
-      this.data = [
-        this.name_collection = this.collection.name,
-        this.desc_collection = this.collection.description,
-        this.color_collection = this.collection.color,
-        this.id_collection = this.collection.id,
-        this.open_info,
-        this.open_info_collection,
-      ]
       this.$emit('OpenModal', this.data)
     },
     showfunil() {
       this.id_collection = this.collection.id
       this.$emit('ShowFunil', this.id_collection);
     },
+    OpenInformations(value){
+      const values = value
+      this.data = [
+          this.name =  values.name,
+          this.desc  = values.description,
+          this.color = this.collection.color,
+          this.id_collection = this.collection.id,
+          this.open_info,
+        this.open_info_collection = false,
+        this.id_funil = values.id
+      ]
+      this.OpenModal()
+    },
+    OpenInfoCollection(){
+      this.data = [
+        this.name = this.collection.name,
+        this.desc = this.collection.description,
+        this.color = this.collection.color,
+        this.id_collection = this.collection.id,
+        this.open_info,
+        this.open_info_collection = true
+      ]
+      this.OpenModal()
+    }
   },
 
 }
@@ -116,6 +130,7 @@ h1 {
 
 .title {
   margin-top: 15px;
+  margin-left: 1.5vw;
   height: 50px;
   width: 94vw;
   display: flex;

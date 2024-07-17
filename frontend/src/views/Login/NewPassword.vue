@@ -144,9 +144,7 @@ export default {
 
             const response = await SendPassword(data);
               this.succes = true;
-            console.log('Resposta da API:', response);
             } catch (error) {
-            console.error('Erro ao Trocar Password:', error);
           }
         }
 
@@ -163,7 +161,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   * {
     margin: 0;
     padding: 0;

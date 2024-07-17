@@ -2,15 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FunnelController;
 use App\Models\User;
-use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\ValidateEmailcontroller;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 
@@ -69,7 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('funnels/{id}', [FunnelController::class, 'show']);
     Route::patch('funnels/{id}', [FunnelController::class, 'update']);
     Route::delete('funnels/{id}', [FunnelController::class, 'destroy']);
-    Route::post('funnels/search', [FunnelController::class, 'search']); // Rota para busca de funis
+    Route::post('funnels/search', [FunnelController::class, 'search']);
 });
 
 Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"

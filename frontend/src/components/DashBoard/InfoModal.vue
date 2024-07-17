@@ -45,7 +45,7 @@
   </div>
 </template>
 <script>
-import HttpService, {DeleteCollection, UpdateCollection} from "@/services/HttpService.js";
+import HttpService, {DeleteCollection, DeleteFunnel, UpdateCollection, UpdateFunnel} from "@/services/HttpService.js";
 import store from '../../store/index.js';
 
 export default{
@@ -84,23 +84,45 @@ export default{
       this.Edit = !this.Edit
     },
     async SendData(){
-      const data = {
-        user_id: store.getters.user_id,
-        id: this.data_collection[3],
-        name : this.name,
-        description : this.description,
-        color : this.color,
+      if (this.ValidateCollection){
+        const data = {
+          user_id: store.getters.user_id,
+          id: this.data_collection[3],
+          name : this.name,
+          description : this.description,
+          color : this.color,
+        }
+        const response = await UpdateCollection(data)
+        return response;
+      } else {
+        const data = {
+          user_id: store.getters.user_id,
+          id: this.data_collection[6],
+          name : this.name,
+          description : this.description,
+        }
+        const response = await UpdateFunnel(data);
+        return response;
       }
-      const response = await UpdateCollection(data)
-      return response;
+
     },
     async DeleteInfo(){
-      const data = {
-        user_id : store.getters.user_id,
-        id: this.data_collection[3],
+      if (this.ValidateCollection){
+        const data = {
+          user_id : store.getters.user_id,
+          id: this.data_collection[3],
+        }
+        const response = await DeleteCollection(data)
+        return response;
+      } else {
+        const data = {
+          user_id : store.getters.user_id,
+          id: this.data_collection[6],
+        }
+        const response = await DeleteFunnel(data);
+        return response;
       }
-      const response = await DeleteCollection(data)
-      return response;
+
     }
   },
   created(){
@@ -108,7 +130,7 @@ export default{
   }
 }
 </script>
-<style>
+<style scoped>
 .modal3 {
   position: absolute;
   background: rgba(0, 0, 0, 0.384);
@@ -210,7 +232,7 @@ export default{
 .content-info p {
   margin-left: 1.7vw;
   margin-bottom: 20px;
-  font-size: 12px;
+  font-size: 15px;
   margin-right: 40px;
 }
 
@@ -235,8 +257,8 @@ input[type="text"] {
   margin-bottom: 15px;
   width: 20vw;
   border-radius: 5px;
-  border: 1px solid black;
-  font-size: 9px;
+  border: 1px solid grey;
+  font-size: 13px;
   padding: 5px 0px;
   padding-left: 10px;
   color: grey;

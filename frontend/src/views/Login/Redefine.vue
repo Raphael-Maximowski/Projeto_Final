@@ -73,7 +73,6 @@
           try {
             const data = {email: this.email};
             const response = await ResetPassword(data);
-            console.log('Status da resposta:', response.status);
             this.succes = true;
           } catch (error) {
               if (error.response.status === 404) {
@@ -101,7 +100,7 @@
 
 
 
-<style>
+<style scoped>
     * {
       margin: 0;
       padding: 0;
