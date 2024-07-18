@@ -14,7 +14,7 @@ return new class extends Migration
             $table->integer('posicao');
             $table->timestamps();
 
-            $table->foreignId('funnels')->constrained()->onDelete('cascade');
+            $table->foreignId('funnel_id')->constrained()->onDelete('cascade');
 
     });
     }
