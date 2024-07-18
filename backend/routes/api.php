@@ -10,6 +10,9 @@ use App\Models\User;
 use App\Http\Controllers\ValidateEmailcontroller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\StepController;
+use App\Http\Controllers\ContactController;
+
 
 
 
@@ -87,4 +90,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/{teamId}/add-collection/{collectionId}', [TeamController::class, 'addCollectionToTeam']);
         Route::delete('/teams/{teamId}/remove-collection/{collectionId}', [TeamController::class, 'removeCollectionFromTeam']);
     });
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Rotas para etapas
+    Route::get('steps', [StepController::class, 'index']);
+    Route::post('steps', [StepController::class, 'store']);
+    Route::get('steps/{id}', [StepController::class, 'show']);
+    Route::put('steps/{id}', [StepController::class, 'update']);
+    Route::delete('steps/{id}', [StepController::class, 'destroy']);
+
+    // Rotas para contatos
+    Route::get('contacts', [ContactController::class, 'index']);
+    Route::post('contacts', [ContactController::class, 'store']);
+    Route::get('contacts/{id}', [ContactController::class, 'show']);
+    Route::put('contacts/{id}', [ContactController::class, 'update']);
+    Route::delete('contacts/{id}', [ContactController::class, 'destroy']);
 });
