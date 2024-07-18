@@ -23,6 +23,6 @@ class Contact extends Model
 
     public function step()
     {
-        return $this->belongsTo(Step::class);
+        return $this->belongsTo(Step::class, 'step_id');
     }
 }
