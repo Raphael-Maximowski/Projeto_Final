@@ -3,9 +3,7 @@
     <div><MenuDash/></div>
     <div class="content">
       <div class="header">
-        <div>a</div>
-        <div>b</div>
-        <div>c</div>
+        <DashFunil/>
       </div>
     </div>
   </main>
@@ -25,8 +23,9 @@ main {
 
 import {defineComponent} from "vue";
 import MenuDash from "@/components/DashBoard/Menu.vue";
+import DashFunil from "@/components/Funil/DashFunil.vue";
 
 export default defineComponent({
-  components: {MenuDash}
+  components: {DashFunil, MenuDash}
 })
 </script>

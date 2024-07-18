@@ -22,7 +22,7 @@ import Etapa from "@/components/Funil/Etapa.vue";
 import index from "vuex";
 import {GetFunnel} from "@/services/HttpService.js";
 export default {
-  name: "table-column-example",
+  name: "DashFunil",
   computed: {
     index() {
       return index
