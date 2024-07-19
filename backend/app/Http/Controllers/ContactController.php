@@ -38,6 +38,7 @@ class ContactController extends Controller
     }
 
     public function update(Request $request, $id)
+
 {
     $request->validate([
         'posicao' => 'required|integer',
@@ -78,10 +79,5 @@ class ContactController extends Controller
     return response()->json($contact);
 }
 
-    public function destroy($id)
-    {
-        Contact::destroy($id);
-        return response()->json(null, 204);
-    }
 }
 

@@ -62,4 +62,5 @@ export default {
 th {
   width: 100px;
 }
+
 </style>

@@ -56,8 +56,7 @@
   cursor: pointer;
 }
 .body {
-  width: 267px;
-  height: 75vh;
+
   background-color: #ededef;
   overflow-x: auto;
   font-weight: lighter;
