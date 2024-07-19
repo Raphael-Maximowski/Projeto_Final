@@ -39,8 +39,34 @@ class StepController extends Controller
             'funnel_id' => 'exists:funnels,id',
         ]);
 
+        $newPosition = $request->posicao;
         $step = Step::findOrFail($id);
-        $step->update($request->all());
+        $funnelId = $request->funnel_id;
+        $oldPosition = $step->posicao;
+
+        if ($newPosition == $oldPosition) {
+            return response()->json($step);
+        }
+        
+        $rest = Step::where('funnel_id', $funnelId)->orderBy('posicao')->get();
+
+        for ($i = 0; $i < count($rest); $i++) {
+            if ($rest[$i]->id == $id) {
+                continue;
+            }
+            if ($oldPosition < $newPosition) {
+                if ($rest[$i]->posicao > $oldPosition && $rest[$i]->posicao <= $newPosition) {
+                    $rest[$i]->posicao--;
+                    $rest[$i]->save();
+                }
+            } else {
+                if ($rest[$i]->posicao >= $newPosition && $rest[$i]->posicao < $oldPosition) {
+                    $rest[$i]->posicao++;
+                    $rest[$i]->save();
+                }
+            }
+        }
+        $step->update(['posicao' => $newPosition]);
         return response()->json($step);
     }
 
