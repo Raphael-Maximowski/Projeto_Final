@@ -1,89 +1,69 @@
 <template>
-  <div class="body">
+  <div class="teste">
     <div class="line"></div>
-    <div class="info">
-      Teste
-      <div class="img"><img src="../../assets/images/Funil/mais.png"></div>
+    <div class="content">
+      <div class="title">{{ dados.name }}</div>
     </div>
-    <div class="col-6">
+    <div class="cards">
       <draggable
-          :list="dados"
-          :disabled="!enabled"
-          item-key="Nome"
-          class="list-group"
+          v-model="cards"
+          group="cards"
+          item-key="id"
+          drag-class="drag"
           ghost-class="ghost"
-          :move="checkMove"
-          @start="dragging = true"
-          @end="dragging = false"
       >
-        <template #item="{ element }">
-          <div >
-            <Contato :dados="element"/>
-          </div>
+        <template #item="{element}">
+          <ContatoCard/>
         </template>
       </draggable>
     </div>
   </div>
 </template>
+<style scoped>
 
-<style>
-.info{
-  display: flex;
-  margin-top: 10px;
-  justify-content: space-between;
-  padding: 0px 10px;
-  font-weight: bold;
-}
-
-.img {
-  background-color: #4b5563;;
-  height: 25px;
-  width: 25px;
-  border-radius: 5px;
+.cards {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
-
-.info img {
-  width: 20px;
+.title {
+  font-size: 18px;
+  font-weight: bold;
 }
-.line{
-  background-color: #4b5563;
+.content {
+  margin: 10px 15px 10px 15px;
+}
+.line {
+  background-color: rgba(255, 186, 39, 0.55);
   width: 250px;
   height: 10px;
-  border-radius: 20px;
-  cursor: pointer;
+  border-radius: 50px;
 }
-.body {
+.teste {
+  width: 250px;
+  height: 79.9vh;
 
-  background-color: #ededef;
-  overflow-x: auto;
-  font-weight: lighter;
+  overflow-y: auto;
 
 }
 </style>
 <script>
+import ContatoCard from "@/components/Funil/Contato.vue";
 import draggable from 'vuedraggable';
-import Contato from "@/components/Funil/Contato.vue";
-let id = 1;
-export default {
 
-  components: {
-    Contato,
-    draggable
+export default {
+  name: 'etapa',
+  components: {ContatoCard, draggable},
+  props: {
+    dados: {
+      type:Object
+    },
   },
-  data() {
-    return {
-      enabled: true,
-      dados: [
-        { Nome: "Raphael", Price: "1235" },
-        { Nome: "Pedro", Price: "1099" },
-        { Nome: "João", Price: "5097" },
-        { Nome: "Claudio", Price: "12.410" }
-      ],
-      dragging: false
-    };
-  },
-};
+  data(){
+    return{
+      cards: [
+        1,2,3,4,5
+      ]
+    }
+  }
+}
 </script>

@@ -20,7 +20,7 @@
         </div>
       </div>
       <div>
-
+        <Draggable/>
       </div>
     </div>
   </main>
@@ -99,9 +99,9 @@ main {
 import {defineComponent} from "vue";
 import MenuDash from "@/components/DashBoard/Menu.vue";
 import SearchBar from "@/components/DashBoard/SearchBar.vue";
-import DashFunil from "@/components/Funil/DashFunil.vue";
+import Draggable from "@/components/Funil/Draggable.vue";
 
 export default defineComponent({
-  components: {DashFunil, SearchBar, MenuDash}
+  components: {Draggable, SearchBar, MenuDash}
 })
 </script>

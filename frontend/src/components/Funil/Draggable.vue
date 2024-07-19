@@ -1,19 +1,27 @@
 <template>
-  <div class="row">
-    <div class="col-8">
-      <table class="table table-striped">
-        <thead class="thead-dark">
-        <draggable v-model="headers" tag="tr" :item-key="key => key" handle=".line">
-          <template #item="{ element: header }">
-            <th scope="col">
-              <Etapa :data="header"></Etapa>
-            </th>
-          </template>
-        </draggable>
-        </thead>
-      </table>
+  <main>
+    <div class="dash">
+      <div class="row">
+        <div class="col-8">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+            <draggable
+                v-model="headers"
+                tag="tr"
+                :item-key="key => key" handle=".line">
+
+              <template #item="{ element: header }">
+                <th scope="col">
+                  <Etapa :dados="header"></Etapa>
+                </th>
+              </template>
+            </draggable>
+            </thead>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -58,9 +66,19 @@ export default {
   }
 };
 </script>
+
 <style scoped>
-th {
-  width: 100px;
+.dash {
+  width: 90vw;
+  height: 85vh;
+  overflow-x: auto;
 }
 
+main {
+  width: 95.5vw;
+  height: 91.3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
