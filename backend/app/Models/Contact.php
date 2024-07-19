@@ -25,4 +25,10 @@ class Contact extends Model
     {
         return $this->belongsTo(Step::class, 'step_id');
     }
+
+    public function updateStep($request)
+    {
+        $this->step_id = $request['step_id'];
+        $this->save();
+    }
 }

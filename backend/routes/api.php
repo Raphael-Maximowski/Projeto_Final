@@ -97,7 +97,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('steps', [StepController::class, 'index']);
     Route::post('steps', [StepController::class, 'store']);
     Route::get('steps/{id}', [StepController::class, 'show']);
-    Route::put('steps/{id}', [StepController::class, 'update']);
+    Route::patch('steps/{id}', [StepController::class, 'update']);
     Route::delete('steps/{id}', [StepController::class, 'destroy']);
 
     // Rotas para contatos
@@ -105,5 +105,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('contacts', [ContactController::class, 'store']);
     Route::get('contacts/{id}', [ContactController::class, 'show']);
     Route::patch('contacts/{id}', [ContactController::class, 'update']);
+    Route::patch('contacts/cross/{id}', [ContactController::class, 'updateStep']);
     Route::delete('contacts/{id}', [ContactController::class, 'destroy']);
 });
