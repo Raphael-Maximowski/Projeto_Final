@@ -60,7 +60,7 @@ const router = createRouter({
     {
       path: '/Funil',
       name: 'Funil',
-      component: () => import('../views/Funil/DashBoard_Funil.vue')
+      component: () => import('../views/Funil/Funil.vue')
     }
   ]
 })

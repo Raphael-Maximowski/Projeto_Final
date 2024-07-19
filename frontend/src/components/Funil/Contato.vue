@@ -1,49 +1,55 @@
 <template>
-  <main>
-    <div class="name"><p>{{dados.Nome}}</p></div>
-    <div class="price">R${{dados.Price}}</div>
-  </main>
+  <div class="maincard">
+    <div class="contentcard">
+      <div class="name" >Raphael Maximowski</div>
+      <div class="value">R$ 1250,90</div>
+    </div>
+
+  </div>
 </template>
-<style>
+<script>
+export default {
+  name: 'ContatoCard'
+}
+</script>
+<style scoped>
 * {
-  font-family: Arial;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.name p {
-  margin-top: 10px;
-}
 .name {
-  padding-top: 1px;
-  margin-top: 10px;
-  height: 70px;
-  font-size: 15px;
+  padding-top: 10px;
+  font-weight: normal;
+  font-size: 14px;
 }
 
-.price {
+.value {
+  padding-top: 18px;
+  font-weight: normal;
   font-size: 13px;
-  color: #8ea9c7;
-  font-weight: bold;
+  color: grey;
 }
 
-main {
-  background-color: white;
-  margin: 15px 10px;
-  border-radius: 8px;
-  padding: 0px 10px;
-  width: 230px;
-  height: 100px;
-  cursor: pointer;
+.contentcard{
+  margin-left: 10px;
+
+}
+.maincard {
+  margin-top: 10px;
+  height: 80px;
+  border-radius: 10px;
+  width: 218px;
+  border: 1px solid rgba(211, 211, 211, 0.51);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.drag{
+  transform: rotate(10deg);
+}
+
+.ghost {
+  background-color: lightgray;
+  border-radius: 6px;
   z-index: 1000;
 }
 </style>
-<script>
-export default {
-  name: 'Contato',
-  props:{
-    dados:{type:Object}
-  },
-  created(){
-    console.log(this.dados)
-  }
-}
-</script>
