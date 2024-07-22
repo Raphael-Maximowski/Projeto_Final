@@ -11,6 +11,7 @@
           item-key="id"
           drag-class="drag"
           ghost-class="ghost"
+          animation="350"
       >
         <template #item="{element}">
           <ContatoCard/>
