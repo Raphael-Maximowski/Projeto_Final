@@ -2,179 +2,227 @@
   <div class="modalcontato">
     <div class="content">
       <div class="header">
-        <div class="button">
-          <div class="back"><p><</p></div>
-          <div class="text">Voltar</div>
+        <div class="displayheader">
+          <div @click="CloseModal" class="closemodal" >
+            <img src="../../assets/images/Funil/seta.png">
+          </div>
+          <div><h1>Voltar</h1></div>
         </div>
-        <div class="create"><p>Criar Contato</p></div>
+        <div><p>Criar Contato</p></div>
       </div>
-      <div class="name">
-        <div class="contentname">
-          <div class="insertname"><p>Nome do Contato</p></div>
-          <hr>
-          <div class="funil">
-            <p>Nome do Funil</p>
-            <div class="etapas">
-              <div class="etapa" id="border1">Sem Etapa</div>
-              <div class="etapa">Prospecção</div>
-              <div class="etapa">Contato</div>
-              <div class="etapa" id="border2">Proposta</div>
+      <div class="body">
+        <div class="contentbody">
+          <div class="base">
+            <div class="title">Nome do Contato</div>
+            <hr>
+            <div class="basecontent">
+              <div><p>Nome do Funil</p></div>
+              <div class="funil">
+                <div id="border1" >Sem Etapa</div>
+                <div class="etapa">Prospecção</div>
+                <div class="etapa">Contato</div>
+                <div id="border2">Proposta</div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="contato">
-        <div class="contentcontato">
-          <div class="insertname">
-            <div class="rotate"><</div>
-              <p>Contatos</p>
+          <div class="base" >
+            <div style="display: flex">
+              <div v-if="!contato" @click="opencontato" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(90deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div v-if="contato" @click="opencontato" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(270deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div class="title">Contatos</div>
+            </div>
+            <div v-if="contato" class="basecontent">
+              <div class="contato">
+                <div class="titlecontact">Telefone:</div>
+                <div class="contentcontact">Adicionar Numero</div>
+              </div>
+              <div class="contato">
+                <div class="titlecontact">E-mail:</div>
+                <div class="contentcontact">Adicionar E-mail</div>
+              </div>
+            </div>
           </div>
+          <div class="base">
+            <div style="display: flex">
+              <div v-if="!dados" @click="opendados" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(90deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div v-if="dados" @click="opendados" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(270deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div class="title">Dados</div>
+            </div>
+            <div v-if="dados" class="basecontent">
+              <div class="contato">
+                <div class="titlecontact">CPF:</div>
+                <div class="contentcontact">000.000.000-00</div>
+              </div>
+              <div class="contato">
+                <div class="titlecontact">Data de<br>nascimento:</div>
+                <div class="contentcontact" style="margin-top: 12px">DD/MM/AAAA</div>
+              </div>
+              <div class="contato">
+                <div class="titlecontact">Endereço:</div>
+                <div class="contentcontact">-</div>
+              </div>
+              <div class="contato">
+                <div class="titlecontact">Valor:</div>
+                <div class="contentcontact">R$ 0,00</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'ModalContato',
+  data(){
+    return{
+      contato : false,
+      dados: false
+    }
+  },
+  methods: {
+    CloseModal(){
+      this.$emit('CloseModal')
+    },
+    opencontato(){
+      this.contato =  !this.contato
+    },
+    opendados(){
+      this.dados =  !this.dados
+    }
+  }
+}
+</script>
+
 <style scoped>
-
-.rotate {
-  color: #3D3D58;
-  font-weight: bold;
-  margin-top: 6px;
-  font-size: 30px;
-  margin-left: 20px;
-  transform: rotate(270deg); /* Rotaciona a div em 45 graus */
-  cursor: pointer;
-}
-
-.contentcontato{
-    background-color: white;
-    border: 1px solid lightgray;
-    width: 37vw;
-    border-radius: 10px;
-}
 .contato {
-  margin-top: 20px;
-  width: 40vw;
+  display: flex;
+  margin-bottom: 10px;
+}
+.titlecontact {
+  color: #575778;
+  width: 7vw;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.contentcontact {
+  color: #677c92;
+  cursor: pointer;
+
+}
+#border2 {
+  padding: 3px 0px;
+  width: 7.8vw;
+  background-color: #f4f5f8;
+  text-align: center;
+  border-radius: 5px 20px 20px 0px;
   display: flex;
   justify-content: center;
+  color: grey;
 }
+
 #border1 {
-  border-radius: 20px 10px 10px 20px;
-}
-
-#border2 {
-  border-radius: 10px 20px 20px 10px;
-}
-
-.etapa {
-  width: 8.3vw;
-  color: #a4a4aa;
-  padding: 3px 0px;
+  width: 7.8vw;
+  background-color: #e1e9f4;
+  color: #677c92;;
   text-align: center;
-  background-color: #f3f6fb;
-}
-.etapas {
+  border-radius: 20px 5px 5px 20px;
   display: flex;
-  justify-content: space-between;
-  width: 34.5vw;
-  border-radius: 20px;
-}
-.funil {
-  margin-left: 1vw;
-  margin-top: 10px;
-}
-
-.funil p {
-  color: #1b1b2b;
-  margin-bottom: 20px;
-}
-
-hr {
-  width: 34.5vw;
-  margin: 0vw 1vw;
-}
-
-
-.insertname {
-  height: 10vh;
-  display: flex;
+  justify-content: center;
   align-items: center;
 }
-
-.insertname p {
-  margin-top: 20px;
-  margin-left: 20px;
+.etapa {
+  background-color: #f4f5f8;
+  width: 7.8vw;
+  text-align: center;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: grey;
+}
+.funil {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+.basecontent {
+  margin: 10px 20px;
+  color: #373753;
+}
+hr {
+  margin: 0px 20px;
+  color: gray;
+}
+.title {
+  margin: 15px 0px 15px 20px;
+  font-size: 17px;
   font-weight: bold;
-  font-size: 22px;
   color: #373753;
 }
 
-.name {
-  width: 40vw;
-  display: flex;
-  justify-content: center;
-}
-
-.contentname {
+.base {
   background-color: white;
   border: 1px solid lightgray;
-  width: 37vw;
-  height: 180px;
   border-radius: 10px;
+  margin-top: 10px;
 }
-
-.create p {
-  margin-left: 4.5vw;
-  margin-top: 18px;
-  background-color: blue;
-  padding: 5px 40px;
+.contentbody {
+  margin: 0px 2vw;
+}
+.displayheader {
+  display: flex;
+}
+.displayheader h1  {
+  margin-top: 5px;
   font-size: 18px;
-  color: white;
-  border-radius: 10px;
-}
-.back p {
-  margin-bottom: 5px;
-  margin-right: 3px;
-  color: #3d3d58;
+  padding-top: 6px;
+  margin-left: 6vw;
+  color: #373753;
   font-weight: bold;
 }
-.text {
-  color: #3d3d58;
-  font-size: 20px;
-  font-weight: bold;
-}
-.back{
+.closemodal {
+  margin-top: 2px;
+  margin-left: 2vw;
   background-color: white;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
   border-radius: 50%;
-  border: 1px solid lightgray;
-  margin-right: 20px;
-  margin-left: 20px;
+  transform: rotate(180deg);
+  position: absolute;
+  cursor: pointer;
 }
 
-.create {
-
-  width: 20vw;
-  display: flex;
-  justify-content: center;
-
+.header p {
+  background-color: blue;
+  color: white;
+  padding: 5px 40px;
+  margin-top: 20px;
+  border-radius: 10px;
+  margin-right: 2vw;
+  cursor: pointer;
 }
-.button {
-  width: 20vw;
-  display: flex;
-  align-items: center;
-
+.header img {
+  margin-bottom: 2px;
+  width: 13px;
+  height: 13px;
 }
 .header {
-  height: 80px;
   display: flex;
   align-items: center;
-;
+  justify-content: space-between;
+}
+.header {
+
+  height: 70px;
+}
+.body {
+
+  height: 620px;
 }
 
 .content {
@@ -192,11 +240,7 @@ hr {
   background: rgba(0, 0, 0, 0.384);
   display: flex;
   justify-content: end;
+  overflow-y: hidden;
 }
 
 </style>
-<script>
-export default {
-  name: 'ModalContato'
-}
-</script>

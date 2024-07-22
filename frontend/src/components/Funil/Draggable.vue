@@ -8,7 +8,8 @@
             <draggable
                 v-model="headers"
                 tag="tr"
-                :item-key="key => key" handle=".line">
+                :item-key="key => key" handle=".line"
+                animation="350">
 
               <template #item="{ element: header }">
                 <th scope="col">
@@ -44,7 +45,7 @@ export default {
   },
   data() {
     return {
-      headers: [1,2,3],
+      headers: [],
       dragging: false,
       data: [],
     };

@@ -1,6 +1,8 @@
 <template>
   <main>
-    <ModalContato/>
+    <ModalContato v-if="activecontact"
+    @CloseModal="CloseModal"
+    />
     <div>
       <MenuDash/>
     </div>
@@ -15,7 +17,7 @@
           <div class="create">
             <div class="background">
               <div class="img"><img src="../../assets/images/Funil/newuser.png"></div>
-              <div class="label">Novo Contato</div>
+              <div class="label" @click="CloseModal">Novo Contato</div>
             </div>
           </div>
         </div>
@@ -26,6 +28,30 @@
     </div>
   </main>
 </template>
+
+<script>
+import {defineComponent} from "vue";
+import MenuDash from "@/components/DashBoard/Menu.vue";
+import SearchBar from "@/components/DashBoard/SearchBar.vue";
+import Draggable from "@/components/Funil/Draggable.vue";
+import ModalContato from "@/components/Funil/CreateContact.vue";
+
+export default {
+  components: {ModalContato, Draggable, SearchBar, MenuDash},
+  data(){
+    return {
+      activecontact : false
+    }
+  },
+  methods: {
+    CloseModal(){
+      this.activecontact = !this.activecontact
+      console.log(this.activecontact)
+    }
+  }
+}
+</script>
+
 <style scoped>
 
 
@@ -97,14 +123,3 @@ main {
   width: 100vw;
 }
 </style>
-<script>
-import {defineComponent} from "vue";
-import MenuDash from "@/components/DashBoard/Menu.vue";
-import SearchBar from "@/components/DashBoard/SearchBar.vue";
-import Draggable from "@/components/Funil/Draggable.vue";
-import ModalContato from "@/components/Funil/CreateContact.vue";
-
-export default defineComponent({
-  components: {ModalContato, Draggable, SearchBar, MenuDash}
-})
-</script>
