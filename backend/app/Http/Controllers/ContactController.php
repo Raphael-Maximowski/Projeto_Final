@@ -79,60 +79,65 @@ class ContactController extends Controller
         return response()->json($contact);
     }
 
-    public function updateStep(Request $request, $id) 
-
+    public function updateStep(Request $request, $id)
     {
         $request->validate([
             'posicao' => 'required|integer',
-            'name' => 'string|max:255',
-            'phone' => 'string',
-            'email' => 'string|email|max:255',
-            'cpf' => 'string|max:14',
-            'data_de_nascimento' => 'date',
-            'endereco' => 'string|max:255',
-            'value' => 'numeric',
             'step_id' => 'exists:steps,id',
             'newStep_id' => 'exists:steps,id',
             'newPosition' => 'integer'
         ]);
 
         $stepId = $request->step_id;
-        $newStep = $request->newStep_id;
-        $contact = Contact::findOrFail($id);
-        $newPosition = $request->posicao;
-        $oldPosition = $contact->posicao;
+        $newStep = $request->newStep;
+        $newPosition = $request->newPosition;
 
-        if ($newStep == $stepId) {
+        $contact = Contact::findOrFail($id);
+        $oldPosition = $contact->posicao;
+        $oldStep = $contact->step_id;
+
+        if ($newStep == $oldStep) {
+            if ($oldPosition != $newPosition) {
+                $rest = Contact::where('step_id', $oldStep)->orderBy('posicao')->get();
+                for ($i = 0; $i < count($rest); $i++) {
+                    if ($rest[$i]->posicao > $oldPosition && $rest[$i]->posicao <= $newPosition) {
+                        $rest[$i]->posicao--;
+                        $rest[$i]->save();
+                    } elseif ($rest[$i]->posicao >= $newPosition && $rest[$i]->posicao < $oldPosition) {
+                        $rest[$i]->posicao++;
+                        $rest[$i]->save();
+                    }
+                }
+            }
+
+            $contact->updateContact([
+                'posicao' => $newPosition
+            ]);
+
             return response()->json($contact);
         }
 
-        $rest = Contact::where('step_id', $stepId)->orderBy('posicao')->get();
-        $newRest = Contact::where('step_id', $newStep)->orderBy('posicao')->get();
-
-        for ($i = 0; $i < count($rest); $i++) {
-            if ($oldPosition < $newPosition) {
-                if ($rest[$i]->posicao > $oldPosition && $rest[$i]->posicao <= $newPosition) {
-                    $rest[$i]->posicao--;
-                    $rest[$i]->save();
-            } 
+        $oldRest = Contact::where('step_id', $oldStep)->where('posicao', '>', $oldPosition)->orderBy('posicao')->get();
+        for ($i = 0; $i < count($oldRest); $i++) {
+            $oldRest[$i]->posicao--;
+            $oldRest[$i]->save();
         }
-    }
 
+        $newRest = Contact::where('step_id', $newStep)->where('posicao', '>=', $newPosition)->orderBy('posicao')->get();
         for ($i = 0; $i < count($newRest); $i++) {
-            if ($oldPosition < $newPosition) {
-                if ($rest[$i]->posicao >= $newPosition && $rest[$i]->posicao < $oldPosition) {
-                    $rest[$i]->posicao++;
-                    $rest[$i]->save();
-                }
+            $newRest[$i]->posicao++;
+            $newRest[$i]->save();
         }
-    }
 
-        $contact->updateStep(['step_id' => $newStep]);
+        $contact->updateContact([
+            'step_id' => $newStep,
+            'posicao' => $newPosition
+        ]);
+
         return response()->json($contact);
-
-
     }
-        
+
+
 
     public function destroy($id)
     {

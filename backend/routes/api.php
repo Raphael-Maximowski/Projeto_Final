@@ -22,12 +22,16 @@ Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=> 'crm', 'middleware'=> 'auth:sanctum'], function() {
-    Route::post('logout', [AuthController::class, 'logout']);
-});
+
 
 Route::post('register',[AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('logout', [AuthController::class, 'logout']);
+    // Adicione outras rotas aqui, se necessário
+});
+
 
 // Rota para verificar se o usuário está no banco de dados para enviar o email
 Route::post('forget_password', [EmailController::class, 'emailValidated'])
@@ -89,6 +93,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('/{teamId}/add-collection/{collectionId}', [TeamController::class, 'addCollectionToTeam']);
         Route::delete('/teams/{teamId}/remove-collection/{collectionId}', [TeamController::class, 'removeCollectionFromTeam']);
+
+
     });
 });
 
