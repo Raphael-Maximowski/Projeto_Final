@@ -21,10 +21,7 @@ class FunnelController extends Controller
         $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
-            'collection_id' => 'required|integer',
-            'steps' => 'required|array',
-            'step.*.name' => 'required|string',
-            'step.*.position' => 'required|integer'
+            'collection_id' => 'required|integer'
         ]);
 
         $user = Auth::user();
@@ -36,11 +33,13 @@ class FunnelController extends Controller
             'collection_id' => $request->collection_id, // Criação de um novo funil
         ]);
 
+        $stepsName = ['Sem etapa', 'Prospecção', 'Contato', 'Proposta'];
+        $stepsPosition = [1, 2, 3, 4];
 
-        foreach ($request->steps as $stepData){
+        foreach ($stepsName as $index =>$stepsName){
             $step = new Step ([
-                'name' => $stepData ['name'],
-                'posicao' => $stepData ['position'],
+                'name' => $stepsName,
+                'posicao' => $stepsPosition[$index],
                 'funnel_id' => $funnel->id,
             ]);
 

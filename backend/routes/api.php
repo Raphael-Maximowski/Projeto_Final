@@ -113,4 +113,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('contacts/{id}', [ContactController::class, 'update']);
     Route::patch('contacts/cross/{id}', [ContactController::class, 'updateStep']);
     Route::delete('contacts/{id}', [ContactController::class, 'destroy']);
+    Route::post('contacts/search', [ContactController::class, 'search']);
 });
