@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Funnel;
+use App\Models\Step;
 
 class FunnelController extends Controller
 {
@@ -20,7 +21,10 @@ class FunnelController extends Controller
         $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
-            'collection_id' => 'required|integer', // Validação dos dados recebidos no request
+            'collection_id' => 'required|integer',
+            'steps' => 'required|array',
+            'step.*.name' => 'required|string',
+            'step.*.position' => 'required|integer'
         ]);
 
         $user = Auth::user();
@@ -32,7 +36,19 @@ class FunnelController extends Controller
             'collection_id' => $request->collection_id, // Criação de um novo funil
         ]);
 
+
+        foreach ($request->steps as $stepData){
+            $step = new Step ([
+                'name' => $stepData ['name'],
+                'posicao' => $stepData ['position'],
+                'funnel_id' => $funnel->id,
+            ]);
+
+            $step->save();
+        }
+
         return response()->json($funnel, 201);
+
     }
 
     public function show($id)

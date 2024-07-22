@@ -137,12 +137,34 @@ class ContactController extends Controller
         return response()->json($contact);
     }
 
-
-
     public function destroy($id)
     {
         Contact::destroy($id);
         return response()->json(null, 204);
+    }
+
+    public function search(Request $request)
+    {
+
+        $query = Contact::query(); // Inicializa uma consulta
+
+        if ($request->has('name')) {
+            $query->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->input('name') . '%')->orWhere('last_name', 'like', '%' . $request->input('name') . '%');
+            });
+        }
+
+        if ($request->has('email')) {
+            $query->where('email', 'like', '%' . $request->input('email') . '%');
+        }
+
+        if ($request->has('phone')) {
+            $query->where('phone', 'like', '%' . $request->input('phone') . '%');
+        }
+
+        $users = $query->get();
+
+        return response()->json(['users' => $users], 200);
     }
 
 }

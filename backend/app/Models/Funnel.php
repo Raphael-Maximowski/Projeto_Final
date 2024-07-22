@@ -46,6 +46,11 @@ class Funnel extends Model
     {
         return 'created_at';
     }
+
+    public function steps()
+    {
+        return $this->hasMany(Step::class);
+    }
 }
 
 
