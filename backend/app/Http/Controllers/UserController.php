@@ -40,8 +40,7 @@ class UserController extends Controller
 
         if ($request->has('name')) {
             $query->where(function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->input('name') . '%')
-                      ->orWhere('last_name', 'like', '%' . $request->input('name') . '%');
+                $query->where('name', 'like', '%' . $request->input('name') . '%')->orWhere('last_name', 'like', '%' . $request->input('name') . '%');
             });
         }
 
