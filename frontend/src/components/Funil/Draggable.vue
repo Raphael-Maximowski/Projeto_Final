@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      headers: [],
+      headers: [1,2,3],
       dragging: false,
       data: [],
     };

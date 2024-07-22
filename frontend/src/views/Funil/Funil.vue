@@ -1,5 +1,6 @@
 <template>
   <main>
+    <ModalContato/>
     <div>
       <MenuDash/>
     </div>
@@ -26,6 +27,7 @@
   </main>
 </template>
 <style scoped>
+
 
 .label {
 
@@ -100,8 +102,9 @@ import {defineComponent} from "vue";
 import MenuDash from "@/components/DashBoard/Menu.vue";
 import SearchBar from "@/components/DashBoard/SearchBar.vue";
 import Draggable from "@/components/Funil/Draggable.vue";
+import ModalContato from "@/components/Funil/CreateContact.vue";
 
 export default defineComponent({
-  components: {Draggable, SearchBar, MenuDash}
+  components: {ModalContato, Draggable, SearchBar, MenuDash}
 })
 </script>
