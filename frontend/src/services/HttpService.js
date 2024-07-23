@@ -180,7 +180,16 @@ export const SendContact = async (data) => {
     return response;
 }
 
-
+export const Pagination = async (data) => {
+    const token = store.getters.user_token;
+    const page = data
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const url = `collections/page/${page}`;
+    const response = await HttpService.get(url, {headers})
+    return response;
+}
 export default HttpService;
 
 
