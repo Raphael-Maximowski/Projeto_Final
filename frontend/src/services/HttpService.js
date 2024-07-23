@@ -142,14 +142,6 @@ export const GetContacts =  async(data) => {
     return response;
 }
 
-export const PostContact = async (data) => {
-    const token = store.getters.user_token;
-    const headers = {
-        Authorization: `Bearer ${token}`}
-    const response = await HttpService.post('contacts', data, {headers})
-    return response;
-}
-
 export const GetOneFunnel = async (data) => {
     const token = store.getters.user_token;
     const id =  data

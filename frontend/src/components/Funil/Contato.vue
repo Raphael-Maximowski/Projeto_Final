@@ -1,15 +1,21 @@
 <template>
   <div class="maincard">
     <div class="contentcard">
-      <div class="name" >Raphael Maximowski</div>
-      <div class="value">R$ 1250,90</div>
+      <div class="name" >{{this.dadoscontact.name}}</div>
+      <div class="value">R$ {{this.dadoscontact.value}}</div>
     </div>
 
   </div>
 </template>
 <script>
 export default {
-  name: 'ContatoCard'
+  name: 'ContatoCard',
+  props: {
+    dadoscontact: {type:Object}
+  },
+  created (){
+    console.log(this.dadoscontact)
+  }
 }
 </script>
 <style scoped>

@@ -9,7 +9,7 @@ class ContactController extends Controller
 {
     public function index($id)
     {
-        $contacts = Contact::where('step_id', $id);
+        $contacts = Contact::where('step_id', $id)->get();
         return response()->json($contacts);
     }
 
