@@ -100,16 +100,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     // Rotas para etapas
-    Route::get('steps', [StepController::class, 'index']);
     Route::post('steps', [StepController::class, 'store']);
-    Route::get('steps/{id}', [StepController::class, 'show']);
+    Route::get('steps/{id}', [StepController::class, 'index']);
     Route::patch('steps/{id}', [StepController::class, 'update']);
     Route::delete('steps/{id}', [StepController::class, 'destroy']);
 
     // Rotas para contatos
-    Route::get('contacts', [ContactController::class, 'index']);
+    Route::get('contacts/{id}', [ContactController::class, 'index']);
     Route::post('contacts', [ContactController::class, 'store']);
-    Route::get('contacts/{id}', [ContactController::class, 'show']);
+    Route::get('contact/{id}', [ContactController::class, 'show']);
     Route::patch('contacts/{id}', [ContactController::class, 'update']);
     Route::patch('contacts/cross/{id}', [ContactController::class, 'updateStep']);
     Route::delete('contacts/{id}', [ContactController::class, 'destroy']);

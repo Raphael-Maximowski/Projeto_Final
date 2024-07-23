@@ -1,5 +1,5 @@
 <template>
-<div class="base-funil">
+<div @click="CRM" class="base-funil">
   <div class="info-funil">
     <div class="funil-img"><img src="../../assets/images/DashBoard/funil.png"></div>
     <div class="name-funil">{{funil.name}}</div>
@@ -8,6 +8,8 @@
 </div>
 </template>
 <script>
+import {mapGetters, mapMutations} from "vuex";
+
 export default {
   name: 'Funil',
   props: {
@@ -18,6 +20,9 @@ export default {
       type: Object
     }
   },
+  computed: {
+    ...mapGetters(['funnel_id']),
+  },
   data ()
   {
     return {
@@ -26,8 +31,14 @@ export default {
   methods: {
     OpenInfoFunnel(){
       this.$emit('OpenInformations', this.funil);
-    }
-  }
+    },
+    CRM(){
+      this.updateFunnelId(this.funil.id)
+      console.log(this.funil.id)
+      this.$router.push('/Funil');
+    },
+    ...mapMutations(['updateFunnelId'])
+  },
 }
 </script>
 <style scoped>
@@ -51,6 +62,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10000;
 
 }
 .funil-img img {

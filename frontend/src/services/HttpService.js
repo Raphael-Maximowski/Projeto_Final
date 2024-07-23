@@ -122,6 +122,45 @@ export const SearchFunnel = async(data) => {
     return response;
 }
 
+export const GetSteps =  async(data) => {
+    const token = store.getters.user_token;
+    const id =  data.id;
+    const headers = {
+        Authorization: `Bearer ${token}`}
+    const url = `steps/${id}`;
+    const response = await HttpService.get(url, {headers})
+    return response;
+}
+
+export const GetContacts =  async(data) => {
+    const token = store.getters.user_token;
+    const id =  data.id;
+    const headers = {
+        Authorization: `Bearer ${token}`}
+    const url = `contacts/${id}`;
+    const response =  await HttpService.get(url, {headers})
+    return response;
+}
+
+export const PostContact = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`}
+    const response = await HttpService.post('contacts', data, {headers})
+    return response;
+}
+
+export const GetOneFunnel = async (data) => {
+    const token = store.getters.user_token;
+    const id =  data
+    const headers = {
+        Authorization: `Bearer ${token}`}
+    const url = `funnels/${id}`;
+    const response = await HttpService.get(url, {headers})
+    return response;
+}
+
+
 export default HttpService;
 
 

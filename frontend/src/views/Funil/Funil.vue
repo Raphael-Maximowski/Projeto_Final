@@ -10,7 +10,7 @@
       <div class="header">
         <div class="name">
           <h1>Funil</h1>
-          <p>Name</p>
+          <p>{{dadosfunil.name}}</p>
         </div>
         <div class="buttons">
           <div class="search"><SearchBar/></div>
@@ -23,34 +23,47 @@
         </div>
       </div>
       <div>
-        <Draggable/>
+        <Draggable @ReceiveId = "ReceiveId" />
       </div>
     </div>
   </main>
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 import MenuDash from "@/components/DashBoard/Menu.vue";
 import SearchBar from "@/components/DashBoard/SearchBar.vue";
 import Draggable from "@/components/Funil/Draggable.vue";
 import ModalContato from "@/components/Funil/CreateContact.vue";
+import { mapGetters } from "vuex";
+import {GetOneFunnel} from "@/services/HttpService.js";
 
-export default {
-  components: {ModalContato, Draggable, SearchBar, MenuDash},
-  data(){
+export default defineComponent({
+  components: { ModalContato, Draggable, SearchBar, MenuDash },
+  computed: {
+    ...mapGetters(['funnel_id']),
+  },
+  data() {
     return {
-      activecontact : false
-    }
+      activecontact: false,
+      dadosfunil : {},
+    };
   },
   methods: {
-    CloseModal(){
-      this.activecontact = !this.activecontact
-      console.log(this.activecontact)
+    CloseModal() {
+      this.activecontact = !this.activecontact;
+      console.log(this.activecontact);
+    },
+    async ReceiveId(value){
+      const response = await GetOneFunnel(value)
+      this.dadosfunil =  response.data
+      return response
     }
-  }
-}
+  },
+
+});
 </script>
+
 
 <style scoped>
 

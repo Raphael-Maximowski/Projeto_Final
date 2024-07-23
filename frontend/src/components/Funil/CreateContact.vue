@@ -247,6 +247,18 @@ export default {
     SaveValue(){
       this.edit_value = !this.edit_value
       this.value_expose =  this.value
+    },
+    SendContact(){
+      const data = {
+        'posicao' : 1,
+        'name' : this.name,
+        'phone' : this.number,
+        'email' : this.email,
+        'cpf' : this.cpf,
+        'data_de_nascimento' : this.date,
+        'endereco' : this.addres,
+        'value' : this.value
+      }
     }
 
   }

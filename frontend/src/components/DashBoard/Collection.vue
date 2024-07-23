@@ -100,7 +100,7 @@ export default {
         this.open_info_collection = true
       ]
       this.OpenModal()
-    }
+    },
   },
 
 }

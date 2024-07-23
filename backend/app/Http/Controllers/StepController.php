@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class StepController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $steps = Step::with('contacts')->get();
+        $steps = Step::with('contacts')->where('funnel_id', $id)->get();
         return response()->json($steps);
     }
 
@@ -47,7 +47,7 @@ class StepController extends Controller
         if ($newPosition == $oldPosition) {
             return response()->json($step);
         }
-        
+
         $rest = Step::where('funnel_id', $funnelId)->orderBy('posicao')->get();
 
         for ($i = 0; $i < count($rest); $i++) {
