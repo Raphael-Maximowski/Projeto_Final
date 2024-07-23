@@ -6,16 +6,11 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FunnelController;
-use App\Models\User;
 use App\Http\Controllers\ValidateEmailcontroller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\ContactController;
-
-
-
-
 
 
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
@@ -29,7 +24,6 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('logout', [AuthController::class, 'logout']);
-    // Adicione outras rotas aqui, se necessário
 });
 
 
