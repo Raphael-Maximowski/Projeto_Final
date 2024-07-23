@@ -56,8 +56,8 @@
           </div>
           <div class="page" >
             <div class="center-page">
-              <div class="changepage"><p>Anterior</p></div>
-              <div class="changepage"><p>Proxima</p></div>
+              <div class="changepage" @click="PaginationBack"><p>Anterior</p></div>
+              <div class="changepage" @click="PaginationSkip"><p>Proxima</p></div>
             </div>
           </div>
         </div>
@@ -75,6 +75,7 @@ import {
   GetUser,
   SendCollection,
   SendFunnel,
+  Pagination,
 } from "@/services/HttpService.js";
 import { mapState, mapMutations } from 'vuex';
 import MenuDash from "@/components/DashBoard/Menu.vue";
@@ -101,6 +102,7 @@ export default {
       collections: {},
       funnels: {},
       data_collection: [],
+      page: 1,
 
     };
   },
@@ -170,6 +172,25 @@ export default {
       this.updateUserValidate(response.data.email_verified_at);
       this.updateUserCreated(response.data.created_at);
     },
+
+    async PaginationSkip()
+    {
+      this.page++
+      const response = await Pagination(this.page);
+      this.collections = response.data
+      console.log('teste')
+      return response
+    },
+
+    async PaginationBack()
+    {
+      this.page--
+      const response = await Pagination(this.page);
+      this.collections = response.data
+      console.log('teste2')
+      return response
+    },
+
 
     ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated'])
 
