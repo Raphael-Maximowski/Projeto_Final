@@ -8,7 +8,7 @@
           </div>
           <div><h1>Voltar</h1></div>
         </div>
-        <div><p>Criar Contato</p></div>
+        <div><p @click="SendContact">Criar Contato</p></div>
       </div>
       <div class="body">
         <div class="contentbody">
@@ -131,8 +131,13 @@
 </template>
 
 <script>
+import {GetOneStep, SendContact} from "@/services/HttpService.js";
+
 export default {
   name: 'ModalContato',
+  props: {
+    id : {type:Number}
+  },
   data(){
     return{
       contato : false,
@@ -158,6 +163,7 @@ export default {
       value : "",
       edit_value : false,
       value_expose : "0,00",
+      size : ""
 
     }
   },
@@ -248,20 +254,31 @@ export default {
       this.edit_value = !this.edit_value
       this.value_expose =  this.value
     },
-    SendContact(){
+    async GetSize(){
+      const response = await GetOneStep(this.id)
+      const datastep = response.data;
+      this.size = datastep.contacts
+      return response;
+    },
+    async SendContact(){
+      await this.GetSize();
       const data = {
-        'posicao' : 1,
+        'posicao' : (this.size.length) + 1,
         'name' : this.name,
         'phone' : this.number,
         'email' : this.email,
         'cpf' : this.cpf,
         'data_de_nascimento' : this.date,
         'endereco' : this.addres,
-        'value' : this.value
+        'value' : this.value,
+        'step_id' : this.id
       }
+      const response =  await SendContact(data);
+      console.log(response.data);
+      return response;
     }
 
-  }
+  },
 }
 </script>
 
