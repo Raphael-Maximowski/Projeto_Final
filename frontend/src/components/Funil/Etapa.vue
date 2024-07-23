@@ -2,7 +2,7 @@
   <div class="teste">
     <div class="line"></div>
     <div class="content">
-      <div class="title">{{ dados.name }}</div>
+      <div class="title"> {{dados.name}} </div>
     </div>
     <div class="cards">
       <draggable
@@ -42,7 +42,6 @@
 .teste {
   width: 250px;
   height: 79.9vh;
-
   overflow-y: auto;
 
 }
@@ -50,6 +49,7 @@
 <script>
 import ContatoCard from "@/components/Funil/Contato.vue";
 import draggable from 'vuedraggable';
+import {GetContacts} from "@/services/HttpService.js";
 
 export default {
   name: 'etapa',
@@ -62,9 +62,22 @@ export default {
   data(){
     return{
       cards: [
-        1,2,3,4,5
+
       ]
     }
+  },
+  methods: {
+    async GetContact(){
+      const data = {
+        id: this.dados.id
+      }
+      const response = await GetContacts(data)
+      return response;
+    }
+  },
+
+  created(){
+    this.GetContact()
   }
 }
 </script>

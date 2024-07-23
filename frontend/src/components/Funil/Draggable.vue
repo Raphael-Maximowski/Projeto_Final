@@ -28,14 +28,12 @@
 <script>
 import draggable from 'vuedraggable';
 import Etapa from "@/components/Funil/Etapa.vue";
-import index from "vuex";
-import {GetFunnel} from "@/services/HttpService.js";
+import {GetFunnel, GetOneFunnel, GetSteps} from "@/services/HttpService.js";
+import { mapGetters } from "vuex";
 export default {
   name: "DashFunil",
   computed: {
-    index() {
-      return index
-    }
+    ...mapGetters(['funnel_id']),
   },
   display: "Table Column",
   order: 9,
@@ -48,22 +46,35 @@ export default {
       headers: [],
       dragging: false,
       data: [],
+      returndata: {},
+      senddata : [],
+      default : {},
     };
   },
   methods: {
-    async GetFunnels(){
-      const response = await GetFunnel();
-      this.data = response.data
-      for (let i = 0; i < this.data.length; i++){
-        this.headers.push(this.data[i])
+    async SendData(){
+      const data = {
+        id : this.funnel_id
       }
-      console.log(this.headers)
-      return response;
+      const response = await GetSteps(data);
+      this.$emit('ReceiveId', data.id)
+      this.returndata =  response.data;
     },
-
+    SetHeaders(){
+      for (let i = 0; i < this.returndata.length; i++){
+        if (this.returndata[i].name = "Sem etapa"){
+          this.default.push(this.returndata[i])
+        }
+        this.headers.push(this.returndata[i]);
+        this.senddata.push(this.returndata[i].id)
+        console.log(this.default)
+      }
+    },
   },
   created(){
-    this.GetFunnels()
+    this.SendData().then(() => {
+      this.SetHeaders();
+    })
   }
 };
 </script>
@@ -72,7 +83,7 @@ export default {
 .dash {
   width: 90vw;
   height: 85vh;
-  overflow-x: auto;
+  overflow-y: auto;
 }
 
 main {

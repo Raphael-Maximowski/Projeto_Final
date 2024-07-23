@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $contacts = Contact::all();
+        $contacts = Contact::where('step_id', $id);
         return response()->json($contacts);
     }
 
@@ -21,7 +21,7 @@ class ContactController extends Controller
             'phone' => 'required|string',
             'email' => 'required|string|email',
             'cpf' => 'required|string|max:14',
-            'data_de_nascimento' => 'required|date',
+            'data_de_nascimento' => 'required',
             'endereco' => 'required|string',
             'value' => 'required|numeric',
             'step_id' => 'required|exists:steps,id',

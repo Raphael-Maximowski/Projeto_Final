@@ -10,6 +10,7 @@ export default createStore({
       validated: "",
       token: "",
       created: "",
+      funnel_id: "",
     }
   },
   getters: {
@@ -21,7 +22,8 @@ export default createStore({
     created: state => state.user.created,
     logged_in: state => {
       return state.user;
-    }
+    },
+    funnel_id : state => state.user.funnel_id
 
   },
   mutations: {
@@ -43,6 +45,9 @@ export default createStore({
     },
     updateUserCreated(state, NewDate){
       state.user.created =  NewDate;
+    },
+    updateFunnelId(state, NewFunnelId){
+      state.user.funnel_id =  NewFunnelId
     }
   },
   actions: {},
