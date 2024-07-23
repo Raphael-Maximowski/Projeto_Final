@@ -72,6 +72,7 @@ export default {
         id: this.dados.id
       }
       const response = await GetContacts(data)
+      console.log(response.data)
       return response;
     }
   },

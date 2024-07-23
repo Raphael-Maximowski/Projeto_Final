@@ -160,6 +160,26 @@ export const GetOneFunnel = async (data) => {
     return response;
 }
 
+export const GetOneStep =  async (data) => {
+    const token = store.getters.user_token;
+    const id = data
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const url = `step/${id}`;
+    const response = await HttpService.get(url, {headers})
+    return response;
+}
+
+export const SendContact = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const response = await HttpService.post('contacts', data,{headers})
+    return response;
+}
+
 
 export default HttpService;
 

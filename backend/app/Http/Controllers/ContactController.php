@@ -23,8 +23,8 @@ class ContactController extends Controller
             'cpf' => 'required|string|max:14',
             'data_de_nascimento' => 'required',
             'endereco' => 'required|string',
-            'value' => 'required|numeric',
-            'step_id' => 'required|exists:steps,id',
+            'value' => 'required',
+            'step_id' => 'required',
         ]);
 
         $contact = Contact::create($request->all());

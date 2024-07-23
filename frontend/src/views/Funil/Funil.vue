@@ -1,6 +1,6 @@
 <template>
   <main>
-    <ModalContato v-if="activecontact"
+    <ModalContato :id="id" v-if="activecontact"
     @CloseModal="CloseModal"
     />
     <div>
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div>
-        <Draggable @ReceiveId = "ReceiveId" />
+        <Draggable @ReceiveIdPost="ReceiveIdPost" @ReceiveId = "ReceiveId" />
       </div>
     </div>
   </main>
@@ -47,18 +47,21 @@ export default defineComponent({
     return {
       activecontact: false,
       dadosfunil : {},
+      id : "",
     };
   },
   methods: {
     CloseModal() {
       this.activecontact = !this.activecontact;
-      console.log(this.activecontact);
     },
     async ReceiveId(value){
       const response = await GetOneFunnel(value)
       this.dadosfunil =  response.data
       return response
-    }
+    },
+    ReceiveIdPost(value){
+      this.id = value
+    },
   },
 
 });

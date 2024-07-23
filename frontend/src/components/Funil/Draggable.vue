@@ -48,7 +48,8 @@ export default {
       data: [],
       returndata: {},
       senddata : [],
-      default : {},
+      default : [],
+      id : ""
     };
   },
   methods: {
@@ -62,13 +63,17 @@ export default {
     },
     SetHeaders(){
       for (let i = 0; i < this.returndata.length; i++){
-        if (this.returndata[i].name = "Sem etapa"){
-          this.default.push(this.returndata[i])
+        if (this.returndata[i].name === "Sem etapa"){
+          this.default.push(this.returndata[i]);
+          for (let i = 0; i < this.default.length; i++){
+            this. id = this.default[i].id
+          }
         }
         this.headers.push(this.returndata[i]);
         this.senddata.push(this.returndata[i].id)
-        console.log(this.default)
       }
+      this.$emit('ReceiveIdPost', this.id)
+      console.log(this.id)
     },
   },
   created(){
