@@ -12,9 +12,10 @@
           drag-class="drag"
           ghost-class="ghost"
           animation="350"
+          @change="log"
       >
         <template #item="{element}">
-          <ContatoCard/>
+          <ContatoCard :dadoscontact="element"/>
         </template>
       </draggable>
     </div>
@@ -72,8 +73,14 @@ export default {
         id: this.dados.id
       }
       const response = await GetContacts(data)
-      console.log(response.data)
+      const GetData = response.data
+      for (let i = 0; i < GetData.length; i++){
+        this.cards.push(GetData[i])
+      }
       return response;
+    },
+    log: function(evt) {
+      window.console.log(evt);
     }
   },
 
