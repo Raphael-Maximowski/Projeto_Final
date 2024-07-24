@@ -1,7 +1,8 @@
 <template>
   <main>
+    <Alert :pass="pass" :errors="errors" />
     <div class="camada">
-      <Alert :pass="pass" :errors="errors" />
+
       <section>
         <div class="logo">
           <CenterAnimation />

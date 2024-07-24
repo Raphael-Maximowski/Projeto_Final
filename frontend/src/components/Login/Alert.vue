@@ -70,7 +70,7 @@ export default {
 #modal {
   display: flex;
   justify-content: end;
-  width: 30vw;
+  width: 20vw;
   height: 100vh;
   position: absolute;
   z-index: 4;

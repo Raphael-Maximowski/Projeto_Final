@@ -1,9 +1,11 @@
 <template>
-<div @click="CRM" :style="{ backgroundColor: color}" class="base-funil">
+<div :style="{ backgroundColor: color}" class="base-funil">
   <div class="info-funil">
-    <div class="funil-img"><img src="../../assets/images/DashBoard/funil.png"></div>
-    <div class="name-funil">{{funil.name}}</div>
-    <div @click="OpenInfoFunnel" id="open-info-funnel" class="funil-img"><img src="../../assets/images/DashBoard/pontos.png"></div>
+    <div @click="CRM"  style="display: flex; ">
+      <div class="funil-img"><img src="../../assets/images/DashBoard/funil.png"></div>
+      <div class="name-funil">{{funil.name}}</div>
+    </div>
+    <div @click="OpenInfoFunnel" id="open-info-funnel" class="funil-img"><img  src="../../assets/images/DashBoard/pontos.png"></div>
   </div>
 </div>
 </template>
@@ -49,7 +51,7 @@ export default {
 .base-funil {
     background-color: #FEBC28;
     width: 12vw;
-    padding: 5px 0px;
+
     margin: 10px 20px;
     border-radius: 10px;
   cursor: pointer;
@@ -57,8 +59,7 @@ export default {
 
 .info-funil {
   display: flex;
-
-  height: 25px;
+  padding: 5px 0px;
 }
 .funil-img {
   width: 2.5vw;
@@ -77,6 +78,8 @@ export default {
 
 #open-info-funnel {
   cursor: pointer;
+
+  z-index: 10000;
 }
 
 .name-funil {
