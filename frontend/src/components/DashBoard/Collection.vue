@@ -1,5 +1,5 @@
 <template>
-<div class="base">
+<div class="base" :style="{ border: '2px solid ' + collection.color }">
   <div class="info">
     <div class="title">
       <div>{{collection.name}}</div>
@@ -7,13 +7,13 @@
       </div>
     <div class="crud">
       <div class="funil" @click="showfunil">
-        <p>Novo Funil</p>
+        <p :style="{ backgroundColor: collection.color}">Novo Funil</p>
       </div>
     </div>
   </div>
   <div class="group">
     <div v-for="funil in funnel">
-      <Funil @OpenInformations="OpenInformations" :funil="funil"/>
+      <Funil :color="color" @OpenInformations="OpenInformations" :funil="funil"/>
     </div>
   </div>
 </div>
@@ -40,6 +40,9 @@ export default {
     },
     funnels: {
       type: Object
+    },
+    resync: {
+      type: Boolean
     }
   },
 
@@ -58,15 +61,8 @@ export default {
     }
   },
   created() {
-    this.receive_data = this.collection
-    this.id_collection = this.collection.id
-
-    for(let i = 0; i < this.funnels.length; i++){
-      let id = this.funnels[i].collection_id;
-      if (id === this.id_collection){
-        this.funnel.push(this.funnels[i])
-      }
-    }
+    this.SyncData()
+    this.color = this.collection.color
   },
   methods: {
     OpenModal()
@@ -101,7 +97,28 @@ export default {
       ]
       this.OpenModal()
     },
+    SyncData(){
+      this.receive_data = this.collection
+      this.id_collection = this.collection.id
+      this.$emit('ResetResync');
+      this.funnel = []
+
+
+      for(let i = 0; i < this.funnels.length; i++){
+        let id = this.funnels[i].collection_id;
+        if (id === this.id_collection){
+          this.funnel.push(this.funnels[i])
+        }
+      }
+    }
   },
+  watch: {
+    resync(value) {
+      if (value ===  true){
+        this.SyncData()
+      }
+    }
+  }
 
 }
 </script>
@@ -111,7 +128,7 @@ export default {
   height: 170px;
   margin: 30px 45px;
   border-radius: 5px;
-  border: 2px solid #FEBC28;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 

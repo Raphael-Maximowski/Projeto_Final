@@ -73,7 +73,6 @@ export default {
         this.senddata.push(this.returndata[i].id)
       }
       this.$emit('ReceiveIdPost', this.id)
-      console.log(this.id)
     },
   },
   created(){

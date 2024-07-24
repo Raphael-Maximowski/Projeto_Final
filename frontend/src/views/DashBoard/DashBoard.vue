@@ -1,6 +1,6 @@
 <template>
 <main>
-  <Alert errors="" pass/>
+  <Alert :pass="pass" :errors="errors" />
   <div class="menu">
       <div v-if="modal">
         <CreateModal
@@ -15,6 +15,7 @@
             header2="Nome do Funil"
             thidheader="Descrição do Funil"
             @SendData="SendData"
+            @Error = "Error"
             :id_collection="id_collection"
         />
 
@@ -28,6 +29,7 @@
           title2="Nome Associado ao Funil"
           description1="Descrição Associada a Coleção"
           description2="Descrição Associada ao Funil"
+          @Error="Error"
       />
 
     <MenuDash/>
@@ -49,15 +51,19 @@
               <Collection
                   :funnels="funnels"
                   :collection="collection"
+                  :resync="resync"
                   @ShowFunil="ActiveFunil"
                   @values_collection="DataCollection"
-                  @OpenModal="ShowInfo" />
+                  @OpenModal="ShowInfo"
+                  @ResetResync="ResetResync"
+              />
             </div>
           </div>
           <div class="page" >
-            <div class="center-page">
-              <div class="changepage" @click="PaginationBack"><p>Anterior</p></div>
-              <div class="changepage" @click="PaginationSkip"><p>Proxima</p></div>
+            <div class="center-page" v-if="sizepages.length > 4">
+              <div v-if="collections.current_page > 1" class="changepage" @click="PaginationBack"><p>Anterior</p></div>
+              <div v-if="collections.current_page > 1 && collections.current_page < collections.total_pages" class="changepage" @click="PaginationSkip"><p>Proxima</p></div>
+              <div style="margin-left: 83vw" v-if="collections.current_page == 1 && collections.current_page < collections.total_pages" class="changepage" @click="PaginationSkip"><p>Proxima</p></div>
             </div>
           </div>
         </div>
@@ -103,12 +109,27 @@ export default {
       funnels: {},
       data_collection: [],
       page: 1,
+      sizepages: 0,
+      resync: false,
+      pass : true,
+      errors: [],
 
     };
   },
 
   methods: {
-
+    Error(value){
+      this.pass = false
+      this.errors[0] = value
+      console.log('value', this.errors)
+      setTimeout(() => {
+        this.pass = true;
+        this.errors = [];
+      }, 8000);
+    },
+    ResetResync(){
+      this.resync =  false
+    },
     closeModal(){
       this.modal = false
       this.activecollection = false
@@ -135,14 +156,22 @@ export default {
 
     async GetCollection()
     {
-      const response = await GetCollection();
-      this.collections = response.data;
+      this.page = 1
+      const response = await Pagination(this.page);
+      this.collections = response.data
+      this.sizepages = this.collections.collections
+      console.log(this.sizepages)
+
+      console.log('Actual')
+      console.log(this.collections)
+      return response
     },
 
     async GetFunnels()
     {
       const response = await GetFunnel();
       this.funnels =  response.data
+      console.log(this.funnels)
     },
 
     async SendData(value){
@@ -178,7 +207,9 @@ export default {
       this.page++
       const response = await Pagination(this.page);
       this.collections = response.data
-      console.log('teste')
+      console.log('Go')
+      console.log(this.collections)
+      this.resync =  true;
       return response
     },
 
@@ -187,7 +218,9 @@ export default {
       this.page--
       const response = await Pagination(this.page);
       this.collections = response.data
-      console.log('teste2')
+      console.log('Back')
+      console.log(this.collections)
+      this.resync =  true;
       return response
     },
 
@@ -270,6 +303,7 @@ main {
     color: white;
     font-size: 17px;
     margin-left: 6vw;
+  cursor: pointer;
 }
 
 .page {
@@ -290,6 +324,8 @@ main {
   display: flex;
   justify-content: space-between;
 }
+
+
 
 .changepage p{
   background-color: #3053F2;

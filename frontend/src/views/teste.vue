@@ -48,7 +48,6 @@ export default {
       for (let i = 0; i < this.data.length; i++){
         this.headers.push(this.data[i])
       }
-      console.log(this.headers)
       return response;
     },
 

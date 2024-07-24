@@ -1,5 +1,5 @@
 <template>
-<div @click="CRM" class="base-funil">
+<div @click="CRM" :style="{ backgroundColor: color}" class="base-funil">
   <div class="info-funil">
     <div class="funil-img"><img src="../../assets/images/DashBoard/funil.png"></div>
     <div class="name-funil">{{funil.name}}</div>
@@ -18,10 +18,14 @@ export default {
     },
     funil: {
       type: Object
-    }
+    },
+    color: {type:String}
   },
   computed: {
     ...mapGetters(['funnel_id']),
+  },
+  created(){
+    console.log(this.color)
   },
   data ()
   {
@@ -34,7 +38,6 @@ export default {
     },
     CRM(){
       this.updateFunnelId(this.funil.id)
-      console.log(this.funil.id)
       this.$router.push('/Funil');
     },
     ...mapMutations(['updateFunnelId'])
@@ -49,11 +52,12 @@ export default {
     padding: 5px 0px;
     margin: 10px 20px;
     border-radius: 10px;
+  cursor: pointer;
 }
 
 .info-funil {
   display: flex;
-  background-color: #FEBC28;
+
   height: 25px;
 }
 .funil-img {

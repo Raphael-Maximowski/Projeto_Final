@@ -274,7 +274,6 @@ export default {
         'step_id' : this.id
       }
       const response =  await SendContact(data);
-      console.log(response.data);
       return response;
     }
 
