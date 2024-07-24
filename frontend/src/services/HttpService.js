@@ -180,6 +180,25 @@ export const Pagination = async (data) => {
     const response = await HttpService.get(url, {headers})
     return response;
 }
+
+export const UpdateOwnStep = async (data) => {
+    const token = store.getters.user_token;
+
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id = data.id
+    const url = `contacts/${id}`;
+    const response = await HttpService.patch(url , data, {headers})
+    return response;
+}
+
+export const UpdateOtherStep = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+}
 export default HttpService;
 
 

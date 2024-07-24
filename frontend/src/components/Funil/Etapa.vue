@@ -51,7 +51,7 @@
 <script>
 import ContatoCard from "@/components/Funil/Contato.vue";
 import draggable from 'vuedraggable';
-import {GetContacts} from "@/services/HttpService.js";
+import {GetContacts, UpdateOwnStep} from "@/services/HttpService.js";
 
 export default {
   name: 'etapa',
@@ -66,6 +66,9 @@ export default {
       cards: [],
       object: [],
       data: {},
+      lastIndex : 0,
+      lastId: 0,
+      key: []
     }
   },
   methods: {
@@ -81,21 +84,45 @@ export default {
       return response;
     },
     log: function(evt, id) {
-      const key = Object.keys(evt)
-      if (key[0] === "moved") {
+      this.key = Object.keys(evt)
+      if (this.key[0] === "moved") {
         const last = evt.moved.newIndex
         const newpos = evt.moved.oldIndex
-        const id = evt.moved.element.id
-      }
-      if (key[0] === "added"){
-        const newid = id
-        const newpos = evt.added.newIndex
-        const id = evt.added.element.id
+        const iduser = evt.moved.element.id
         this.data = {
-
+          'id' : iduser,
+          'posicao' : newpos,
+          'step_id' : id
         }
+        this.UpdateOwnStep()
+        console.log(this.data)
+      }
+
+      if (this.key[0] === "removed"){
+        this.lastId = id
+        this.lastIndex =  evt.removed.oldIndex
+      }
+
+      if (this.key[0] === "added"){
+        console.log(evt)
+        this.data = {
+          'id' : evt.added.id,
+          'posicao' : this.lastIndex,
+          'step_id' : this.lastId,
+          'newStep_id' : id,
+          'newPosition' : evt.added.newIndex
+        }
+        console.log(this.data)
+
       }
       console.log(evt, id)
+    },
+    async UpdateOwnStep(){
+      const response =  await UpdateOwnStep(this.data)
+      return response
+    },
+    async UpdateOtherStep(){
+
     }
   },
 
