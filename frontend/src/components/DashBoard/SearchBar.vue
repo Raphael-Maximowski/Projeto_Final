@@ -92,12 +92,10 @@ hr {
 .content-search {
   width: 18vw;
   margin: 1vw 1vw;
-  background-color: #F9FAFC;
 }
 
 .content-search:hover {
-  color: #2336C7;
-  font-size: 18px;
+  font-weight: bold;
 }
 
 .info-search:hover{
@@ -111,10 +109,9 @@ hr {
   border-radius: 5px;
   background-color: #F9FAFC;
   cursor: pointer;
-
-
-
 }
+
+
 .search-img {
   position: absolute;
   margin-left: 17vw;
