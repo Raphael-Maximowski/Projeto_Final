@@ -86,7 +86,7 @@ export default {
       ValidateName(){
         if (this.name.length === 0 ){
           this.error.push('O campo nome é obrigatório');
-        } else if (this.name.length > 7){
+        } else if (this.name.length > 12){
           this.error.push('Nome excedeu caracteres maximos');
         }
       },
