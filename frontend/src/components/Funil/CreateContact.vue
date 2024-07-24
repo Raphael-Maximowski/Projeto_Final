@@ -26,7 +26,7 @@
             <hr>
             <div class="basecontent">
               <div>
-                <p>Nome do Funil</p>
+                <p>{{ nomefunil }}</p>
               </div>
               <div class="funil">
                 <div id="border1" >Sem Etapa</div>
@@ -87,13 +87,13 @@
 
               </div>
               <div class="contato">
-                <div class="titlecontact">Data de<br>nascimento:</div>
-                <div @click="ActiveDate" v-if="!edit_date" class="contentcontact" style="margin-top: 12px">{{ date_expose }}</div>
+                <div class="titlecontact">Nascimento:</div>
+                <div @click="ActiveDate" v-if="!edit_date" class="contentcontact">{{ date_expose }}</div>
                 <div v-if="edit_date" class="contentcontact">
-                  <input v-model="date" style="margin-top: 8px">
+                  <input v-model="date">
                   <div class="confirm-little">
-                    <img @click="CloseDate" width="13px" height="13px" style="margin-top: 8px" src="../../assets/images/Funil/cancel.png">
-                    <img @click="SaveDate" width="16px" height="16px" style="margin-top: 8px" src="../../assets/images/Funil/confirm.png">
+                    <img @click="CloseDate" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                    <img @click="SaveDate" width="16px" height="16px"  src="../../assets/images/Funil/confirm.png">
                   </div>
                 </div>
               </div>
@@ -136,7 +136,8 @@ import {GetOneStep, SendContact} from "@/services/HttpService.js";
 export default {
   name: 'ModalContato',
   props: {
-    id : {type:Number}
+    id : {type:Number},
+    nomefunil: {type:String}
   },
   data(){
     return{
@@ -282,6 +283,10 @@ export default {
 </script>
 
 <style scoped>
+input:focus {
+  outline: none;
+}
+
 .fixed {
   position: absolute;
   margin-left: 10px;
@@ -292,7 +297,7 @@ export default {
   width: 2.7vw;
   justify-content: space-between;
   position: absolute;
-  margin-top: 10px;
+  margin-top: 9px;
   margin-left: 24.5vw;
 
 }
@@ -319,7 +324,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 17px;
+  margin-top: 13px;
   margin-left: 29.7vw;
   height: 35px;
   width: 5vw;

@@ -1,7 +1,9 @@
 <template>
   <main>
-    <ModalContato :id="id" v-if="activecontact"
-    @CloseModal="CloseModal"
+    <ModalContato :id="id"
+                  v-if="activecontact"
+                  @CloseModal="CloseModal"
+                  :nomefunil="nomefunil"
     />
     <div>
       <MenuDash/>
@@ -48,6 +50,7 @@ export default defineComponent({
       activecontact: false,
       dadosfunil : {},
       id : "",
+      nomefunil: "",
     };
   },
   methods: {
@@ -57,6 +60,7 @@ export default defineComponent({
     async ReceiveId(value){
       const response = await GetOneFunnel(value)
       this.dadosfunil =  response.data
+      this.nomefunil = this.dadosfunil.name
       return response
     },
     ReceiveIdPost(value){

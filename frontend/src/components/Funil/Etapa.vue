@@ -12,10 +12,11 @@
           drag-class="drag"
           ghost-class="ghost"
           animation="350"
-          @change="log"
+          @change="event=> log(event, dados.id)"
       >
         <template #item="{element}">
           <ContatoCard :dadoscontact="element"/>
+
         </template>
       </draggable>
     </div>
@@ -62,9 +63,9 @@ export default {
   },
   data(){
     return{
-      cards: [
-
-      ]
+      cards: [],
+      object: [],
+      data: {},
     }
   },
   methods: {
@@ -79,8 +80,22 @@ export default {
       }
       return response;
     },
-    log: function(evt) {
-      window.console.log(evt);
+    log: function(evt, id) {
+      const key = Object.keys(evt)
+      if (key[0] === "moved") {
+        const last = evt.moved.newIndex
+        const newpos = evt.moved.oldIndex
+        const id = evt.moved.element.id
+      }
+      if (key[0] === "added"){
+        const newid = id
+        const newpos = evt.added.newIndex
+        const id = evt.added.element.id
+        this.data = {
+
+        }
+      }
+      console.log(evt, id)
     }
   },
 

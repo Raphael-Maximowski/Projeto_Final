@@ -179,9 +179,11 @@ export default {
       if (data.type === true)
       {
         const response = await SendCollection(data);
+
         return response;
       } else {
         const response = await SendFunnel(data);
+
         return response;
       }
     },
