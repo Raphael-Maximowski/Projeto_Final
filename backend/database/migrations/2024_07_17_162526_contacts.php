@@ -15,9 +15,9 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->string('cpf');
-            $table->date('data_de_nascimento');
+            $table->string('data_de_nascimento');
             $table->string('endereco');
-            $table->decimal('value');
+            $table->string('value');
             $table->timestamps();
 
             $table->foreignId('step_id')->constrained()->onDelete('cascade');
