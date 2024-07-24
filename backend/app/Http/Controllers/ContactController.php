@@ -41,13 +41,6 @@ class ContactController extends Controller
     {
         $request->validate([
             'posicao' => 'required|integer',
-            'name' => 'string|max:255',
-            'phone' => 'string',
-            'email' => 'string|email|max:255',
-            'cpf' => 'string|max:14',
-            'data_de_nascimento' => 'string',
-            'endereco' => 'string|max:255',
-            'value' => 'string',
             'step_id' => 'exists:steps,id',
         ]);
 
