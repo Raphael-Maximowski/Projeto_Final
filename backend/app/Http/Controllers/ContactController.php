@@ -45,9 +45,9 @@ class ContactController extends Controller
             'phone' => 'string',
             'email' => 'string|email|max:255',
             'cpf' => 'string|max:14',
-            'data_de_nascimento' => 'date',
+            'data_de_nascimento' => 'string',
             'endereco' => 'string|max:255',
-            'value' => 'numeric',
+            'value' => 'string',
             'step_id' => 'exists:steps,id',
         ]);
 
