@@ -46,8 +46,6 @@ export default {
       this.close = true;
       this.hidden = true
       this.returndata = response.data;
-      console.log('retorno')
-      console.log(this.returndata)
     },
     CleanSearch(){
       this.hidden = false

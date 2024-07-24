@@ -27,13 +27,13 @@
         <div>
           <div v-if="ValidateCollection" class="subtitle-info">
             <div><h2>Cor Associada a Coleção</h2></div>
-            <div class="border-info" v-if="!Edit"><div class="box-color-info"></div></div>
+            <div class="border-info"  v-if="!Edit"><div :style="{ backgroundColor: data_collection[2]}" class="box-color-info"></div></div>
             <input v-if="Edit"  v-model="color" style="margin-left: 20px" type="color">
           </div>
         </div>
         <div class="buttons-info">
           <div class="edit-info" v-if="!Edit"  @click="EditInfo"><p>Editar</p></div>
-          <div class="edit-info" v-if="Edit"  @click="SendData"><p>Enviar</p></div>
+          <div class="edit-info" v-if="Edit"  @click="Validator"><p>Enviar</p></div>
         </div>
 
 
@@ -67,12 +67,12 @@ export default{
       name: "",
       description: "",
       color: "",
+      errors: [],
     }
   },
   methods: {
     SyncInfo(){
       this.ValidateCollection = this.data_collection[5]
-
       this.name = this.data_collection[0];
       this.description = this.data_collection[1];
       this.color = this.data_collection[2]
@@ -83,6 +83,28 @@ export default{
     EditInfo(){
       this.Edit = !this.Edit
     },
+    ValidateName(){
+      if (this.name.length === 0){
+        this.errors.push('O campo nome é obrigatório');
+      } else if (this.name.length > 7) { this.errors.push('Nome excedeu caracteres maximos') }
+    },
+    ValidateDescription(){
+      if(this.description.length === 0 ){
+        this.errors.push('O campo descrição é obrigatório');
+      }
+    },
+
+    Validator(){
+      this.ValidateName()
+      this.ValidateDescription()
+      if (this.errors.length === 0 ){
+        this.SendData()
+      } else { this.$emit('Error', this.errors[0])
+      console.log(this.errors[0])}
+
+      this.errors = []
+    },
+
     async SendData(){
       if (this.ValidateCollection){
         const data = {
@@ -138,7 +160,7 @@ export default{
   height: 100vh;
   display: flex;
   justify-content: end;
-  z-index: 1000;
+  z-index: 3;
 }
 
 .base-modal3 {

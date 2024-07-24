@@ -69,11 +69,12 @@ export default {
 /* Background Alerta */
 #modal {
   display: flex;
-  justify-content: center;
-  width: 100vw;
+  justify-content: end;
+  width: 30vw;
   height: 100vh;
   position: absolute;
-  z-index: 1;
+  z-index: 4;
+
 }
 
 /* Principal Elemento Visual Modal */
@@ -81,7 +82,6 @@ export default {
   position: relative;
   opacity: 0;
   animation: moveUpDown 8s ease-in-out 1;
-  margin-right: 65vw;
 }
 
 /* Configuração Texto */

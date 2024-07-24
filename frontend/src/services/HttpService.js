@@ -48,7 +48,6 @@ export const ResetPassword = async(data) => {
 
   export const GetCollection = async(data) => {
     const token = store.getters.user_token;
-    console.log(token)
     const headers = {
         Authorization: `Bearer ${token}`
     }
@@ -62,7 +61,6 @@ export const UpdateCollection = async(data) => {
         Authorization: `Bearer ${token}`
     }
     const id =  data.id;
-    console.log('id:', id);
     const url = `collections/${id}`;
     const response = await HttpService.put(url, data, {headers});
     return response;

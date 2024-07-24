@@ -40,7 +40,7 @@
       </div>
 
       <div class="backsubmit">
-        <div class="submit" @click="SendData">Criar</div>
+        <div class="submit" @click="Validator">Criar</div>
       </div>
     </div>
 
@@ -75,13 +75,47 @@ export default {
       description: "",
       color: "#ffffff",
       type: "",
-      idcollection: ""
+      idcollection: "",
+      error: [],
     }
   },
     methods: {
       teste() {
         this.$emit('closeModal')
       },
+      ValidateName(){
+        if (this.name.length === 0 ){
+          this.error.push('O campo nome é obrigatório');
+        } else if (this.name.length > 7){
+          this.error.push('Nome excedeu caracteres maximos');
+        }
+      },
+      ValidateDescription(){
+        if (this.description.length === 0 ){
+          this.error.push('O campo descrição é obrigatório');
+        }
+      },
+      ValidateColor(){
+        if (this.color === '#ffffff'){
+          this.error.push('Insira uma cor');
+        }
+      },
+
+      Validator(){
+        this.ValidateName()
+        this.ValidateDescription()
+        if (this.activecollection) {
+          this.ValidateColor()
+        }
+        if (this.error.length === 0) {
+          this.SendData()
+        } else {
+          this.$emit('Error', this.error[0])
+        }
+
+        this.error = []
+      },
+
 
       SendData(){
         this.type = this.activecollection === true;
@@ -194,6 +228,7 @@ hr {
   filter: blur(0px);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  z-index: 5;
 }
 
 .title {
@@ -217,4 +252,6 @@ hr {
   font-size: 15px;
   margin-bottom: 10px;
 }
+
+
 </style>

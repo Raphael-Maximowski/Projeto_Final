@@ -14,7 +14,6 @@ export default {
     dadoscontact: {type:Object}
   },
   created (){
-    console.log(this.dadoscontact)
   }
 }
 </script>
