@@ -108,7 +108,7 @@ class ContactController extends Controller
         $newStep = $request->newStep_id;
         $newPosition = $request->newPosition;
 
-        $newRest = Contact::where('step_id', $newStep)->where('posicao', '>=', $newPosition)->orderBy('posicao')->get();
+        $newRest = Contact::where('step_id', $newStep)->where('posicao', '>', $newPosition)->orderBy('posicao')->get();
 
         for ($i = 0; $i < count($newRest); $i++) {
             $newRest[$i]->posicao++;
@@ -144,6 +144,8 @@ class ContactController extends Controller
     {
         Contact::destroy($id);
         return response()->json(null, 204);
+
+
     }
 
     public function search(Request $request)
