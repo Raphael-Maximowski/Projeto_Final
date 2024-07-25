@@ -9,8 +9,9 @@
                 v-model="headers"
                 tag="tr"
                 :item-key="key => key" handle=".line"
-                animation="350">
-
+                animation="350"
+                @change="event=> log(event)"
+            >
               <template #item="{ element: header }">
                 <th scope="col">
                   <Etapa @ActiveContact="ActiveContact" :dados="header"></Etapa>
@@ -28,7 +29,7 @@
 <script>
 import draggable from 'vuedraggable';
 import Etapa from "@/components/Funil/Etapa.vue";
-import {GetFunnel, GetOneFunnel, GetSteps} from "@/services/HttpService.js";
+import {GetFunnel, GetOneFunnel, GetSteps, UpdateStepPosition} from "@/services/HttpService.js";
 import { mapGetters } from "vuex";
 export default {
   name: "DashFunil",
@@ -49,7 +50,8 @@ export default {
       returndata: {},
       senddata : [],
       default : [],
-      id : ""
+      id : "",
+      newdata: {}
     };
   },
   methods: {
@@ -77,7 +79,21 @@ export default {
     ActiveContact(value){
       const newdatamain = value
       this.$emit('ActiveContactMain', newdatamain);
-    }
+    },
+    log: function(evt) {
+      console.log(evt)
+      const pos = (evt.moved.newIndex) + 1
+      this.newdata = {
+        'id' : evt.moved.element.id,
+        'posicao' : pos,
+        'funnel_id' : evt.moved.element.funnel_id,
+      }
+      this.SendDataStep()
+    },
+    async SendDataStep(){
+      const response =  await UpdateStepPosition(this.newdata)
+      return response;
+    },
   },
   created(){
     this.SendData().then(() => {
