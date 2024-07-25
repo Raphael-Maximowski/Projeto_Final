@@ -15,7 +15,7 @@
           @change="event=> log(event, dados.id)"
       >
         <template #item="{element}">
-          <ContatoCard :dadoscontact="element"/>
+          <ContatoCard @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
 
         </template>
       </draggable>
@@ -66,9 +66,14 @@ export default {
       cards: [],
       object: [],
       data: {},
-      lastIndex : 0,
-      lastId: 0,
-      key: []
+      key: [],
+      evt: {},
+      datacontact : {},
+      idcontact : "",
+      lastStep: "",
+      lastPos: "",
+      evtremove: {},
+
     }
   },
   methods: {
@@ -83,47 +88,44 @@ export default {
       }
       return response;
     },
+
     log: function(evt, id) {
       this.key = Object.keys(evt)
-      if (this.key[0] === "moved") {
-        const last = evt.moved.newIndex
-        const newpos = evt.moved.oldIndex
-        const iduser = evt.moved.element.id
+
+      if (this.key[0] === 'moved') {
+        this.evt = evt
+        this.idcontact = this.evt.moved.element.id
+        this.Moved()
+      }  else if (this.key[0] === 'removed'){
+        this.evtremove = evt
+        console.log(this.evtremove, id)
+        this.lastStep = id
+        this.lastPos = (this.evtremove.removed.oldIndex) + 1
+
+      } else if (this.key[0] === "added") {
+        this.evt = evt
+        console.log(this.evt, id)
         this.data = {
-          'id' : iduser,
-          'posicao' : newpos,
-          'step_id' : id
+          'id' : this.evt.added.element.id,
+          'posicao' : this.lastStep,
+          'step_id' : this.lastPos,
         }
-        this.UpdateOwnStep()
-        console.log(this.data)
       }
-
-      if (this.key[0] === "removed"){
-        this.lastId = id
-        this.lastIndex =  evt.removed.oldIndex
-      }
-
-      if (this.key[0] === "added"){
-        console.log(evt)
-        this.data = {
-          'id' : evt.added.id,
-          'posicao' : this.lastIndex,
-          'step_id' : this.lastId,
-          'newStep_id' : id,
-          'newPosition' : evt.added.newIndex
-        }
-        console.log(this.data)
-
-      }
-      console.log(evt, id)
     },
-    async UpdateOwnStep(){
-      const response =  await UpdateOwnStep(this.data)
+    async Moved(){
+      this.datacontact = {
+        'id' : this.idcontact,
+        'posicao' : this.evt.moved.newIndex + 1,
+        'step_id' : this.evt.moved.element.step_id
+      }
+      const response =  await UpdateOwnStep(this.datacontact)
       return response
     },
-    async UpdateOtherStep(){
-
+    ActiveContact(value){
+      const newdata =  value
+      this.$emit('ActiveContact', newdata);
     }
+
   },
 
   created(){

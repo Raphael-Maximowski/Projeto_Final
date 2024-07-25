@@ -147,16 +147,8 @@ class ContactController extends Controller
 
         if ($request->has('name')) {
             $query->where(function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->input('name') . '%')->orWhere('last_name', 'like', '%' . $request->input('name') . '%');
+                $query->where('name', 'like', '%' . $request->input('name') . '%');
             });
-        }
-
-        if ($request->has('email')) {
-            $query->where('email', 'like', '%' . $request->input('email') . '%');
-        }
-
-        if ($request->has('phone')) {
-            $query->where('phone', 'like', '%' . $request->input('phone') . '%');
         }
 
         $users = $query->get();

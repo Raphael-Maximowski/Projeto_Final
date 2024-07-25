@@ -8,7 +8,8 @@
           </div>
           <div><h1>Voltar</h1></div>
         </div>
-        <div><p @click="SendContact">Criar Contato</p></div>
+        <div><p v-if="dadoscontact == null" style="margin-left: 17vw" @click="SendContact">Criar Contato</p></div>
+        <div><p v-if="dadoscontact != null" @click="UpdateContact">Atualizar Contato</p></div>
       </div>
       <div class="body">
         <div class="contentbody">
@@ -16,6 +17,7 @@
             <div class="title" v-if="!edit_name" @click="ActiveEditName">
               {{ name_expose }}
             </div>
+
             <div class="input" v-if="edit_name">
               <input type="text" v-model="name">
               <div class="confirm">
@@ -38,8 +40,8 @@
           </div>
           <div class="base" >
             <div style="display: flex">
-              <div v-if="!contato" @click="opencontato" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(90deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
-              <div v-if="contato" @click="opencontato" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(270deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div v-if="!contato" @click="opencontato" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(90deg); cursor: pointer" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div v-if="contato" @click="opencontato" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(270deg); cursor: pointer" width="13px" src="../../assets/images/Funil/seta.png"></div>
               <div class="title">Contatos</div>
             </div>
             <div v-if="contato" class="basecontent">
@@ -69,8 +71,8 @@
           </div>
           <div class="base">
             <div style="display: flex">
-              <div v-if="!dados" @click="opendados" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(90deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
-              <div v-if="dados" @click="opendados" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(270deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div v-if="!dados" @click="opendados" style="margin-top: 14px; margin-left: 15px; cursor: pointer"><img style="transform: rotate(90deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
+              <div v-if="dados" @click="opendados" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(270deg); cursor: pointer" width="13px" src="../../assets/images/Funil/seta.png"></div>
               <div class="title">Dados</div>
             </div>
             <div v-if="dados" class="basecontent">
@@ -111,6 +113,7 @@
               <div class="contato">
                 <div class="titlecontact">Valor:</div>
                 <div @click="ActiveValue" v-if="!edit_value" class="contentcontact">R$ {{value_expose}}</div>
+
                 <div v-if="edit_value" class="contentcontact">
                   <div class="fixed">R$</div>
                   <input v-model="value" style="padding-left: 30px">
@@ -123,6 +126,10 @@
               </div>
             </div>
           </div>
+          <div class="delete" v-if="dadoscontact != null" @click="DeleteContact">
+            <div><img src="../../assets/images/Funil/lixeira.png"></div>
+            <div>Excluir Contato</div>
+          </div>
 
         </div>
       </div>
@@ -131,13 +138,14 @@
 </template>
 
 <script>
-import {GetOneStep, SendContact} from "@/services/HttpService.js";
+import {DeleteContact, GetOneStep, SendContact} from "@/services/HttpService.js";
 
 export default {
   name: 'ModalContato',
   props: {
     id : {type:Number},
-    nomefunil: {type:String}
+    nomefunil: {type:String},
+    dadoscontact: {type:Object}
   },
   data(){
     return{
@@ -169,8 +177,21 @@ export default {
     }
   },
   methods: {
+    async UpdateContact(){
+      const data = {
+
+      }
+    },
+    async DeleteContact(){
+      const data = this.dadoscontact.id
+      console.log(this.dadoscontact)
+      console.log(data)
+      const response = await DeleteContact(data)
+      return response;
+    },
     CloseModal(){
       this.$emit('CloseModal')
+      this.SetNullFunil()
     },
     opencontato(){
       this.contato =  !this.contato
@@ -187,6 +208,9 @@ export default {
     },
     CloseName(){
       this.name_expose = "Nome do Contato"
+      if (this.dadoscontact != null) {
+        this.name_expose = this.dadoscontact.name
+      }
       this.edit_name = !this.edit_name
     },
     ActiveEditNumber(){
@@ -195,6 +219,9 @@ export default {
     CloseNumber(){
       this.edit_number = !this.edit_number
       this.number_expose = "Adicionar Numero"
+      if (this.dadoscontact != null){
+        this.number_expose = this.dadoscontact.phone
+      }
     },
     SaveNumber(){
       this.number_expose = this.number
@@ -206,6 +233,9 @@ export default {
     CloseEmail(){
       this.edit_email = !this.edit_email
       this.email_expose =  "Adicionar E-mail"
+      if (this.dadoscontact != null) {
+        this.email_expose = this.dadoscontact.email
+      }
     },
     SaveEmail(){
       this.email_expose =  this.email
@@ -217,6 +247,9 @@ export default {
     CloseCPF(){
       this.edit_cpf = !this.edit_cpf
       this.cpf_expose = "000.000.000-00"
+      if (this.dadoscontact != null) {
+        this.cpf_expose = this.dadoscontact.cpf
+      }
     },
     SaveCPF(){
       this.cpf_expose =  this.cpf
@@ -228,6 +261,8 @@ export default {
     CloseDate(){
       this.edit_date =  !this.edit_date
       this.date_expose = "DD/MM/AAAA"
+      if (this.dadoscontact != null) {
+        this.date_expose =  this.dadoscontact.data_de_nascimento}
     },
     SaveDate(){
       this.edit_date =  !this.edit_date
@@ -239,6 +274,9 @@ export default {
     CloseAddres(){
       this.edit_addres = !this.edit_addres
       this.addres_expose = "-"
+      if (this.dadoscontact != null) {
+        this.addres_expose = this.dadoscontact.endereco
+      }
     },
     SaveAddres(){
       this.edit_addres = !this.edit_addres
@@ -250,6 +288,7 @@ export default {
     CloseValue(){
       this.edit_value = !this.edit_value
       this.value_expose =  "0,00"
+      if (this.dadoscontact != null) {this.value_expose = this.dadoscontact.value}
     },
     SaveValue(){
       this.edit_value = !this.edit_value
@@ -276,13 +315,54 @@ export default {
       }
       const response =  await SendContact(data);
       return response;
+    },
+    SetNullFunil(){
+      this.$emit('SetNull');
     }
-
   },
+  created() {
+    console.log(this.dadoscontact)
+    if (this.dadoscontact != null) {
+      this.name_expose = this.dadoscontact.name
+      this.name = this.dadoscontact.name
+      this.number_expose = this.dadoscontact.phone
+      this.number = this.dadoscontact.phone
+      this.email_expose = this.dadoscontact.email
+      this.email = this.dadoscontact.email
+      this.cpf_expose = this.dadoscontact.cpf
+      this.cpf = this.dadoscontact.cpf
+      this.date_expose =  this.dadoscontact.data_de_nascimento
+      this.date = this.dadoscontact.data_de_nascimento
+      this.addres_expose = this.dadoscontact.endereco
+      this.addres = this.dadoscontact.endereco
+      this.value_expose = this.dadoscontact.value
+      this.value = this.dadoscontact.value
+    }
+  }
 }
 </script>
 
 <style scoped>
+.delete {
+  margin-top: 30px;
+  background-color: #e1e9f4;
+  display: flex;
+  color: #677c92;
+  font-weight: bold;
+  padding: 6px;
+  border-radius: 10px;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.delete img {
+  width: 17px;
+  margin-right: 20px;
+}
+
+
+
 input:focus {
   outline: none;
 }
@@ -299,6 +379,7 @@ input:focus {
   position: absolute;
   margin-top: 9px;
   margin-left: 24.5vw;
+  cursor: pointer;
 
 }
 .contentcontact {
@@ -407,6 +488,7 @@ hr {
   font-size: 17px;
   font-weight: bold;
   color: #373753;
+  cursor: pointer;
 }
 
 .base {
@@ -436,7 +518,7 @@ hr {
   padding: 5px 10px;
   border: 1px solid lightgrey;
   border-radius: 50%;
-  transform: rotate(180deg);
+  transform: rotate(0deg);
   position: absolute;
   cursor: pointer;
 }
@@ -460,10 +542,7 @@ hr {
   align-items: center;
   justify-content: space-between;
 }
-.header {
 
-  height: 70px;
-}
 .body {
 
   height: 620px;
