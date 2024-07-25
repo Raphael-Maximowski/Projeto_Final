@@ -21,10 +21,10 @@ class ContactController extends Controller
             'phone' => 'required|string',
             'email' => 'required|string|email',
             'cpf' => 'required|string|max:14',
-            'data_de_nascimento' => 'required',
+            'data_de_nascimento' => 'required|string',
             'endereco' => 'required|string',
             'value' => 'required',
-            'step_id' => 'required',
+            'step_id' => 'required'
         ]);
 
         $contact = Contact::create($request->all());
@@ -120,6 +120,24 @@ class ContactController extends Controller
         $contact->save();
 
         return response()->json($contact);
+    }
+
+    public function updateInfos (Request $request, $id)
+    {
+        $request->validate([
+            'posicao' => 'sometimes|integer',
+            'name' => 'sometimes|string',
+            'phone' => 'sometimes|string',
+            'email' => 'sometimes|string|email',
+            'cpf' => 'sometimes|string|max:14',
+            'data_de_nascimento' => 'sometimes',
+            'endereco' => 'sometimes|string',
+            'value' => 'sometimes',
+        ]);
+
+        $contact = Contact::findOrFail($id);
+        $contact->update($request->all());
+        return response()->json(['message' => 'Contato atualizado com sucesso', 'data' => $contact]);
     }
 
     public function destroy($id)
