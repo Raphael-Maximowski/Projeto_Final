@@ -146,3 +146,16 @@ services:
     working_dir: /app
     entrypoint: [ 'npm' ]
     
+  microservico:
+    build:
+      context: ./microservico
+    ports:
+      - "3005:3005"
+    volumes:
+      - './microservico:/microservico'
+    networks:
+      - laravel-vue
+    depends_on:
+      - app
+    entrypoint: [ "sh", "-c" ]
+    command: [ "npm install && npm run dev" ]
