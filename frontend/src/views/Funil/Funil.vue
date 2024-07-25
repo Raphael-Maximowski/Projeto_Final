@@ -17,7 +17,10 @@
           <p>{{dadosfunil.name}}</p>
         </div>
         <div class="buttons">
-          <div class="search"><SearchBar :contact="contact" /></div>
+          <div class="search"><SearchBar
+              :contact="contact"
+              @OpenContacts="OpenContacts"
+          /></div>
           <div class="create">
             <div class="background">
               <div class="img"><img src="../../assets/images/Funil/newuser.png"></div>
@@ -58,6 +61,9 @@ export default defineComponent({
     };
   },
   methods: {
+    OpenContacts() {
+      this.activecontact =  true
+    },
     SetNull(){
       this.dadoscontact = null
     },
