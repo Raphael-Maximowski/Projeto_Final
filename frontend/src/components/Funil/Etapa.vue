@@ -51,7 +51,7 @@
 <script>
 import ContatoCard from "@/components/Funil/Contato.vue";
 import draggable from 'vuedraggable';
-import {GetContacts, UpdateOwnStep} from "@/services/HttpService.js";
+import {GetContacts, UpdateLastStep, UpdateNewStep, UpdateOwnStep} from "@/services/HttpService.js";
 
 export default {
   name: 'etapa',
@@ -73,6 +73,8 @@ export default {
       lastStep: "",
       lastPos: "",
       evtremove: {},
+      lastId: null,
+      newId: null
 
     }
   },
@@ -91,34 +93,53 @@ export default {
 
     log: function(evt, id) {
       this.key = Object.keys(evt)
+      this.evt = evt
 
       if (this.key[0] === 'moved') {
         this.evt = evt
         this.idcontact = this.evt.moved.element.id
         this.Moved()
       }  else if (this.key[0] === 'removed'){
-        this.evtremove = evt
-        console.log(this.evtremove, id)
-        this.lastStep = id
-        this.lastPos = (this.evtremove.removed.oldIndex) + 1
+        this.idcontact = this.evt.removed.element.id
+        this.lastId = id
+        this.evt = evt
+        this.Removed()
 
       } else if (this.key[0] === "added") {
         this.evt = evt
-        console.log(this.evt, id)
-        this.data = {
-          'id' : this.evt.added.element.id,
-          'posicao' : this.lastStep,
-          'step_id' : this.lastPos,
-        }
+        this.newId = id
+        this.idcontact = this.evt.added.element.id
+        this.Added()
       }
     },
     async Moved(){
       this.datacontact = {
         'id' : this.idcontact,
         'posicao' : this.evt.moved.newIndex + 1,
-        'step_id' : this.evt.moved.element.step_id
+        'step_id' : this.lastId
       }
       const response =  await UpdateOwnStep(this.datacontact)
+      return response
+    },
+    async Removed(){
+      const pos = this.evt.removed.oldIndex + 1
+      this.datacontact = {
+        'id' : this.idcontact,
+        'posicao' : pos,
+        'step_id' : this.lastId
+      }
+      const response = await UpdateLastStep(this.datacontact)
+      return response
+    },
+    async Added(){
+      const pos = this.evt.added.newIndex + 1
+      const newId = this.lastId
+      this.datacontact = {
+        'id' : this.idcontact,
+        'newStep_id' : this.newId,
+        'newPosition' : pos
+      }
+      const response = await UpdateNewStep(this.datacontact)
       return response
     },
     ActiveContact(value){

@@ -44,7 +44,7 @@
 
 <script>
 import {GetOneStep, SearchContact, SearchFunnel} from "@/services/HttpService.js";
-import {mapMutations} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 export default {
   name: 'SearchBar',
@@ -65,9 +65,9 @@ export default {
   methods: {
     async CRMWithContact(id, step_id){
       const response = await GetOneStep(step_id)
-      const returnjson = response.data
-      this.updateFunnelId(returnjson.funnel_id)
-      this.$router.push('/Funil')
+      const id_funnel = response.data.funnel_id
+      this.updateFunnelId(id_funnel)
+      window.location.reload();
     },
     async SendSearch(){
       if (this.contact !== true)
@@ -97,8 +97,10 @@ export default {
       this.$router.push('/Funil');
     },
     ...mapMutations(['updateFunnelId'])
-
-  }
+  },
+  computed: {
+    ...mapGetters(['funnel_id']),
+  },
 }
 </script>
 

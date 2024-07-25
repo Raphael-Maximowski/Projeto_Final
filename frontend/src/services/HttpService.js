@@ -219,6 +219,28 @@ export const DeleteContact = async (data) => {
     return response;
 }
 
+export const UpdateLastStep = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id = data.id
+    const url = `contacts/update-old-step/${id}`;
+    const response =  await HttpService.patch(url, data, {headers})
+    return response;
+}
+
+export const UpdateNewStep = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id = data.id
+    const url = `contacts/update-new-step/${id}`;
+    const response =  await HttpService.patch(url, data, {headers})
+    return response;
+}
+
 export default HttpService;
 
 
