@@ -13,7 +13,7 @@
 
               <template #item="{ element: header }">
                 <th scope="col">
-                  <Etapa :dados="header"></Etapa>
+                  <Etapa @ActiveContact="ActiveContact" :dados="header"></Etapa>
                 </th>
               </template>
             </draggable>
@@ -74,6 +74,10 @@ export default {
       }
       this.$emit('ReceiveIdPost', this.id)
     },
+    ActiveContact(value){
+      const newdatamain = value
+      this.$emit('ActiveContactMain', newdatamain);
+    }
   },
   created(){
     this.SendData().then(() => {
@@ -88,6 +92,7 @@ export default {
   width: 90vw;
   height: 85vh;
   overflow-y: auto;
+  z-index: 0
 }
 
 main {

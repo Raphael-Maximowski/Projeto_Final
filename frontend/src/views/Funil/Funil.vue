@@ -4,6 +4,8 @@
                   v-if="activecontact"
                   @CloseModal="CloseModal"
                   :nomefunil="nomefunil"
+                  :dadoscontact="dadoscontact"
+                  @SetNull="SetNull"
     />
     <div>
       <MenuDash/>
@@ -15,7 +17,7 @@
           <p>{{dadosfunil.name}}</p>
         </div>
         <div class="buttons">
-          <div class="search"><SearchBar/></div>
+          <div class="search"><SearchBar :contact="contact" /></div>
           <div class="create">
             <div class="background">
               <div class="img"><img src="../../assets/images/Funil/newuser.png"></div>
@@ -25,7 +27,7 @@
         </div>
       </div>
       <div>
-        <Draggable @ReceiveIdPost="ReceiveIdPost" @ReceiveId = "ReceiveId" />
+        <Draggable @ActiveContactMain="ActiveContactMain" @ReceiveIdPost="ReceiveIdPost" @ReceiveId = "ReceiveId" />
       </div>
     </div>
   </main>
@@ -51,9 +53,22 @@ export default defineComponent({
       dadosfunil : {},
       id : "",
       nomefunil: "",
+      dadoscontact :  null,
+      contact: null
     };
   },
   methods: {
+    SetNull(){
+      this.dadoscontact = null
+    },
+    SearchContact(){
+      this.contact = true;
+    },
+    ActiveContactMain(value){
+      this.dadoscontact =  value
+      console.log(this.dadoscontact)
+      this.activecontact = true
+    },
     CloseModal() {
       this.activecontact = !this.activecontact;
     },
@@ -67,6 +82,9 @@ export default defineComponent({
       this.id = value
     },
   },
+  created() {
+    this.SearchContact()
+  }
 
 });
 </script>
@@ -137,7 +155,7 @@ main {
 
 .header {
   display: flex;
-
+  z-index: 100000;
   align-items: center;
   height: 60px;
   width: 100vw;

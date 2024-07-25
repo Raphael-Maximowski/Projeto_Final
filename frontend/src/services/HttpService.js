@@ -183,7 +183,6 @@ export const Pagination = async (data) => {
 
 export const UpdateOwnStep = async (data) => {
     const token = store.getters.user_token;
-
     const headers = {
         Authorization: `Bearer ${token}`
     }
@@ -199,6 +198,27 @@ export const UpdateOtherStep = async (data) => {
         Authorization: `Bearer ${token}`
     }
 }
+
+export const SearchContact =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const response =  await HttpService.post('contacts/search', data, {headers})
+    return response;
+}
+
+export const DeleteContact = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id = data
+    const url = `contacts/${id}`;
+    const response = await HttpService.delete(url, {headers})
+    return response;
+}
+
 export default HttpService;
 
 
