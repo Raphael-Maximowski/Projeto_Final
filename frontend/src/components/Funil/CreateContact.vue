@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import {DeleteContact, GetOneStep, SendContact} from "@/services/HttpService.js";
+import {DeleteContact, GetOneStep, SendContact, UpdateInfoContact} from "@/services/HttpService.js";
 
 export default {
   name: 'ModalContato',
@@ -179,8 +179,17 @@ export default {
   methods: {
     async UpdateContact(){
       const data = {
-
+        'id' : this.dadoscontact.id,
+        'name' : this.name,
+        'phone' : this.number,
+        'email' : this.email,
+        'cpf' : this.cpf,
+        'data_de_nascimento' : this.date,
+        'endereco' : this.addres,
+        'value' : this.value,
       }
+      const response =  await UpdateInfoContact(data)
+      return response
     },
     async DeleteContact(){
       const data = this.dadoscontact.id
@@ -526,7 +535,7 @@ hr {
 .header p {
   background-color: blue;
   color: white;
-  padding: 5px 40px;
+  padding: 5px 33px;
   margin-top: 20px;
   border-radius: 10px;
   margin-right: 2vw;

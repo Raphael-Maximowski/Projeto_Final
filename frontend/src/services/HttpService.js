@@ -241,6 +241,27 @@ export const UpdateNewStep = async (data) => {
     return response;
 }
 
+export const UpdateInfoContact = async(data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id = data.id
+    const url = `contacts/update-infos/${id}`;
+    const response =  await HttpService.patch(url, data, {headers})
+    return response;
+}
+
+export const UpdateStepPosition = async(data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id = data.id
+    const url = `steps/${id}`;
+    const response =  await HttpService.patch(url, data, {headers})
+}
+
 export default HttpService;
 
 

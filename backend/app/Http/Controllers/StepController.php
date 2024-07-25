@@ -34,7 +34,6 @@ class StepController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'string|max:255',
             'posicao' => 'integer',
             'funnel_id' => 'exists:funnels,id',
         ]);
