@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Funnel;
@@ -25,16 +26,18 @@ class FunnelController extends Controller
         ]);
 
         $user = Auth::user();
+        $collection = Collection::findOrFail($request->collection_id);
 
         $funnel = Funnel::create([
             'name' => $request->name,
             'description' => $request->description,
+            'color' => $collection->color,
             'user_id' => $user->id,
             'collection_id' => $request->collection_id, // Criação de um novo funil
         ]);
 
-        $stepsName = ['Sem etapa', 'Prospecção', 'Contato', 'Proposta'];
-        $stepsPosition = [1, 2, 3, 4];
+        $stepsName = ['Sem etapa', 'Prospecção', 'Contato', 'Proposta', 'EmptyStep'];
+        $stepsPosition = [1, 2, 3, 4, 5];
 
         foreach ($stepsName as $index =>$stepsName){
             $step = new Step ([

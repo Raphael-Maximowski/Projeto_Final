@@ -100,7 +100,7 @@ export default{
       if (this.errors.length === 0 ){
         this.SendData()
       } else { this.$emit('Error', this.errors[0])
-      console.log(this.errors[0])}
+      }
 
       this.errors = []
     },

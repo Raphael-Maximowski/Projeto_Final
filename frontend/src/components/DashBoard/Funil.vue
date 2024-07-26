@@ -27,7 +27,6 @@ export default {
     ...mapGetters(['funnel_id']),
   },
   created(){
-    console.log(this.color)
   },
   data ()
   {

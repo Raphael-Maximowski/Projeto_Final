@@ -1,6 +1,7 @@
 <template>
   <div class="modalcontato">
     <div class="content">
+
       <div class="header">
         <div class="displayheader">
           <div @click="CloseModal" class="closemodal" >
@@ -11,6 +12,8 @@
         <div><p v-if="dadoscontact == null" style="margin-left: 17vw" @click="SendContact">Criar Contato</p></div>
         <div><p v-if="dadoscontact != null" @click="UpdateContact">Atualizar Contato</p></div>
       </div>
+
+
       <div class="body">
         <div class="contentbody">
           <div class="base">
@@ -145,7 +148,7 @@ export default {
   props: {
     id : {type:Number},
     nomefunil: {type:String},
-    dadoscontact: {type:Object}
+    dadoscontact: {type:Object},
   },
   data(){
     return{
@@ -559,6 +562,7 @@ hr {
 
 .content {
   background-color: #f9fafc;
+  z-index: 2000;
   width: 40vw;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
