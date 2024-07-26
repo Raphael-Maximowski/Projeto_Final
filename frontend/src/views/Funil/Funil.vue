@@ -6,6 +6,7 @@
                   :nomefunil="nomefunil"
                   :dadoscontact="dadoscontact"
                   @SetNull="SetNull"
+                  :step="step"
     />
     <div>
       <MenuDash/>
@@ -30,7 +31,7 @@
         </div>
       </div>
       <div>
-        <Draggable @ActiveContactMain="ActiveContactMain" @ReceiveIdPost="ReceiveIdPost" @ReceiveId = "ReceiveId" />
+        <Draggable @ActiveFromStep="ActiveFromStep" :dadosfunil="dadosfunil"  @ActiveContactMain="ActiveContactMain" @ReceiveIdPost="ReceiveIdPost" @ReceiveId = "ReceiveId" />
       </div>
     </div>
   </main>
@@ -53,11 +54,12 @@ export default defineComponent({
   data() {
     return {
       activecontact: false,
-      dadosfunil : {},
+      dadosfunil : "",
       id : "",
       nomefunil: "",
       dadoscontact :  null,
-      contact: null
+      contact: null,
+      step: null
     };
   },
   methods: {
@@ -72,7 +74,6 @@ export default defineComponent({
     },
     ActiveContactMain(value){
       this.dadoscontact =  value
-      console.log(this.dadoscontact)
       this.activecontact = true
     },
     CloseModal() {
@@ -81,12 +82,17 @@ export default defineComponent({
     async ReceiveId(value){
       const response = await GetOneFunnel(value)
       this.dadosfunil =  response.data
+      console.log(this.dadosfunil)
       this.nomefunil = this.dadosfunil.name
       return response
     },
     ReceiveIdPost(value){
       this.id = value
     },
+    ActiveFromStep(){
+      this.activecontact = true
+      this.step =  true
+    }
   },
   created() {
     this.SearchContact()
@@ -137,10 +143,9 @@ export default defineComponent({
 }
 
 .name {
-
   height: 60px;
   width: 50vw;
-  padding-left: 15px;
+  padding-left: 50px;
   display: flex;
 }
 

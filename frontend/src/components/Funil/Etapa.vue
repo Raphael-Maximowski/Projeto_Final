@@ -1,8 +1,8 @@
 <template>
-  <div class="teste">
-    <div class="line"></div>
+  <div class="teste" v-if="dados.dados.name !='EmptyStep'">
+    <div class="line" :style="{ backgroundColor: dadosfunilstep.color, opacity: dados.opacity}"></div>
     <div class="content">
-      <div class="title"> {{dados.name}} </div>
+      <div class="title"> <div>{{dados.dados.name}}</div></div>
     </div>
     <div class="cards">
       <draggable
@@ -12,15 +12,19 @@
           drag-class="drag"
           ghost-class="ghost"
           animation="350"
-          @change="event=> log(event, dados.id)"
+          @change="event=> log(event, dados.dados.id)"
       >
         <template #item="{element}">
-          <ContatoCard @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
+          <div>
+            <ContatoCard v-if="cards.length !== 0" @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
+          </div>
 
         </template>
       </draggable>
     </div>
   </div>
+  <div v-if="dados.dados.name =='EmptyStep'"><NewStep :dadosfunilstep="dadosfunilstep" @ActiveFromStep="ActiveFromStep"/></div>
+
 </template>
 <style scoped>
 
@@ -31,15 +35,27 @@
 .title {
   font-size: 18px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
 }
+
+
+
+.title img {
+  width: 27px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
 .content {
   margin: 10px 15px 10px 15px;
 }
 .line {
-  background-color: rgba(255, 186, 39, 0.55);
   width: 250px;
   height: 10px;
   border-radius: 50px;
+  z-index: 1;
+  cursor: pointer;
 }
 .teste {
   width: 250px;
@@ -52,14 +68,27 @@
 import ContatoCard from "@/components/Funil/Contato.vue";
 import draggable from 'vuedraggable';
 import {GetContacts, UpdateLastStep, UpdateNewStep, UpdateOwnStep} from "@/services/HttpService.js";
+import {mapGetters} from "vuex";
+import Funil from "@/components/DashBoard/Funil.vue";
+import SearchBar from "@/components/DashBoard/SearchBar.vue";
+import NewStep from "@/components/Funil/CreateEtapa.vue";
 
 export default {
   name: 'etapa',
-  components: {ContatoCard, draggable},
+  components: {NewStep, SearchBar, Funil, ContatoCard, draggable},
   props: {
     dados: {
       type:Object
     },
+    dadosfunilstep: {
+      type:Object
+    }
+
+  },
+  computed:{
+    ...mapGetters([
+      'colors'
+    ])
   },
   data(){
     return{
@@ -81,7 +110,7 @@ export default {
   methods: {
     async GetContact(){
       const data = {
-        id: this.dados.id
+        id: this.dados.dados.id
       }
       const response = await GetContacts(data)
       const GetData = response.data
@@ -145,6 +174,9 @@ export default {
     ActiveContact(value){
       const newdata =  value
       this.$emit('ActiveContact', newdata);
+    },
+    ActiveFromStep(){
+      this.$emit('ActiveFromStep');
     }
 
   },

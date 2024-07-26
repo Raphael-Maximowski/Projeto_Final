@@ -20,7 +20,7 @@
 </template>
 <script>
 import Funil from './Funil.vue';
-import index from "vuex";
+import {mapMutations } from 'vuex';
 export default {
   components: { Funil },
   name: 'Collection',
@@ -63,6 +63,9 @@ export default {
   created() {
     this.SyncData()
     this.color = this.collection.color
+    this.updateColors(this.color)
+    this.$emit('Color')
+
   },
   methods: {
     OpenModal()
@@ -110,7 +113,8 @@ export default {
           this.funnel.push(this.funnels[i])
         }
       }
-    }
+    },
+    ...mapMutations(['updateColors'])
   },
   watch: {
     resync(value) {

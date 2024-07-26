@@ -11,6 +11,7 @@ export default createStore({
       token: "",
       created: "",
       funnel_id: "",
+      colors: "",
     }
   },
   getters: {
@@ -23,8 +24,8 @@ export default createStore({
     logged_in: state => {
       return state.user;
     },
-    funnel_id : state => state.user.funnel_id
-
+    funnel_id : state => state.user.funnel_id,
+    colors : state => state.user.colors
   },
   mutations: {
     updateUserId(state, NewId)
@@ -48,6 +49,9 @@ export default createStore({
     },
     updateFunnelId(state, NewFunnelId){
       state.user.funnel_id =  NewFunnelId
+    },
+    updateColors(state, NewColor) {
+      state.user.colors = NewColor
     }
   },
   actions: {},

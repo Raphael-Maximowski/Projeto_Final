@@ -94,7 +94,6 @@ export const GetFunnel =  async() => {
 export const UpdateFunnel = async(data) => {
     const token = store.getters.user_token;
     const id = data.id
-    console.log(id)
     const headers = {
         Authorization: `Bearer ${token}`}
     const url = `funnels/${id}`;
