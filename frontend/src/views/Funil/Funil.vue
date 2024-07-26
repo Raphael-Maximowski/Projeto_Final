@@ -82,7 +82,6 @@ export default defineComponent({
     async ReceiveId(value){
       const response = await GetOneFunnel(value)
       this.dadosfunil =  response.data
-      console.log(this.dadosfunil)
       this.nomefunil = this.dadosfunil.name
       return response
     },

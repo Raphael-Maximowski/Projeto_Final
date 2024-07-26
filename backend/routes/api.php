@@ -97,6 +97,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('steps', [StepController::class, 'store']);
     Route::get('steps/{id}', [StepController::class, 'index']);
     Route::get('step/{id}', [StepController::class, 'show']);
+    Route::patch('stepedit/{id}', [StepController::class, 'editinfo']);
     Route::patch('steps/{id}', [StepController::class, 'update']);
     Route::delete('steps/{id}', [StepController::class, 'destroy']);
 

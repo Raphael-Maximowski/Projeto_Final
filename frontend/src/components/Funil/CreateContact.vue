@@ -196,8 +196,6 @@ export default {
     },
     async DeleteContact(){
       const data = this.dadoscontact.id
-      console.log(this.dadoscontact)
-      console.log(data)
       const response = await DeleteContact(data)
       return response;
     },
@@ -333,7 +331,6 @@ export default {
     }
   },
   created() {
-    console.log(this.dadoscontact)
     if (this.dadoscontact != null) {
       this.name_expose = this.dadoscontact.name
       this.name = this.dadoscontact.name

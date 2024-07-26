@@ -14,7 +14,7 @@
               >
                 <template #item="{ element: header }">
                   <th scope="col">
-                    <Etapa @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
+                    <Etapa :id_funnel="id_funnel" @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
                   </th>
                 </template>
               </draggable>
@@ -56,7 +56,9 @@ export default {
       senddata : [],
       default : [],
       id : "",
-      newdata: {}
+      newdata: {},
+      id_funnel : null,
+      size : null
     };
   },
   methods: {
@@ -67,13 +69,13 @@ export default {
       const response = await GetSteps(data);
       this.$emit('ReceiveId', data.id)
       this.returndata =  response.data;
+      console.log(this.returndata)
+      this.size = this.returndata.length
     },
     SetHeaders(){
-      const porcentage = (100 / this.returndata.length) / 100
-      console.log('length', this.returndata.length)
+      const porcentage = (100 / this.returndata.length) / 70
       let opacity = 0
 
-      console.log(opacity)
       for (let i = 0; i < this.returndata.length; i++){
         if (this.returndata[i].name === "Sem etapa"){
           this.default.push(this.returndata[i]);
@@ -116,8 +118,11 @@ export default {
   created(){
     this.SendData().then(() => {
       this.SetHeaders();
+      this.id_funnel = {
+        'id' : this.funnel_id,
+        'size' : this.size
+      }
     })
-    console.log(this.dadosfunil)
   }
 };
 </script>

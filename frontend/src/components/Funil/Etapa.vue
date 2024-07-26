@@ -2,15 +2,22 @@
   <div class="teste" v-if="dados.dados.name !='EmptyStep'">
     <div class="line" :style="{ backgroundColor: dadosfunilstep.color, opacity: dados.opacity}"></div>
     <div class="content">
-      <div class="title"> <div>{{dados.dados.name}}</div></div>
+      <div v-if="edit" class="title"> <div>{{dados.dados.name}}</div><img @click="ActiveEdit"  src="../../assets/images/Funil/editar.png"></div>
+      <div v-if="!edit" class="title">
+        <div style="display: flex">
+          <input type="text" v-model="name">
+          <div class="images">
+            <img @click="UpdateStep" width="8px" src="../../assets/images/Funil/tick.png">
+            <img @click="ActiveEdit" src="../../assets/images/Funil/remove.png">
+          </div>
+        </div>
+        <img @click="DeleteStep" src="../../assets/images/Funil/delete.png"> </div>
     </div>
     <div class="cards">
       <draggable
           v-model="cards"
           group="cards"
-          item-key="id"
-          drag-class="drag"
-          ghost-class="ghost"
+          item-key="id" 
           animation="350"
           @change="event=> log(event, dados.dados.id)"
       >
@@ -23,10 +30,27 @@
       </draggable>
     </div>
   </div>
-  <div v-if="dados.dados.name =='EmptyStep'"><NewStep :dadosfunilstep="dadosfunilstep" @ActiveFromStep="ActiveFromStep"/></div>
+  <div v-if="dados.dados.name =='EmptyStep'"><NewStep :id_funnel="id_funnel" :dadosfunilstep="dadosfunilstep" @ActiveFromStep="ActiveFromStep"/></div>
 
 </template>
 <style scoped>
+.images {
+  position: absolute;
+  display: flex;
+  margin-bottom: 10px;
+  margin-left: 8.2vw;
+
+  height: 10px;
+}
+
+input {
+  width: 12vw;
+  height: 27px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  padding: 10px;
+  font-size: 13px;
+}
 
 .cards {
   display: flex;
@@ -39,10 +63,10 @@
   justify-content: space-between;
 }
 
-
-
 .title img {
-  width: 27px;
+  margin-top: 6px;
+  width: 19px;
+  height: 19px;
   margin-right: 10px;
   cursor: pointer;
 }
@@ -67,7 +91,14 @@
 <script>
 import ContatoCard from "@/components/Funil/Contato.vue";
 import draggable from 'vuedraggable';
-import {GetContacts, UpdateLastStep, UpdateNewStep, UpdateOwnStep} from "@/services/HttpService.js";
+import {
+  DeleteStep,
+  GetContacts,
+  UpdateLastStep,
+  UpdateNewStep,
+  UpdateOwnStep,
+  UpdateStepInfo
+} from "@/services/HttpService.js";
 import {mapGetters} from "vuex";
 import Funil from "@/components/DashBoard/Funil.vue";
 import SearchBar from "@/components/DashBoard/SearchBar.vue";
@@ -82,6 +113,8 @@ export default {
     },
     dadosfunilstep: {
       type:Object
+    },
+    id_funnel: {
     }
 
   },
@@ -103,7 +136,9 @@ export default {
       lastPos: "",
       evtremove: {},
       lastId: null,
-      newId: null
+      newId: null,
+      edit: true,
+      name : null
 
     }
   },
@@ -177,12 +212,31 @@ export default {
     },
     ActiveFromStep(){
       this.$emit('ActiveFromStep');
+    },
+    ActiveEdit(){
+      this.edit = !this.edit
+    },
+    async DeleteStep(){
+      const data = {
+        'id' : this.dados.dados.id,
+      }
+      const response = DeleteStep(data)
+      return response
+    },
+    async UpdateStep(){
+      const data = {
+        'id' : this.dados.dados.id,
+        'name' :  this.name
+      }
+      const response = UpdateStepInfo(data)
+      return response;
     }
 
   },
 
   created(){
     this.GetContact()
+    this.name = this.dados.dados.name
   }
 }
 </script>
