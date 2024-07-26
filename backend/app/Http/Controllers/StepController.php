@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Step;
 use Illuminate\Http\Request;
 
+
 class StepController extends Controller
 {
     public function index($id)
@@ -23,6 +24,7 @@ class StepController extends Controller
 
         $step = Step::create($request->all());
         return response()->json($step, 201);
+    
     }
 
     public function show($id)

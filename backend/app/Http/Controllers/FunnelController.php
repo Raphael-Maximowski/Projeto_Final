@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Funnel;
 use App\Models\Step;
+use App\Models\Contact;
 
 class FunnelController extends Controller
 {
@@ -47,6 +48,21 @@ class FunnelController extends Controller
             ]);
 
             $step->save();
+
+            if ($step->id) {
+                Contact::create([
+                    'name' => 'card vazio',
+                    'posicao' => 1,
+                    'phone' => '',
+                    'email' => '',
+                    'cpf' => '',
+                    'data_de_nascimento' => '',
+                    'endereco' => '',
+                    'value' => 0,
+                    'step_id' => $step->id,
+                ]);
+            }
+        
         }
 
         return response()->json($funnel, 201);

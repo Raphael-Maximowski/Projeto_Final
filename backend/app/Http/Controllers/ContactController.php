@@ -83,18 +83,26 @@ class ContactController extends Controller
         $oldPosition = $contact->posicao;
         $oldStep = $contact->step_id;
 
-        if ($oldPosition != $request->posicao || $oldStep != $request->step_id) {
-            return response()->json(['message' => 'Etapa não encontrada'], 422);
+        if ($oldPosition == $request->posicao && $oldStep == $request->step_id) {
+            return response()->json(['message' => 'Nenhuma mudança foi realizada'], 200);
         }
 
-        $oldRest = Contact::where('step_id', $oldStep)->where('posicao', '>', $oldPosition)->orderBy('posicao')->get();
+        $contact->update([
+            'step_id' => $request->step_id,
+            'posicao' => $request->posicao,
+        ]);
 
-        for ($i = 0; $i < count($oldRest); $i++) {
-            $oldRest[$i]->posicao--;
-            $oldRest[$i]->save();
+        if ($oldStep) {
+            $oldRest = Contact::where('step_id', $oldStep)->where('posicao', '>', $oldPosition)->orderBy('posicao')->get();
+
+            for ($i = 0; $i < count($oldRest); $i++) {
+                $contactToUpdate = $oldRest[$i];
+                $contactToUpdate->posicao--;
+                $contactToUpdate->save();
+            }
         }
 
-        return response()->json(['message' => 'Etapa atualizada']);
+        return response()->json(['message' => 'Etapa atualizada com sucesso']);
     }
 
     public function updateNewStep(Request $request, $id)
@@ -108,16 +116,24 @@ class ContactController extends Controller
         $newStep = $request->newStep_id;
         $newPosition = $request->newPosition;
 
-        $newRest = Contact::where('step_id', $newStep)->where('posicao', '>', $newPosition)->orderBy('posicao')->get();
+        $emptyCard = Contact::where('step_id', $newStep)->where('name', 'card vazio')->first();
 
-        for ($i = 0; $i < count($newRest); $i++) {
-            $newRest[$i]->posicao++;
-            $newRest[$i]->save();
+        $contactsToUpdate = Contact::where('step_id', $newStep)->where('posicao', '>=', $newPosition)->where('id', '<>', $contact->id)->orderBy('posicao')->get();
+
+        for ($i = 0; $i < count($contactsToUpdate); $i++) {
+            $contactToUpdate = $contactsToUpdate[$i];
+            $contactToUpdate->posicao++;
+            $contactToUpdate->save();
         }
 
         $contact->step_id = $newStep;
         $contact->posicao = $newPosition;
         $contact->save();
+
+        if ($emptyCard && $emptyCard->posicao == $newPosition) {
+            $emptyCard->posicao++;
+            $emptyCard->save();
+        }
 
         return response()->json($contact);
     }
@@ -142,7 +158,14 @@ class ContactController extends Controller
 
     public function destroy($id)
     {
-        Contact::destroy($id);
+        $contact = Contact::findOrFail($id);
+        $oldPosition = $contact->posicao;
+        $stepId = $contact->step_id;
+
+        $contact->delete();
+
+        Contact::where('step_id', $stepId)->where('posicao', '>', $oldPosition)->decrement('posicao');
+
         return response()->json(null, 204);
 
 
