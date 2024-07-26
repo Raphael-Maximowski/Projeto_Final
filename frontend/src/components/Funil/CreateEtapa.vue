@@ -1,35 +1,46 @@
 <template>
   <div class="teste" v-if="edit">
-    <div class="fixed" :style="{ backgroundColor: dadosfunilstep.color}"></div>
+    <div class="fixed" style="background-color: lightgray"></div>
     <div class="content">
-      <div class="title" style="color: black"> <div>Nome da Etapa</div></div>
+      <div class="title1"> <input v-model="name" type="text" placeholder="Insira o nome da Etapa"> <div class="cancel" @click="Active" ><img width="22px"  src="../../assets/images/Funil/remove.png"></div></div>
     </div>
     <div class="cards">
-      <img @click="Active" src="../../assets/images/Funil/aba.png">
+      <img @click="CreateStep" v-if="name != null && name != ''" src="../../assets/images/Funil/aba.png">
     </div>
   </div>
   <div class="teste" v-if="!edit">
     <div class="fixed"></div>
     <div class="content">
-      <div class="title"> <div>Criar nova Etapa</div></div>
-    </div>
-    <div class="cards">
-      <img @click="Active" src="../../assets/images/Funil/aba.png">
+      <div @click="Active"  class="title"> <div class="text" style="color: black">Criar nova Etapa</div> <div class="edit"><img width="10px" src="../../assets/images/Funil/editar.png"></div></div>
     </div>
   </div>
 </template>
 <style scoped>
-.edit img {
-  width: 10px;
+.title1 img {
+  margin-bottom: 3px;
 }
+
+.title1{
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  color:  lightgray;
+  cursor: pointer;
+}
+
+.cancel {
+  position: absolute;
+  margin-left: 13vw;
+  margin-top: 3px;
+}
+
 input {
-  width: 12.7vw;
-  margin-top: 10px;
+  width: 15.3vw;
   height: 30px;
   border-radius: 5px;
   border: 1px solid grey;
-
   padding: 10px;
+  font-size: 13px;
 }
 
 
@@ -48,15 +59,17 @@ input {
   font-size: 18px;
   font-weight: bold;
   display: flex;
-  justify-content: space-between;
   color:  lightgray;
+  cursor: pointer;
 }
 
 
 
 .title img {
-  width: 27px;
-  margin-right: 10px;
+  width: 18px;
+  margin-bottom: 3px;
+  margin-left: 3.7vw;
+
 }
 
 .content {
@@ -71,7 +84,7 @@ input {
 }
 .teste {
   margin-top: 7px;
-  margin-left: 15px;
+
   width: 250px;
   height: 79.9vh;
 
@@ -81,21 +94,37 @@ input {
 </style>
 <script>
 
+import {CreateStep} from "@/services/HttpService.js";
+
 export default {
   name: 'NewStep',
   props: {
-    dadosfunilstep: {type:Object}
+    dadosfunilstep: {type:Object},
+    id_funnel:{}
   },
   data(){
     return {
       name: null,
-      edit: false
+      edit: false,
     }
   },
   methods: {
     Active(){
       this.edit =  !this.edit
+    },
+    async CreateStep(){
+      let pos = (this.id_funnel.size) + 1
+      const data = {
+        'name' : this.name,
+        'posicao' : pos,
+        'funnel_id' : this.id_funnel.id
+      }
+      const response = await CreateStep(data)
+      return response
     }
+  },
+  created(){
+    console.log(this.id_funnel)
   }
 }
 </script>

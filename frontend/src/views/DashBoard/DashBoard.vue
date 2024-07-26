@@ -121,7 +121,6 @@ export default {
     Error(value){
       this.pass = false
       this.errors[0] = value
-      console.log('value', this.errors)
       setTimeout(() => {
         this.pass = true;
         this.errors = [];
@@ -160,10 +159,6 @@ export default {
       const response = await Pagination(this.page);
       this.collections = response.data
       this.sizepages = this.collections.collections
-      console.log(this.sizepages)
-
-      console.log('Actual')
-      console.log(this.collections)
       return response
     },
 
@@ -171,7 +166,6 @@ export default {
     {
       const response = await GetFunnel();
       this.funnels =  response.data
-      console.log(this.funnels)
     },
 
     async SendData(value){
@@ -209,8 +203,6 @@ export default {
       this.page++
       const response = await Pagination(this.page);
       this.collections = response.data
-      console.log('Go')
-      console.log(this.collections)
       this.resync =  true;
       return response
     },
@@ -221,7 +213,6 @@ export default {
       const response = await Pagination(this.page);
       this.collections = response.data
       console.log('Back')
-      console.log(this.collections)
       this.resync =  true;
       return response
     },

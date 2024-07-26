@@ -261,6 +261,38 @@ export const UpdateStepPosition = async(data) => {
     const response =  await HttpService.patch(url, data, {headers})
 }
 
+export const CreateStep = async(data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const url = `steps`;
+    const response =  await HttpService.post(url, data,{headers})
+    return response;
+}
+
+export const DeleteStep =  async(data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    let id =  data.id
+    const url = `steps/${id}`;
+    const response =  await HttpService.delete(url, {headers})
+    return response
+}
+
+export const UpdateStepInfo =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    let id =  data.id
+    const url = `stepedit/${id}`;
+    const response =  await HttpService.patch(url, data, {headers})
+    return response
+}
+
 export default HttpService;
 
 

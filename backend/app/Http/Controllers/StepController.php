@@ -24,7 +24,7 @@ class StepController extends Controller
 
         $step = Step::create($request->all());
         return response()->json($step, 201);
-    
+
     }
 
     public function show($id)
@@ -76,4 +76,17 @@ class StepController extends Controller
         Step::destroy($id);
         return response()->json(null, 204);
     }
+
+    public function editinfo(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string'
+        ]);
+
+        $step = Step::findOrFail($id);
+        $step->update(['name' => $request->name]);
+
+        return response()->json(['message' => 'Nome Alterado', 'step' => $step], 200);
+    }
+
 }
