@@ -1,28 +1,28 @@
 <template>
   <main>
-      <div class="dash">
-        <div class="row">
-          <div class="col-8">
-            <table class="table table-striped">
-              <thead class="thead-dark" v-if='dadosfunil != ""'>
-              <draggable
-                  v-model="headers"
-                  tag="tr"
-                  :item-key="key => key" handle=".line"
-                  animation="350"
-                  @change="event=> log(event)"
-              >
-                <template #item="{ element: header }">
-                  <th scope="col">
-                    <Etapa :id_funnel="id_funnel" @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
-                  </th>
-                </template>
-              </draggable>
-              </thead>
-            </table>
-          </div>
+    <div class="dash">
+      <div class="row">
+        <div class="col-8">
+          <table class="table table-striped">
+            <thead class="thead-dark" v-if='dadosfunil != ""'>
+            <draggable
+                v-model="headers"
+                tag="tr"
+                :item-key="key => key" handle=".line"
+                animation="350"
+                @change="event=> log(event)"
+            >
+              <template #item="{ element: header }">
+                <th scope="col">
+                  <Etapa :id_funnel="id_funnel" @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
+                </th>
+              </template>
+            </draggable>
+            </thead>
+          </table>
         </div>
       </div>
+    </div>
   </main>
 </template>
 

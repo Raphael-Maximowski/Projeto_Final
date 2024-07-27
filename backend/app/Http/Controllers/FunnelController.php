@@ -37,7 +37,7 @@ class FunnelController extends Controller
             'collection_id' => $request->collection_id, // Criação de um novo funil
         ]);
 
-        $stepsName = ['Sem etapa', 'Prospecção', 'Contato', 'Proposta', 'EmptyStep'];
+        $stepsName = ['EmptyStep', 'Sem etapa', 'Prospecção', 'Contato', 'Proposta'];
         $stepsPosition = [1, 2, 3, 4, 5];
 
         foreach ($stepsName as $index =>$stepsName){
@@ -62,7 +62,7 @@ class FunnelController extends Controller
                     'step_id' => $step->id,
                 ]);
             }
-        
+
         }
 
         return response()->json($funnel, 201);

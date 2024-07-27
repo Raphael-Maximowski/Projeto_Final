@@ -1,20 +1,33 @@
 <template>
-  <div class="maincard" @click="ActiveContact">
-    <div class="contentcard">
+  <div v-if="this.dadoscontact.name != 'card vazio'" class="maincard" @click="ActiveContact">
+    <div  class="contentcard">
       <div class="name" >{{this.dadoscontact.name}}</div>
       <div class="value">R$ {{this.dadoscontact.value}}</div>
     </div>
+  </div>
+  <div style="border: 1px solid lightgray; height: 130px" v-if="this.dadoscontact.name === 'card vazio' && size == 1" class="maincard" @click="ActiveContact">
+    <div class="contentcard2">
+      <div>
+        <div style="color: lightgray; font-size: 13px;  font-weight: lighter; margin-top: 5px; font-style: italic; text-align: center">Etapa vazia</div>
+        <div>
+          <img src="../../assets/images/Funil/skeleton.png">
+        </div>
+       <div style="color: lightgray; font-size: 13px;  font-weight: lighter; margin-top: 10px; font-style: italic; text-align: center">Crie um novo Contato</div>
 
+      </div>
+
+
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: 'ContatoCard',
   props: {
-    dadoscontact: {type:Object}
+    dadoscontact: {type:Object},
+    size: {type:Number}
   },
-  created (){
-  },
+
   methods: {
     ActiveContact(){
       this.$emit('ActiveContactEtapa',this.dadoscontact);
@@ -42,8 +55,22 @@ export default {
 
 .contentcard{
   margin-left: 10px;
+}
+
+.contentcard2 {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  height: 150px;
 
 }
+
+.contentcard2 img {
+  width: 130px;
+  height: 50px;
+  margin-left: 10px;
+}
+
 .maincard {
   margin-top: 10px;
   height: 80px;

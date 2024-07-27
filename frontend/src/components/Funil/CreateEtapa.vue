@@ -123,8 +123,5 @@ export default {
       return response
     }
   },
-  created(){
-    console.log(this.id_funnel)
-  }
 }
 </script>

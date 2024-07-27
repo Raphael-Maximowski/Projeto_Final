@@ -212,7 +212,6 @@ export default {
       this.page--
       const response = await Pagination(this.page);
       this.collections = response.data
-      console.log('Back')
       this.resync =  true;
       return response
     },
