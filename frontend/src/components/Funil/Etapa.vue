@@ -131,6 +131,8 @@ export default {
       key: [],
       evt: {},
       datacontact : {},
+      datacontactold: {},
+      datacontactnew: {},
       idcontact : "",
       lastStep: "",
       lastPos: "",
@@ -161,10 +163,12 @@ export default {
     log: function(evt, id) {
       this.key = Object.keys(evt)
       this.evt = evt
+      console.log(evt, id)
 
       if (this.key[0] === 'moved') {
         this.evt = evt
         this.idcontact = this.evt.moved.element.id
+        this.lastId = id
         this.Moved()
       }  else if (this.key[0] === 'removed'){
         if (this.size === 2) {
@@ -179,7 +183,8 @@ export default {
         this.evt = evt
         this.newId = id
         this.idcontact = this.evt.added.element.id
-        this.Added()
+        console.log('id', this.idcontact)
+        this.Added();
       }
     },
     async Moved(){
@@ -206,7 +211,6 @@ export default {
         this.size = 2
       }
       const pos = this.evt.added.newIndex + 1
-      const newId = this.lastId
       this.datacontact = {
         'id' : this.idcontact,
         'newStep_id' : this.newId,

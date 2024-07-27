@@ -10,7 +10,8 @@ class StepController extends Controller
 {
     public function index($id)
     {
-        $steps = Step::with('contacts')->where('funnel_id', $id)->get();
+        $steps = Step::with('contacts')->where('funnel_id', $id)->orderBy('posicao')->get();
+
         return response()->json($steps);
     }
 
