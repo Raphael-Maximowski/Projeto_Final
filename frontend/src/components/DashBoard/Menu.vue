@@ -55,6 +55,7 @@ export default {
       this.active_user = false
       this.active_team = true
       this.active_logout = false
+      this.$router.push('/Team')
     },
     SetLogout(){
       this.active_dash = false
