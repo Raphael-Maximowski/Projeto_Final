@@ -23,7 +23,7 @@
       >
         <template #item="{element}">
           <div>
-            <ContatoCard v-if="cards.length !== 0" @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
+            <ContatoCard :size="size" v-if="cards.length !== 0" @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
           </div>
 
         </template>
@@ -93,7 +93,7 @@ import ContatoCard from "@/components/Funil/Contato.vue";
 import draggable from 'vuedraggable';
 import {
   DeleteStep,
-  GetContacts,
+  GetContacts, GetListContacts,
   UpdateLastStep,
   UpdateNewStep,
   UpdateOwnStep,
@@ -138,7 +138,8 @@ export default {
       lastId: null,
       newId: null,
       edit: true,
-      name : null
+      name : null,
+      size : null
 
     }
   },
@@ -149,6 +150,8 @@ export default {
       }
       const response = await GetContacts(data)
       const GetData = response.data
+      this.size = GetData.length
+      console.log(this.size)
       for (let i = 0; i < GetData.length; i++){
         this.cards.push(GetData[i])
       }
@@ -164,6 +167,9 @@ export default {
         this.idcontact = this.evt.moved.element.id
         this.Moved()
       }  else if (this.key[0] === 'removed'){
+        if (this.size === 2) {
+          this.size = 1
+        }
         this.idcontact = this.evt.removed.element.id
         this.lastId = id
         this.evt = evt
@@ -196,6 +202,9 @@ export default {
       return response
     },
     async Added(){
+      if (this.size == 1){
+        this.size = 2
+      }
       const pos = this.evt.added.newIndex + 1
       const newId = this.lastId
       this.datacontact = {
@@ -230,13 +239,15 @@ export default {
       }
       const response = UpdateStepInfo(data)
       return response;
-    }
+    },
+
 
   },
 
   created(){
     this.GetContact()
     this.name = this.dados.dados.name
+    console.log(this.size)
   }
 }
 </script>

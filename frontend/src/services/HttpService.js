@@ -293,6 +293,17 @@ export const UpdateStepInfo =  async (data) => {
     return response
 }
 
+export const GetListContacts =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    let id =  data.id
+    const url = `contacts/${id}`;
+    const response = await HttpService.get(url, {headers})
+    return response
+}
+
 export default HttpService;
 
 
