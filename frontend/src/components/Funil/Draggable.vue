@@ -100,10 +100,11 @@ export default {
     },
     log: function(evt) {
       const pos = (evt.moved.newIndex) + 1
+      console.log('ID FUNNEL', evt.moved.element.dados.id)
       this.newdata = {
-        'id' : evt.moved.element.id,
+        'id' : evt.moved.element.dados.id,
         'posicao' : pos,
-        'funnel_id' : evt.moved.element.funnel_id,
+        'funnel_id' : evt.moved.element.dados.funnel_id,
       }
       this.SendDataStep()
     },

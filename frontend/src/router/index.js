@@ -61,6 +61,11 @@ const router = createRouter({
       path: '/Funil',
       name: 'Funil',
       component: () => import('../views/Funil/Funil.vue')
+    },
+    {
+      path: '/Team',
+      name: 'teams',
+      component: () => import('../views/ExtraFeatures/Team.vue')
     }
   ]
 })
