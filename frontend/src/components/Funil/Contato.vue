@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.dadoscontact.name != 'card vazio'" class="maincard" @click="ActiveContact">
+  <div style=" cursor: pointer;" v-if="this.dadoscontact.name != 'card vazio'" class="maincard" @click="ActiveContact">
     <div  class="contentcard">
       <div class="name" >{{this.dadoscontact.name}}</div>
       <div class="value">R$ {{this.dadoscontact.value}}</div>
@@ -78,7 +78,7 @@ export default {
   width: 218px;
   border: 1px solid rgba(211, 211, 211, 0.51);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
+
 }
 
 .drag{

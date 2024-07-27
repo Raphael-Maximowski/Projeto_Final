@@ -139,6 +139,7 @@ export default defineComponent({
   height: 60px;
   width: 50vw;
   align-items: center;
+  margin-left: 5.5vw;
 }
 
 .name {

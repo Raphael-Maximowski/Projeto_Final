@@ -9,7 +9,7 @@ class ContactController extends Controller
 {
     public function index($id)
     {
-        $contacts = Contact::where('step_id', $id)->get();
+        $contacts = Contact::where('step_id', $id)->orderBy('posicao')->get();
         return response()->json($contacts);
     }
 
@@ -48,9 +48,7 @@ class ContactController extends Controller
         $contact = Contact::findOrFail($id);
         $step_id = $request->step_id;
         $posicaoAtual = $contact->posicao;
-        if ($novaPosicao == $posicaoAtual) {
-            return response()->json($contact);
-        }
+
         $rest = Contact::where('step_id', $step_id)->orderBy('posicao')->get();
         for ($i = 0; $i < count($rest); $i++) {
             if ($rest[$i]->id == $id) {
