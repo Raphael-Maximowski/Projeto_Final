@@ -15,7 +15,17 @@
         <div class="create"><p style="color: white; font-size: 17px; font-weight: normal" @click="ActiveModal">Criar Team</p></div>
       </div>
       <div class="main-content">
-        <div class="content1">a</div>
+        <div class="content1">
+          <div class="centercontent">
+            <div class="info1">
+              <div class="busca">
+                <div class="buscaheader">Adicione um Usuario no seu Time</div>
+                <div class="inputsearch"><input placeholder="Insira o e-mail do seu funcionário"></div>
+              </div>
+            </div>
+            <div  class="info2">b</div>
+          </div>
+        </div>
         <div class="content2">
           <div class="list">
             <div class="headerlist">Usuarios Inseridos no seu Time</div>
@@ -43,6 +53,45 @@
   </div>
 </template>
 <style>
+input {
+  width: 37.3vw;
+  margin: 10px 20px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  font-size: 13px;
+}
+
+input:focus {
+  box-shadow: none;
+}
+
+.buscaheader {
+  background-color: #febc28;
+  height: 40px;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+}
+.info1 {
+  height: 40.5vh;
+  background-color: red;
+}
+.info2 {
+  height: 40.5vh;
+  background-color: blue;
+}
+
+.centercontent {
+  background-color: white;
+  width: 40vw;
+  height: 81vh;
+}
+
 .contentuser {
   height: 70vh;
   overflow-y: auto;
@@ -76,6 +125,9 @@
 .content1 {
   width: 48.05vw;
   background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .content2{
   width: 48.05vw;
