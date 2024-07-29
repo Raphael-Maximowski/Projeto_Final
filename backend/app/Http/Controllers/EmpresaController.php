@@ -21,6 +21,7 @@ class EmpresaController extends Controller
             'cnpj' => 'required|string',
             'inscri_estadual' => 'required|string',
             'fundacao' => 'required|string',
+            'admin_id' => 'required|integer',
         ]);
 
         $empresa = Empresa::create($request->all());

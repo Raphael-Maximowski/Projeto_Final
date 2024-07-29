@@ -26,17 +26,19 @@ class StepController extends Controller
 
         $step = Step::create($request->all());
 
-        Contact::create([
-            'name' => 'card vazio',
-            'posicao' => 1,
-            'phone' => '',
-            'email' => '',
-            'cpf' => '',
-            'data_de_nascimento' => '',
-            'endereco' => '',
-            'value' => 0,
-            'funnel_id' => $request->funnel_id,
-        ]);
+        if ($step->id) {
+            Contact::create([
+                'name' => 'card vazio',
+                'posicao' => 1,
+                'phone' => '',
+                'email' => '',
+                'cpf' => '',
+                'data_de_nascimento' => '',
+                'endereco' => '',
+                'value' => 0,
+                'step_id' => $step->id,
+            ]);
+        }
 
         return response()->json($step, 201);
 
