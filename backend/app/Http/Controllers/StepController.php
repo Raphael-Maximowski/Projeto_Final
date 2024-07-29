@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Step;
 use Illuminate\Http\Request;
+use App\Models\Contact;
 
 
 class StepController extends Controller
@@ -24,6 +25,19 @@ class StepController extends Controller
         ]);
 
         $step = Step::create($request->all());
+
+        Contact::create([
+            'name' => 'card vazio',
+            'posicao' => 1,
+            'phone' => '',
+            'email' => '',
+            'cpf' => '',
+            'data_de_nascimento' => '',
+            'endereco' => '',
+            'value' => 0,
+            'funnel_id' => $request->funnel_id,
+        ]);
+
         return response()->json($step, 201);
 
     }
@@ -74,7 +88,12 @@ class StepController extends Controller
 
     public function destroy($id)
     {
-        Step::destroy($id);
+        $stepToDelete = Step::findOrFail($id);
+        $positionToDelete = $stepToDelete->posicao;
+        $stepToDelete->delete();
+
+        Step::where('funnel_id', $stepToDelete->funnel_id)->where('posicao', '>', $positionToDelete)->decrement('posicao');
+
         return response()->json(null, 204);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Funcionario;
 
 class UserController extends Controller
 {
@@ -29,6 +30,12 @@ class UserController extends Controller
 
             $user->is_admin = true;
             $user->save();
+
+            Funcionario::create([
+                'user_id' => $user->id,
+                'admin_id' => $user->id, 
+                'team_id' => null,
+            ]);
 
             return response()->json(['message' => 'O usuário foi atualizado para administrador'], 200);
     }

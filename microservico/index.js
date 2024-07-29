@@ -3,9 +3,12 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import db from './models/index.js';
 
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
+
+app.use(express.json());
 
 //Rotas express
 app.get('/', (req, res) => {
@@ -31,76 +34,54 @@ app.get('/users', async (req, res) => {
   }
 });
 
-//socket io
+// Array para armazenar informações dos usuários conectados
+const users = [];
 
-interface RoomUser { //comunicação entre usuários 
-  socket_id: string,
-  username: string,
-  room: string
-}
-
-const users: RoomUser[] = [] // aray de usuários para armazenar 
-
+// socket.io
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  socket.join(data.room) //"joga" o user para uma sala
+  // Evento quando um usuário seleciona uma sala
+  socket.on('select_user', async (data, callback) => {
+    socket.join(data.room); // O usuário entra em uma sala específica
 
-  const userInRoom = users.find(user => user.username === data.username && user.room === data.room)
-  if(userInRoom) {
-    userInRoom.socket_id = socket.id //se ja existir so altera o socketid, se não ai sim coloca o user na sala
-  }else{
-    users.push({
-      room: data.room,
-      username: data.username,
-      socket_id: socket.id
-      }) // ao selecionar uma "sala" ja salva as infos dentro do array ali na parte de cima
-  }
-});
-
-const socket = io(); //chat
-
-//é necessário as informações de quais são os usuários conectados e qual "sala"
-const urlSearch = new URLSearchParams(window.location.search); // consegue ter acesso as informações que estão vindo na url
-const username = urlSearch.get('username');
-const room = urlSearch.get("select_user") //aqui ela passa a sala que os usuários vão se comunicar, porém coloquei como "select_user" pq a comunicação vai ser apenas entre dois usuários, talvez possamos usar algo similar para criar grupos
-
-//emits 
-socket.emit("select_user", {
-  username,
-  room,
-}); //nome do evento que ele vai emitir (não existe um evento padrão podemos criar quais a gente quiser) nesse caso aqui eu to enviando qual a "sala" que ta concetando esses dois users
-
-document.getElementById("message_input").addEventListener("keypress", (event) => {
-  if(event.key === 'Enter'){
-    const message = event.target.value;
-
-    const data = {
-      room,
-      message,
-      username
+    // Verifica se o usuário já está na sala
+    const userInRoom = users.find(user => user.username === data.username && user.room === data.room);
+    if (userInRoom) {
+      userInRoom.socket_id = socket.id; // Atualiza o ID do socket se o usuário já estiver na sala
+    } else {
+      users.push({
+        room: data.room,
+        username: data.username,
+        socket_id: socket.id
+      });
     }
 
-    socket.emit("message", data);
+    // Busca as mensagens da sala e chama o callback com as mensagens (é como se salvasse as mensagens pelo q eu entendi)
+    const messagesRoom = await getMessagesRoom(data.room);
+    callback(messagesRoom);
+  });
 
-    event.target.value = ""; //esse aqui so limpa o campo depois de digiar e enviar
-  }
-})//input de quando uma pessoa digta a mensagem e da enter a mensagem é enviada usei "message_id" como id mas podemos mudar de acordo com o front
+  //mensagem é enviada
+  socket.on('message', async (data) => {
+    // Cria uma nova mensagem no banco de dados
+    const message = await db.Message.create({
+      text: data.message,
+      room: data.room,
+      username: data.username,
+      created_at: new Date()
+    });
 
-
-//recebendo infos (on)
-socket.on("select_user", data => {
-  console.log(data);
+    //mensagem para todos os usuários na sala
+    io.to(data.room).emit('message', message);
+  });
 });
 
-socket.on("message", data => {
-  //salvar  as mensagens 
-
-  //Enviar para o usuário da sala
-})
-//window.location.search - Serve para pegar o q tem depois da / no url e consultar essas infos
-
-
+// Função para buscar mensagens de uma sala específica
+async function getMessagesRoom(room) {
+  const messagesRoom = await db.Message.findAll({ where: { room } });
+  return messagesRoom; // Retorna as mensagens da sala
+}
 
 //Subir servidor
 db.sequelize.sync()

@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import UserModel from './User.js';
+import MessageModel from './Message.js';
 
 const sequelize = new Sequelize('codeacademy_laravel_vue', 'root', 'root', {
     host: 'mysql',
@@ -16,7 +17,8 @@ try {
 const db = {
   Sequelize,
   sequelize,
-  User: UserModel(sequelize, DataTypes)
+  User: UserModel(sequelize, DataTypes),
+  Message: MessageModel(sequelize, DataTypes)
 };
 
 export default db;
