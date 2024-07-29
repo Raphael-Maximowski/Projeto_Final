@@ -12,7 +12,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmpresaController;
-use App\Http\Controllers\FuncionarioController;
+
 
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
@@ -119,9 +119,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('empresas/{id}', [EmpresaController::class, 'update']);
     Route::delete('empresas/{id}', [EmpresaController::class, 'destroy']);
 
-    Route::get('funcionarios', [FuncionarioController::class, 'index']);
-    Route::post('funcionarios', [FuncionarioController::class, 'store']);
-    Route::get('funcionarios/{funcionario}', [FuncionarioController::class, 'show']);
-    Route::put('funcionarios/{funcionario}', [FuncionarioController::class, 'update']);
-    Route::delete('funcionarios/{funcionario}', [FuncionarioController::class, 'destroy']);
 });

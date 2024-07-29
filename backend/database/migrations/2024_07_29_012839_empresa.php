@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('inscri_estadual')->nullable(); 
             $table->string('fundacao'); 
             $table->timestamps(); 
+
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }
 

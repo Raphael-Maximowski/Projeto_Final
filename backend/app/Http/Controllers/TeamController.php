@@ -42,7 +42,7 @@ class TeamController extends Controller
         $request->validate([
             'name' => 'sometimes|string' . $id,
             'description' => 'sometimes|string',
-            'empresa_id' => 'sometimes|integer|exists:companies,id',
+            'empresa_id' => 'sometimes|integer|exists:empresa,id',
         ]);
 
         $team = Team::findOrFail($id);
@@ -63,6 +63,7 @@ class TeamController extends Controller
     {
         $request->validate([
             'user_id' => 'required|integer|exists:users,id',
+            'team_id' => 'required|integer|exists:teams,id',
         ]);
 
         $team = Team::findOrFail($teamId);
@@ -75,6 +76,7 @@ class TeamController extends Controller
     {
         $request->validate([
             'user_id' => 'required|integer|exists:users,id',
+            'team_id' => 'required|integer|exists:teams,id',
         ]);
 
         $team = Team::findOrFail($teamId);
