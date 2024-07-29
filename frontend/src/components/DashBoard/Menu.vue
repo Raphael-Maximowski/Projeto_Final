@@ -44,24 +44,24 @@ export default {
       this.$router.push('/dashboard');
     },
     SetUser(){
-      this.active_dash = false
       this.active_user = true
+      this.active_dash = false
       this.active_team = false
       this.active_logout = false
       this.$router.push('/UserProfile')
     },
     SetTeam(){
+      this.active_team = true
       this.active_dash = false
       this.active_user = false
-      this.active_team = true
       this.active_logout = false
       this.$router.push('/Team')
     },
     SetLogout(){
+      this.active_logout = true
       this.active_dash = false
       this.active_user = false
       this.active_team = false
-      this.active_logout = true
     }
   }
 }

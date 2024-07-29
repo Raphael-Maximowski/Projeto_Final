@@ -7,8 +7,8 @@
     />
     <div><MenuDash/></div>
     <div class="content">
-      <div class="welcome">
-        <div class="title">
+      <div class="welcome1">
+        <div class="title1">
           <h1>Team CRM 3C+</h1>
           <p>Configure seus times de forma dinamica</p>
         </div>
@@ -19,6 +19,23 @@
         <div class="content2">
           <div class="list">
             <div class="headerlist">Usuarios Inseridos no seu Time</div>
+            <div class="contentuser">
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+              <WorkerCards/>
+            </div>
+            <div class="bottomlist"></div>
           </div>
         </div>
       </div>
@@ -26,6 +43,17 @@
   </div>
 </template>
 <style>
+.contentuser {
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.bottomlist {
+  background-color: #FEBC28;
+  height: 40px;
+  border-radius: 0px 0px 6px 6px;
+}
+
 .headerlist {
   background-color: #FEBC28;
   height: 40px;
@@ -36,12 +64,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 .list {
   height: 80vh;
-  border: 2px solid #FEBC28;
   width: 30vw;
   border-radius: 10px;
+
 }
 
 .content1 {
@@ -63,7 +92,7 @@
   height: 88.4vh;
   display: flex;
 }
-.title {
+.title1 {
   width: 73vw
 }
 .create {
@@ -84,7 +113,7 @@
   display: flex;
   overflow: hidden;
 }
-.welcome {
+.welcome1 {
   width: 54vw;
   display: flex;
 
@@ -92,14 +121,14 @@
   width: 100vw;
 }
 
-.welcome h1 {
+.welcome1 h1 {
   font-size: 20px;
   margin-left: 3vw;
 
   color: #222738;
   font-weight: bold;
 }
-.welcome p {
+.welcome1 p {
   margin-left: 3vw;
   font-size: 15px;
   color: #222738;
@@ -116,11 +145,11 @@
 <script>
 import {defineComponent} from "vue";
 import MenuDash from "@/components/DashBoard/Menu.vue";
-import CadastroTeam from "@/components/ExtraFeatures/CadastroTeam.vue";
 import ModalContato from "@/components/Funil/CreateContact.vue";
+import WorkerCards from "@/components/ExtraFeatures/WorkerCard.vue";
 
 export default defineComponent({
-  components: {ModalContato, CadastroTeam, MenuDash},
+  components: {WorkerCards, ModalContato, MenuDash},
   data(){
     return{
       team: false
