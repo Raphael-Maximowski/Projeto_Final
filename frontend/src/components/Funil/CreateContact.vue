@@ -11,7 +11,7 @@
         </div>
         <div><p v-if="dadoscontact == null && !team" style="margin-left: 17vw" @click="SendContact">Criar Contato</p></div>
         <div><p v-if="dadoscontact != null  && !team" @click="UpdateContact">Atualizar Contato</p></div>
-        <div><p v-if="team" @click="UpdateContact">Criar Time</p></div>
+        <div><p v-if="team" @click="SendData">Criar Time</p></div>
       </div>
 
 
@@ -74,7 +74,7 @@
             </div>
           </div>
           <div class="base" v-if="!team">
-            <div style="display: flex">3
+            <div style="display: flex">
               <div v-if="!dados" @click="opendados" style="margin-top: 14px; margin-left: 15px; cursor: pointer"><img style="transform: rotate(90deg);" width="13px" src="../../assets/images/Funil/seta.png"></div>
               <div v-if="dados" @click="opendados" style="margin-top: 14px; margin-left: 15px"><img style="transform: rotate(270deg); cursor: pointer" width="13px" src="../../assets/images/Funil/seta.png"></div>
               <div class="title">Dados</div>
@@ -140,23 +140,23 @@
               <div v-if="activeteam" class="basecontent">
                 <div class="contato">
                   <div class="titlecontact">Nome:</div>
-                  <div @click="ActiveEditNumber" v-if="!edit_number"  class="contentcontact">{{ number_expose }}</div>
-                  <div v-if="edit_number" class="contentcontact">
-                    <input v-model="number">
+                  <div @click="ActiveNameTeam" v-if="!edit_nameteam"  class="contentcontact">{{ nometeam_expose }}</div>
+                  <div v-if="edit_nameteam" class="contentcontact">
+                    <input v-model="nometeam">
                     <div class="confirm-little">
-                      <img @click="CloseNumber" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
-                      <img @click="SaveNumber" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
+                      <img @click="CloseNameTeam" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                      <img @click="SaveNameTeam" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
                     </div>
                   </div>
                 </div>
                 <div class="contato">
                   <div class="titlecontact">Descrição:</div>
-                  <div @click="ActiveEmail" v-if="!edit_email" class="contentcontact">{{ email_expose }}</div>
-                  <div v-if="edit_email" class="contentcontact">
-                    <input v-model="email">
+                  <div @click="ActiveDescTeam" v-if="!edit_descteam" class="contentcontact">{{ descteam_expose }}</div>
+                  <div v-if="edit_descteam" class="contentcontact">
+                    <input v-model="descteam">
                     <div class="confirm-little">
-                      <img @click="CloseEmail" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
-                      <img @click="SaveEmail" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
+                      <img @click="CloseDescTeam" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                      <img @click="SaveDescTeam" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
                     </div>
                   </div>
                 </div>
@@ -171,57 +171,57 @@
               </div>
               <div v-if="activecompany" class="basecontent">
                 <div class="contato">
-                  <div class="titlecontact">Nome da empresa:</div>
-                  <div @click="ActiveEditNumber" v-if="!edit_number"  class="contentcontact">{{ number_expose }}</div>
-                  <div v-if="edit_number" class="contentcontact">
-                    <input v-model="number">
+                  <div class="titlecontact">Nome:</div>
+                  <div @click="ActiveNameCompany" v-if="!edit_namecompany"  class="contentcontact">{{ namecompany_expose }}</div>
+                  <div v-if="edit_namecompany" class="contentcontact">
+                    <input v-model="namecompany">
                     <div class="confirm-little">
-                      <img @click="CloseNumber" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
-                      <img @click="SaveNumber" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
+                      <img @click="CloseNameCompany" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                      <img @click="SaveNameCompany" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
                     </div>
                   </div>
                 </div>
                 <div class="contato">
                   <div class="titlecontact">Razão social:</div>
-                  <div @click="ActiveEmail" v-if="!edit_email" class="contentcontact">{{ email_expose }}</div>
-                  <div v-if="edit_email" class="contentcontact">
-                    <input v-model="email">
+                  <div @click="ActiveRazao" v-if="!edit_razao" class="contentcontact">{{ razao_expose }}</div>
+                  <div v-if="edit_razao" class="contentcontact">
+                    <input v-model="razao">
                     <div class="confirm-little">
-                      <img @click="CloseEmail" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
-                      <img @click="SaveEmail" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
+                      <img @click="CloseRazao" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                      <img @click="SaveRazao" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
                     </div>
                   </div>
                 </div>
                 <div class="contato">
                   <div class="titlecontact">CNPJ:</div>
-                  <div @click="ActiveEmail" v-if="!edit_email" class="contentcontact">{{ email_expose }}</div>
-                  <div v-if="edit_email" class="contentcontact">
-                    <input v-model="email">
+                  <div @click="EditCnpj" v-if="!edit_cnpj" class="contentcontact">{{ cnpj_expose }}</div>
+                  <div v-if="edit_cnpj" class="contentcontact">
+                    <input v-model="cnpj">
                     <div class="confirm-little">
-                      <img @click="CloseEmail" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
-                      <img @click="SaveEmail" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
+                      <img @click="CloseCnpj" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                      <img @click="SaveCnpj" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
                     </div>
                   </div>
                 </div>
                 <div class="contato">
                   <div class="titlecontact">Inscrição estadual:</div>
-                  <div @click="ActiveEmail" v-if="!edit_email" class="contentcontact">{{ email_expose }}</div>
-                  <div v-if="edit_email" class="contentcontact">
-                    <input v-model="email">
+                  <div  style="margin-top: 10px" @click="EditInscri" v-if="!edit_inscri" class="contentcontact">{{ insc_expose }}</div>
+                  <div v-if="edit_inscri" class="contentcontact">
+                    <input style="margin-top: 10px" v-model="insc">
                     <div class="confirm-little">
-                      <img @click="CloseEmail" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
-                      <img @click="SaveEmail" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
+                      <img  style="margin-top: 10px" @click="CloseInscri" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                      <img  style="margin-top: 10px" @click="SaveInscri" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
                     </div>
                   </div>
                 </div>
                 <div class="contato">
                   <div class="titlecontact">Data de fundação:</div>
-                  <div @click="ActiveEmail" v-if="!edit_email" class="contentcontact">{{ email_expose }}</div>
-                  <div v-if="edit_email" class="contentcontact">
-                    <input v-model="email">
+                  <div  style="margin-top: 10px" @click="EditFund" v-if="!edit_fund" class="contentcontact">{{ fund_expose }}</div>
+                  <div v-if="edit_fund" class="contentcontact">
+                    <input  style="margin-top: 10px" v-model="fund">
                     <div class="confirm-little">
-                      <img @click="CloseEmail" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
-                      <img @click="SaveEmail" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
+                      <img  style="margin-top: 10px" @click="CloseFund" width="13px" height="13px" src="../../assets/images/Funil/cancel.png">
+                      <img  style="margin-top: 10px" @click="SaveFund" width="16px" height="16px" src="../../assets/images/Funil/confirm.png">
                     </div>
                   </div>
                 </div>
@@ -272,9 +272,6 @@ export default {
       cnpj : "",
       insc : "",
       fund : "",
-      cnpj_expose : "00.000.000/0001-00",
-      fund_expose : "DD/MM/AAAA",
-
       name_expose: "Nome do Contato",
       number_expose: "Adicionar Numero",
       email_expose : "Adicionar E-mail",
@@ -282,15 +279,27 @@ export default {
       date_expose : "DD/MM/AAAA",
       addres_expose : "-",
       value_expose : "0,00",
+      nometeam_expose: "Nome do Time",
+      descteam_expose : "Descrição do Time",
+      namecompany_expose : "Nome da Empresa",
+      razao_expose : "Razão Social da Empresa",
+      cnpj_expose : "00.000.000/0001-00",
+      insc_expose : "000.000.000",
+      fund_expose : "DD/MM/AAAA",
       edit_number : false,
       edit_email : false,
       edit_cpf : false,
       edit_date : false,
       edit_addres : false,
       edit_value : false,
-
-
-
+      edit_nameteam : false,
+      edit_descteam : false,
+      edit_namecompany : false,
+      edit_razao : false,
+      edit_cnpj : false,
+      edit_inscri : false,
+      edit_fund : false,
+      // Nome time - Desc time - Nome Empresa -  Razao - CNPJ - Inscri - Fund
     }
   },
   methods: {
@@ -419,6 +428,108 @@ export default {
       this.edit_value = !this.edit_value
       this.value_expose =  this.value
     },
+    ActiveNameTeam(){
+      this.edit_nameteam = !this.edit_nameteam
+    },
+    CloseNameTeam(){
+      this.edit_nameteam = !this.edit_nameteam
+      this.nometeam_expose = "Nome do Time"
+    },
+    SaveNameTeam(){
+      this.edit_nameteam = !this.edit_nameteam
+      this.nometeam_expose =  this.nometeam
+    },
+    ActiveDescTeam(){
+      this.edit_descteam = !this.edit_descteam
+    },
+    CloseDescTeam(){
+      this.edit_descteam = !this.edit_descteam
+      this.descteam_expose = "Descrição do Time"
+    },
+    SaveDescTeam(){
+      this.edit_descteam = !this.edit_descteam
+      this.descteam_expose = this.descteam
+    },
+    ActiveNameCompany(){
+      this.edit_namecompany = !this.edit_namecompany
+    },
+    CloseNameCompany(){
+      this.edit_namecompany = !this.edit_namecompany
+      this.namecompany_expose = "Nome da Empresa"
+    },
+    SaveNameCompany(){
+      this.edit_namecompany = !this.edit_namecompany
+      this.namecompany_expose = this.namecompany
+    },
+    ActiveRazao(){
+      this.edit_razao =  !this.edit_razao
+    },
+    CloseRazao(){
+      this.edit_razao =  !this.edit_razao
+      this.razao_expose = "Razão Social da Empresa"
+    },
+    SaveRazao(){
+      this.edit_razao =  !this.edit_razao
+      this.razao_expose = this.razao
+    },
+    EditCnpj(){
+      this.edit_cnpj =  !this.edit_cnpj
+    },
+    CloseCnpj () {
+      this.edit_cnpj =  !this.edit_cnpj
+      this.cnpj_expose ="00.000.000/0001-00"
+    },
+    SaveCnpj(){
+      this.edit_cnpj =  !this.edit_cnpj
+      this.cnpj_expose =  this.cnpj
+    },
+    EditInscri(){
+      this.edit_inscri = !this.edit_inscri
+    },
+    CloseInscri(){
+      this.edit_inscri = !this.edit_inscri
+      this.insc_expose = "000.000.000"
+    },
+    SaveInscri(){
+      this.edit_inscri = !this.edit_inscri
+      this.insc_expose = this.insc
+    },
+    EditFund(){
+      this.edit_fund = !this.edit_fund
+    },
+    CloseFund(){
+      this.edit_fund = !this.edit_fund
+      this.fund_expose = "DD/MM/AAAA"
+    },
+    SaveFund(){
+      this.edit_fund = !this.edit_fund
+      this.fund_expose = this.fund
+    },
+    SaveTeam(){
+      const data = {
+        'name' : this.nometeam,
+        'description' : this.descteam
+      }
+      console.log('Data Time : ', data)
+      return 1;
+    },
+    SaveCompany(){
+      const data = {
+        'nome' : this.namecompany,
+        'razao' : this.razao,
+        'cnpj' : this.cnpj,
+        'inscri_estadual' : this.insc,
+        'fundacao' : this.fund
+      }
+      console.log('Data Company : ', data)
+      return 1;
+    },
+    SendData(){
+      this.SaveCompany().then(() => {
+        this.SaveTeam();
+      })
+    },
+    // Nome time - Desc time - Nome Empresa -  Razao - CNPJ - Inscri - Fund
     async GetSize(){
       const response = await GetOneStep(this.id)
       const datastep = response.data;
