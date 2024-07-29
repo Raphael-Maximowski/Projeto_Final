@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('collections/{id}', [CollectionController::class, 'show']);
     Route::put('collections/{id}', [CollectionController::class, 'update']);
     Route::delete('collections/{id}', [CollectionController::class, 'destroy']);
+    Route::get()
 });
 
 //rotas funil

@@ -15,5 +15,6 @@ class Empresa extends Model
         'cnpj',
         'inscri_estadual',
         'fundacao',
+        'admin_id'
     ];
 }
