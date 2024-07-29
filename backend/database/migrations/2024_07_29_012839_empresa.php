@@ -17,13 +17,16 @@ return new class extends Migration
             $table->string('fundacao'); 
             $table->timestamps(); 
 
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('admin_id')->constrained('admin_users')->onDelete('cascade');
         });
     }
 
    
     public function down(): void
     {
+        Schema::table('empresas', function (Blueprint $table) {
+            $table->dropForeign(['admin_id']);
+        });
         Schema::dropIfExists('empresas');
     }
 };
