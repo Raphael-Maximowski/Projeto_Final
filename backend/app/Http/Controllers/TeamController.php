@@ -18,11 +18,13 @@ class TeamController extends Controller
         $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
+            'empresa_id' => 'required|integer',
         ]);
 
         $team = Team::create([
             'name' => $request->name,
             'description' => $request->description,
+            'empresa_id' => $request->empresa_id,
         ]);
 
         return response()->json($team, 201);
@@ -40,10 +42,11 @@ class TeamController extends Controller
         $request->validate([
             'name' => 'sometimes|string' . $id,
             'description' => 'sometimes|string',
+            'empresa_id' => 'sometimes|integer|exists:companies,id',
         ]);
 
         $team = Team::findOrFail($id);
-        $team->update($request->only(['name', 'description']));
+        $team->update($request->only(['name', 'description', 'empresa_id']));
 
         return response()->json($team, 200);
     }
