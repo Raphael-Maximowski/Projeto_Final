@@ -1,13 +1,13 @@
 <template>
   <div class="main">
-    <div class="setteam" v-if="trade"><img src="../../assets/images/ExtraFeatures/set.png"></div>
+    <div class="setteam" v-if="trade"><img style="cursor: pointer" @click="SetPeopleToTeam" src="../../assets/images/ExtraFeatures/set.png"></div>
     <ModalContato
         v-if="teams == true"
         :team = teams
         @returnteam="returnteam"
         @IdTeam="IdTeam"
     />
-    <Message/>
+
     <div><MenuDash/></div>
     <div class="content" v-if="admin == 1">
       <div class="welcome1">
@@ -17,7 +17,7 @@
         </div>
         <div class="create"><p style="color: white; cursor:pointer ; font-size: 17px; font-weight: normal" @click="ActiveModal">Criar Team</p></div>
       </div>
-      <div class="main-content" v-if="team == null && admin == 1">
+      <div class="main-content" v-if="team != null && admin == 1">
         <div class="content1">
           <div class="centercontent">
             <div class="info1">
@@ -43,23 +43,23 @@
                 <div>
                   <div class="contentcompany">
                     <h3>Nome</h3>
-                    <p>Nome da Empresa</p>
+                    <p>{{ companydata.nome }}</p>
                   </div>
                   <div class="contentcompany">
                     <h3>Razão <br> Social</h3>
-                    <p style="margin-top: 7px">Razão Social da Empresa</p>
+                    <p style="margin-top: 7px">{{ companydata.razao }}</p>
                   </div>
                   <div class="contentcompany">
                     <h3>CNPJ</h3>
-                    <p>CNPJ Da Empresa</p>
+                    <p> {{ companydata.cnpj }}</p>
                   </div>
                   <div class="contentcompany">
                     <h3>Inscrição <br> Estadual</h3>
-                    <p style="margin-top: 7px">Nome da Empresa</p>
+                    <p style="margin-top: 7px"> {{ companydata.inscri_estadual }}</p>
                   </div>
                   <div class="contentcompany">
                     <h3>Fundação</h3>
-                    <p>MM/DD/AAAA</p>
+                    <p> {{ companydata.fundacao}}</p>
                   </div>
                 </div>
                 <div>
@@ -86,7 +86,10 @@
           <div class="list">
             <div class="headerlist">Usuarios Inseridos no seu Time</div>
             <div class="contentuser">
-              <WorkerCards/>
+              <div v-for="userteam in userinteam">
+                <WorkerCards :userteam="userteam"/>
+              </div>
+
             </div>
             <div class="bottomlist"></div>
           </div>
@@ -101,7 +104,7 @@ import MenuDash from "@/components/DashBoard/Menu.vue";
 import ModalContato from "@/components/Funil/CreateContact.vue";
 import WorkerCards from "@/components/ExtraFeatures/WorkerCard.vue";
 import FindWorker from "@/components/ExtraFeatures/FindWorker.vue";
-import {GetUserEmail, SetUser} from "@/services/HttpService.js";
+import {GetCompany, GetDataTime, GetUserEmail, SetTeam, SetUser} from "@/services/HttpService.js";
 import {mapGetters} from "vuex";
 import Message from "@/components/DashBoard/message.vue";
 
@@ -114,7 +117,12 @@ export default defineComponent({
       users: [],
       trade: false,
       userid : "",
-      IdTime : ""
+      IdTime : "",
+      empresa_id : null,
+      companydata : {},
+      teamdata: {},
+      userinteam: {},
+
     }
   },
   methods: {
@@ -148,6 +156,33 @@ export default defineComponent({
       }
       const response = await SetUser(data);
       return response;
+    },
+    async GetTeamData() {
+      const data = {
+        id: this.team
+      }
+      const response = await GetDataTime(data);
+      this.teamdata =  response.data;
+      this.userinteam =  this.teamdata.users
+      console.log('User In Team', this.userinteam)
+      this.empresa_id = response.data.empresa_id
+      return response
+    },
+    async GetCompanyView () {
+      const data = {
+        id : this.empresa_id
+      }
+      const response =  await GetCompany(data)
+      this.companydata =  response.data
+      return response;
+    },
+    async SetPeopleToTeam(){
+      const data = {
+        'user_id' : this.userid,
+        'team_id' : this.team
+      }
+      const response =  await SetTeam(data);
+      return response;
     }
   },
   watch: {
@@ -158,7 +193,10 @@ export default defineComponent({
     }
   },
   created(){
-
+    console.log('created')
+    this.GetTeamData().then(() => {
+      this.GetCompanyView();
+    })
   },
   computed: {
     ...mapGetters(['user_id', "team", "admin"]),
