@@ -48,6 +48,6 @@ class User extends Authenticatable implements MustVerifyEmailContract, CanResetP
 
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'team_users');
+        return $this->belongsTo(Team::class, 'team_users');
     }
 }

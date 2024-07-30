@@ -9,11 +9,21 @@ class Team extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'empresa_id'];
 
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function company()
+    {
+        return $this->hasOne(Empresa::class);
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(AdminUser::class);
     }
 
     public function collections()

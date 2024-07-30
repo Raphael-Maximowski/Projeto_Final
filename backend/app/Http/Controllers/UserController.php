@@ -36,6 +36,7 @@ class UserController extends Controller
 
                 AdminUser::create(['user_id' => $user->id]);
             }
+            if (!Team::where('user_id', $user->id)->exists()) {}
 
             return response()->json(['message' => 'O usuário foi atualizado para administrador'], 200);
     }
@@ -44,12 +45,6 @@ class UserController extends Controller
     {
 
         $query = User::query(); // Inicializa uma consulta
-
-        if ($request->has('name')) {
-            $query->where(function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->input('name') . '%')->orWhere('last_name', 'like', '%' . $request->input('name') . '%');
-            });
-        }
 
         if ($request->has('email')) {
             $query->where('email', 'like', '%' . $request->input('email') . '%');

@@ -60,7 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('collections/{id}', [CollectionController::class, 'show']);
     Route::put('collections/{id}', [CollectionController::class, 'update']);
     Route::delete('collections/{id}', [CollectionController::class, 'destroy']);
-    Route::get()
 });
 
 //rotas funil
@@ -74,7 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('funnels/search', [FunnelController::class, 'search']);
 });
 
-Route::get('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"
+Route::post('users/search', [UserController::class, 'search']);  // formas de usar no insomnia "users/search?name=nome,email ou sobrenome"
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('teams')->group(function () {

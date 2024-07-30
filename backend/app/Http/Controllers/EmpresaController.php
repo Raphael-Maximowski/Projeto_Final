@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminUser;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
 
@@ -23,8 +24,16 @@ class EmpresaController extends Controller
             'fundacao' => 'required|string',
             'admin_id' => 'required|integer',
         ]);
-
-        $empresa = Empresa::create($request->all());
+        //$collection = Collection::findOrFail($request->collection_id);
+        $admin = AdminUser::findOrFail($request->admin_id);
+        $empresa = Empresa::create([
+            'nome' => $request->nome,
+            'razao' => $request->razao,
+            'cnpj' => $request->cnpj,
+            'inscri_estadual' => $request->inscri_estadual,
+            'fundacao' => $request->fundacao,
+            'admin_id' => $admin->id,
+        ]);
         return response()->json($empresa, 201);
     }
 

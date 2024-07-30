@@ -240,7 +240,15 @@
 </template>
 
 <script>
-import {DeleteContact, GetOneStep, SendContact, UpdateInfoContact} from "@/services/HttpService.js";
+import {
+  CreateCompany,
+  CreateTeam,
+  DeleteContact,
+  GetOneStep,
+  SendContact,
+  UpdateInfoContact
+} from "@/services/HttpService.js";
+import {mapGetters} from "vuex";
 
 export default {
   name: 'ModalContato',
@@ -505,24 +513,26 @@ export default {
       this.edit_fund = !this.edit_fund
       this.fund_expose = this.fund
     },
-    SaveTeam(){
+    async SaveTeam(){
       const data = {
         'name' : this.nometeam,
-        'description' : this.descteam
+        'description' : this.descteam,
+        'admin_id' : this.user_id
       }
-      console.log('Data Time : ', data)
-      return 1;
+      const response = await CreateTeam(data);
+      return response;
     },
-    SaveCompany(){
+    async SaveCompany(){
       const data = {
         'nome' : this.namecompany,
         'razao' : this.razao,
         'cnpj' : this.cnpj,
         'inscri_estadual' : this.insc,
-        'fundacao' : this.fund
+        'fundacao' : this.fund,
+        'admin_id' : this.user_id
       }
-      console.log('Data Company : ', data)
-      return 1;
+      const response = await CreateCompany(data);
+      return response;
     },
     SendData(){
       this.SaveCompany().then(() => {
@@ -579,7 +589,10 @@ export default {
       this.value_expose = this.dadoscontact.value
       this.value = this.dadoscontact.value
     }
-  }
+  },
+  computed: {
+    ...mapGetters(['user_id']),
+  },
 }
 </script>
 

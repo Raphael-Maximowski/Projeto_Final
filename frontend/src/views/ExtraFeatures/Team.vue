@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <div class="setteam" v-if="trade"><img src="../../assets/images/ExtraFeatures/set.png"></div>
     <ModalContato
         v-if="team == true"
         :team = team
@@ -12,37 +13,77 @@
           <h1>Team CRM 3C+</h1>
           <p>Configure seus times de forma dinamica</p>
         </div>
-        <div class="create"><p style="color: white; font-size: 17px; font-weight: normal" @click="ActiveModal">Criar Team</p></div>
+        <div class="create"><p style="color: white; cursor:pointer ; font-size: 17px; font-weight: normal" @click="ActiveModal">Criar Team</p></div>
       </div>
       <div class="main-content">
         <div class="content1">
           <div class="centercontent">
             <div class="info1">
               <div class="busca">
-                <div class="buscaheader">Adicione um Usuario no seu Time</div>
-                <div class="inputsearch"><input placeholder="Insira o e-mail do seu funcionário"></div>
+                <div class="headerlist">Adicione um Usuario no seu Time</div>
+                <div class="inputsearch">
+                  <input v-model="usersearch" placeholder="Insira o e-mail do seu funcionário">
+                  <img @click="SearchUser" src="../../assets/images/DashBoard/lupa.png">
+                </div>
+                <div class="cardssearch">
+                  <div v-for="(user, index) in users.users" :key="index">
+                    <find-worker @MakeChange="MakeChange" :user="user"/>
+                  </div>
+                </div>
+                <div class="bottomlist"></div>
               </div>
             </div>
-            <div  class="info2">b</div>
+            <div  class="info2">
+              <div style="padding-bottom: 10px" class="headerlist">
+                <h1>Informações da Empresa</h1>
+                </div>
+              <div class="flexboxinfo">
+                <div>
+                  <div class="contentcompany">
+                    <h3>Nome</h3>
+                    <p>Nome da Empresa</p>
+                  </div>
+                  <div class="contentcompany">
+                    <h3>Razão <br> Social</h3>
+                    <p style="margin-top: 7px">Razão Social da Empresa</p>
+                  </div>
+                  <div class="contentcompany">
+                    <h3>CNPJ</h3>
+                    <p>CNPJ Da Empresa</p>
+                  </div>
+                  <div class="contentcompany">
+                    <h3>Inscrição <br> Estadual</h3>
+                    <p style="margin-top: 7px">Nome da Empresa</p>
+                  </div>
+                  <div class="contentcompany">
+                    <h3>Fundação</h3>
+                    <p>MM/DD/AAAA</p>
+                  </div>
+                </div>
+                <div>
+                  <div class="contentcompany">
+                    <h3>Usuarios no Time</h3>
+                    <p>X</p>
+                  </div>
+                  <div class="contentcompany">
+                    <h3>Usuarios Ativos</h3>
+                    <p>X</p>
+                  </div>
+                  <div class="contentcompany">
+                    <h3>Usuarios Offline</h3>
+                    <p>X</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
         <div class="content2">
+
           <div class="list">
             <div class="headerlist">Usuarios Inseridos no seu Time</div>
             <div class="contentuser">
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
-              <WorkerCards/>
               <WorkerCards/>
             </div>
             <div class="bottomlist"></div>
@@ -52,10 +93,110 @@
     </div>
   </div>
 </template>
+<script>
+import {defineComponent} from "vue";
+import MenuDash from "@/components/DashBoard/Menu.vue";
+import ModalContato from "@/components/Funil/CreateContact.vue";
+import WorkerCards from "@/components/ExtraFeatures/WorkerCard.vue";
+import FindWorker from "@/components/ExtraFeatures/FindWorker.vue";
+import {GetUserEmail} from "@/services/HttpService.js";
+import {forEach} from "vuedraggable/dist/vuedraggable.common.js";
+
+export default defineComponent({
+  components: {FindWorker, WorkerCards, ModalContato, MenuDash},
+  data(){
+    return{
+      team: false,
+      usersearch: "",
+      users: [],
+      trade: false,
+      userid : ""
+    }
+  },
+  methods: {
+    MakeChange(value){
+      this.trade =  !this.trade
+      this.userid = value
+      console.log(this.userid)
+    },
+    ActiveModal(){
+      this.team = !this.team
+    },
+    returnteam(){
+      this.team = !this.team
+    },
+    async SearchUser(){
+      const data = {
+        email : this.usersearch
+      }
+      const response = await GetUserEmail(data);
+      this.users =  response.data
+      return response
+    }
+  }
+})
+</script>
 <style>
-input {
-  width: 37.3vw;
-  margin: 10px 20px;
+.setteam img {
+  width: 30px;
+  height: 30px;
+}
+.setteam {
+  position: absolute;
+  width: 100vw;
+  height: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 25vw;
+
+  margin-left: 4.5vw;
+}
+.inputsearch img {
+  width: 15px;
+  margin-top: 20px;
+  margin-left: 36.5vw;
+  position: absolute;
+}
+.cardssearch {
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  height: 20vh;
+  overflow-y: auto;
+}
+.flexboxinfo {
+  display: flex;
+}
+.contentcompany {
+  margin: 5px 20px;
+  display: flex;
+  width: 20vw;
+}
+
+.contentcompany h3 {
+  font-size: 16px;
+  font-weight: bold;
+  width: 5vw;
+  margin-bottom: 2px;
+}
+
+.contentcompany p {
+  font-size: 15px;
+  font-style: italic;
+  margin-left: 10px
+}
+.info2 h1 {
+  margin-top: 15px;
+  font-size: 20px;
+}
+.inputsearch {
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+  display: flex;
+}
+
+.inputsearch input {
+  width: 38vw;
+  margin: 0.5vw;
   padding: 7px 10px;
   border-radius: 5px;
   border: 1px solid lightgray;
@@ -67,27 +208,26 @@ input:focus {
 }
 
 .buscaheader {
-  background-color: #febc28;
+
   height: 40px;
   border-radius: 10px 10px 0px 0px;
   display: flex;
   align-items: center;
-  padding-left: 15px;
+  color: #222738;
   font-size: 18px;
-  color: white;
   font-weight: bold;
 }
 .info1 {
   height: 40.5vh;
-  background-color: red;
+
 }
 .info2 {
   height: 40.5vh;
-  background-color: blue;
+  border: 3px solid #FEBC28;
+  border-radius: 10px;
 }
 
 .centercontent {
-  background-color: white;
   width: 40vw;
   height: 81vh;
 }
@@ -124,14 +264,12 @@ input:focus {
 
 .content1 {
   width: 48.05vw;
-  background-color: grey;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .content2{
   width: 48.05vw;
-  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,7 +277,6 @@ input:focus {
 
 
 .main-content {
-  background-color: red;
   width: 96.1vw;
   height: 88.4vh;
   display: flex;
@@ -194,26 +331,3 @@ input:focus {
 }
 
 </style>
-<script>
-import {defineComponent} from "vue";
-import MenuDash from "@/components/DashBoard/Menu.vue";
-import ModalContato from "@/components/Funil/CreateContact.vue";
-import WorkerCards from "@/components/ExtraFeatures/WorkerCard.vue";
-
-export default defineComponent({
-  components: {WorkerCards, ModalContato, MenuDash},
-  data(){
-    return{
-      team: false
-    }
-  },
-  methods: {
-    ActiveModal(){
-      this.team = !this.team
-    },
-    returnteam(){
-      this.team = !this.team
-    }
-  }
-})
-</script>
