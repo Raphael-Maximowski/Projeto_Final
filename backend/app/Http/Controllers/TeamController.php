@@ -12,7 +12,7 @@ class TeamController extends Controller
 {
     public function index()
     {
-        return Team::all();
+        return Team::with('collections', 'users')->get();
     }
 
     public function store(Request $request)

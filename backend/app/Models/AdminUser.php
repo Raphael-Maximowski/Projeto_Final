@@ -29,6 +29,6 @@ class AdminUser extends Model
     
         public function team()
         {
-            return $this->belongsTo(Team::class);
+            return $this->belongsToMany(Team::class);
         }
 }

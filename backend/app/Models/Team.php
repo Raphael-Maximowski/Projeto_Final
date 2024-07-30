@@ -13,7 +13,7 @@ class Team extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'team_user');
     }
 
     public function company()
@@ -28,7 +28,7 @@ class Team extends Model
 
     public function collections()
     {
-        return $this->belongsToMany(Collection::class, 'team_collection', 'team_id', 'collection_id');
+        return $this->hasMany(Collection::class);
     }
 }
 
