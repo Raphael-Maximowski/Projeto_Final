@@ -5,6 +5,7 @@
         v-if="team == true"
         :team = team
         @returnteam="returnteam"
+        @IdTeam="IdTeam"
     />
     <div><MenuDash/></div>
     <div class="content">
@@ -99,8 +100,8 @@ import MenuDash from "@/components/DashBoard/Menu.vue";
 import ModalContato from "@/components/Funil/CreateContact.vue";
 import WorkerCards from "@/components/ExtraFeatures/WorkerCard.vue";
 import FindWorker from "@/components/ExtraFeatures/FindWorker.vue";
-import {GetUserEmail} from "@/services/HttpService.js";
-import {forEach} from "vuedraggable/dist/vuedraggable.common.js";
+import {GetUserEmail, SetUser} from "@/services/HttpService.js";
+import {mapGetters} from "vuex";
 
 export default defineComponent({
   components: {FindWorker, WorkerCards, ModalContato, MenuDash},
@@ -110,20 +111,25 @@ export default defineComponent({
       usersearch: "",
       users: [],
       trade: false,
-      userid : ""
+      userid : "",
+      IdTime : ""
     }
   },
   methods: {
     MakeChange(value){
       this.trade =  !this.trade
       this.userid = value
-      console.log(this.userid)
     },
     ActiveModal(){
       this.team = !this.team
     },
     returnteam(){
       this.team = !this.team
+    },
+    IdTeam(value){
+      console.log('Evento Recebido!')
+      this.IdTime =  value
+      console.log("Id do Time", this.IdTime)
     },
     async SearchUser(){
       const data = {
@@ -132,8 +138,24 @@ export default defineComponent({
       const response = await GetUserEmail(data);
       this.users =  response.data
       return response
+    },
+    async SetTeamUser(){
+      const data = {
+        'user_id' : this.user_id,
+        'team_id' : this.IdTime,
+      }
+      const response = await SetUser(data);
+      return response;
     }
-  }
+  },
+  watch: {
+    Idtime(newValue, oldValue){
+      this.SetTeamUser()
+    }
+  },
+  computed: {
+    ...mapGetters(['user_id']),
+  },
 })
 </script>
 <style>
@@ -143,13 +165,12 @@ export default defineComponent({
 }
 .setteam {
   position: absolute;
-  width: 100vw;
-  height: 100vw;
+
   display: flex;
   justify-content: center;
   margin-top: 25vw;
 
-  margin-left: 4.5vw;
+  margin-left: 53.5vw;
 }
 .inputsearch img {
   width: 15px;
@@ -173,20 +194,21 @@ export default defineComponent({
 }
 
 .contentcompany h3 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   width: 5vw;
   margin-bottom: 2px;
 }
 
 .contentcompany p {
-  font-size: 15px;
+  font-size: 14px;
   font-style: italic;
   margin-left: 10px
 }
 .info2 h1 {
   margin-top: 15px;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: bold;
 }
 .inputsearch {
   border-left: 1px solid lightgrey;
@@ -267,12 +289,14 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 50px;
 }
 .content2{
   width: 48.05vw;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 70px;
 }
 
 
@@ -280,6 +304,7 @@ input:focus {
   width: 96.1vw;
   height: 88.4vh;
   display: flex;
+  overflow: hidden;
 }
 .title1 {
   width: 73vw
@@ -301,6 +326,7 @@ input:focus {
 .main {
   display: flex;
   overflow: hidden;
+
 }
 .welcome1 {
   width: 54vw;

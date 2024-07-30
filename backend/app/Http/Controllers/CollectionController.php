@@ -28,7 +28,7 @@ class CollectionController extends Controller
         'collections' => $collections
     ]);
 }
-  
+
     public function store(Request $request)
     {
         $request->validate([
@@ -45,6 +45,7 @@ class CollectionController extends Controller
             'description' => $request->description,
             'color' => $request->color
         ]);
+
 
         return response()->json($collection, 201);
     }

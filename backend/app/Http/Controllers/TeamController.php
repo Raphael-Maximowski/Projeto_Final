@@ -65,8 +65,8 @@ class TeamController extends Controller
     public function addUserToTeam(Request $request, $teamId)
     {
         $request->validate([
-            'user_id' => 'required|integer',
-            'admin_id' => 'required|integer',
+            'user_id' => 'required|integer|exists:users,id',
+            'team_id' => 'required|integer|exists:teams,id',
         ]);
 
         $team = Team::findOrFail($teamId);
