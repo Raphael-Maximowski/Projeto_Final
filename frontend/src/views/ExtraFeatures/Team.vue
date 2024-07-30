@@ -149,8 +149,10 @@ export default defineComponent({
     }
   },
   watch: {
-    Idtime(newValue, oldValue){
-      this.SetTeamUser()
+    IdTime(value){
+      if (value != ""){
+        this.SetTeamUser();
+      }
     }
   },
   computed: {
@@ -191,19 +193,21 @@ export default defineComponent({
   margin: 5px 20px;
   display: flex;
   width: 20vw;
+  margin-top: 12px;
 }
 
 .contentcompany h3 {
   font-size: 14px;
   font-weight: bold;
   width: 5vw;
+
   margin-bottom: 2px;
 }
 
 .contentcompany p {
   font-size: 14px;
   font-style: italic;
-  margin-left: 10px
+  margin-left: 10px;
 }
 .info2 h1 {
   margin-top: 15px;

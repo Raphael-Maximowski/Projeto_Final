@@ -16,6 +16,7 @@
 }
 .nameuser {
   width: 25vw;
+  font-size: 14px;
 }
 .boxwork {
   height: 40px;
