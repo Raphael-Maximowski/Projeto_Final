@@ -43,7 +43,7 @@
                 <p>Comece criando sua coleção</p>
             </div>
           <div><SearchBar/></div>
-            <div class="create" @click="ActiveModal"><p>Nova Coleção</p></div>
+            <div class="create" v-if="admin == 1" @click="ActiveModal"><p>Nova Coleção</p></div>
         </div>
       <div class="outer">
           <div class="funis">
@@ -83,7 +83,7 @@ import {
   SendFunnel,
   Pagination,
 } from "@/services/HttpService.js";
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 import MenuDash from "@/components/DashBoard/Menu.vue";
 import InfoModal from "@/components/DashBoard/InfoModal.vue";
 import Alert from "@/components/Login/Alert.vue";
@@ -93,7 +93,8 @@ export default {
   computed: {
     collection() {
       return collection
-    }
+    }, 
+    ...mapGetters(["admin"]),
   },
   components: {SearchBar, Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
   data() {
