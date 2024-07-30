@@ -520,6 +520,10 @@ export default {
         'admin_id' : this.user_id
       }
       const response = await CreateTeam(data);
+      const getdata =  response.data;
+      const id =  getdata.id
+      this.$emit('IdTeam', id)
+      console.log('Evento Emitido')
       return response;
     },
     async SaveCompany(){

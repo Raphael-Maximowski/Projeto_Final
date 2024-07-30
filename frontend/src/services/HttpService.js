@@ -333,6 +333,17 @@ export const GetUserEmail =  async (data) => {
     const response = await HttpService.post(url, data, {headers})
     return response;
 }
+
+export const SetUser =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const teamId =  data.team_id
+    const url = `teams/${teamId}/add-user`
+    const response = await HttpService.post(url, data, {headers})
+    return response;
+}
 export default HttpService;
 
 
