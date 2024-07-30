@@ -17,4 +17,11 @@ class Empresa extends Model
         'fundacao',
         'admin_id'
     ];
+    public function adminuser()
+    {
+        return $this->belongsTo(AdminUser::class);
+    }
+
+
+
 }

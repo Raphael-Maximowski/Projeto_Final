@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminUser;
+use App\Models\Empresa;
 use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\User;
@@ -18,15 +20,16 @@ class TeamController extends Controller
         $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
-            'empresa_id' => 'required|integer',
+            'admin_id' => 'required|integer',
         ]);
+        $admin = AdminUser::findOrFail($request->admin_id);
 
+        $company =  Empresa::where('admin_id', $admin->id)->first();
         $team = Team::create([
             'name' => $request->name,
             'description' => $request->description,
-            'empresa_id' => $request->empresa_id,
+            'empresa_id' => $company->id,
         ]);
-
         return response()->json($team, 201);
     }
 
@@ -62,8 +65,8 @@ class TeamController extends Controller
     public function addUserToTeam(Request $request, $teamId)
     {
         $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
-            'team_id' => 'required|integer|exists:teams,id',
+            'user_id' => 'required|integer',
+            'admin_id' => 'required|integer',
         ]);
 
         $team = Team::findOrFail($teamId);

@@ -304,6 +304,35 @@ export const GetListContacts =  async (data) => {
     return response
 }
 
+export const CreateCompany = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const url = `empresas`;
+    const response = await HttpService.post(url, data, {headers})
+    return response;
+}
+
+export const CreateTeam =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const url =  `teams`
+    const response = await HttpService.post(url, data, {headers})
+    return response;
+}
+
+export const GetUserEmail =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const url =  `users/search`
+    const response = await HttpService.post(url, data, {headers})
+    return response;
+}
 export default HttpService;
 
 
