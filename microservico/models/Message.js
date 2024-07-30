@@ -1,6 +1,6 @@
 // models/Message.js
 export default (sequelize, DataTypes) => {
-    return sequelize.define('Message', {
+    return sequelize.define('messages', {
       text: {
         type: DataTypes.TEXT,
         allowNull: false,
