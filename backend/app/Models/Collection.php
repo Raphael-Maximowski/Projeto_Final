@@ -21,8 +21,8 @@ class Collection extends Model
         return $this->hasMany(Funnel::class); // uma coleção pode ter vários funis
     }
 
-    public function teams()
+    public function team()
     {
-        return $this->belongsToMany(Team::class, 'team_collection', 'collection_id', 'team_id');
+        return $this->belongsTo(Team::class);
     }
 }
