@@ -344,6 +344,14 @@ export const SetUser =  async (data) => {
     const response = await HttpService.post(url, data, {headers})
     return response;
 }
+
+export const GetDataTime = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+
+}
 export default HttpService;
 
 

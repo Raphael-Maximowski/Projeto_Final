@@ -2,13 +2,14 @@
   <div class="main">
     <div class="setteam" v-if="trade"><img src="../../assets/images/ExtraFeatures/set.png"></div>
     <ModalContato
-        v-if="team == true"
-        :team = team
+        v-if="teams == true"
+        :team = teams
         @returnteam="returnteam"
         @IdTeam="IdTeam"
     />
+    <Message/>
     <div><MenuDash/></div>
-    <div class="content">
+    <div class="content" v-if="admin == 1">
       <div class="welcome1">
         <div class="title1">
           <h1>Team CRM 3C+</h1>
@@ -16,7 +17,7 @@
         </div>
         <div class="create"><p style="color: white; cursor:pointer ; font-size: 17px; font-weight: normal" @click="ActiveModal">Criar Team</p></div>
       </div>
-      <div class="main-content">
+      <div class="main-content" v-if="team == null && admin == 1">
         <div class="content1">
           <div class="centercontent">
             <div class="info1">
@@ -102,12 +103,13 @@ import WorkerCards from "@/components/ExtraFeatures/WorkerCard.vue";
 import FindWorker from "@/components/ExtraFeatures/FindWorker.vue";
 import {GetUserEmail, SetUser} from "@/services/HttpService.js";
 import {mapGetters} from "vuex";
+import Message from "@/components/DashBoard/message.vue";
 
 export default defineComponent({
-  components: {FindWorker, WorkerCards, ModalContato, MenuDash},
+  components: {Message, FindWorker, WorkerCards, ModalContato, MenuDash},
   data(){
     return{
-      team: false,
+      teams: false,
       usersearch: "",
       users: [],
       trade: false,
@@ -121,10 +123,10 @@ export default defineComponent({
       this.userid = value
     },
     ActiveModal(){
-      this.team = !this.team
+      this.teams = !this.teams
     },
     returnteam(){
-      this.team = !this.team
+      this.teams = !this.teams
     },
     IdTeam(value){
       console.log('Evento Recebido!')
@@ -155,8 +157,11 @@ export default defineComponent({
       }
     }
   },
+  created(){
+
+  },
   computed: {
-    ...mapGetters(['user_id']),
+    ...mapGetters(['user_id', "team", "admin"]),
   },
 })
 </script>

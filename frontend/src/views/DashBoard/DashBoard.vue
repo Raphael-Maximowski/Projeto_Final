@@ -2,6 +2,7 @@
 <main>
   <Alert :pass="pass" :errors="errors" />
   <div class="menu">
+    <Blocker></Blocker>
       <div v-if="modal">
         <CreateModal
             @closeModal="closeModal"
@@ -89,13 +90,14 @@ import InfoModal from "@/components/DashBoard/InfoModal.vue";
 import Alert from "@/components/Login/Alert.vue";
 import collection from "@/components/DashBoard/Collection.vue";
 import SearchBar from "@/components/DashBoard/SearchBar.vue";
+import Blocker from "@/components/Blocker.vue";
 export default {
   computed: {
     collection() {
       return collection
     }
   },
-  components: {SearchBar, Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
+  components: {Blocker, SearchBar, Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
   data() {
     return {
       modal: false,
@@ -191,11 +193,14 @@ export default {
     async ShowUser()
     {
       const response = await GetUser();
+      console.log('user', response.data)
       this.updateUserId(response.data.id);
       this.updateUserName(response.data.name);
       this.updateUserEmail(response.data.email);
       this.updateUserValidate(response.data.email_verified_at);
       this.updateUserCreated(response.data.created_at);
+      this.updateTeam(response.data.team_id);
+      this.UpdateAdmin(response.data.is_admin)
     },
 
     async PaginationSkip()
@@ -217,7 +222,7 @@ export default {
     },
 
 
-    ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated'])
+    ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated', 'updateTeam', 'UpdateAdmin'])
 
   },
   created() {
