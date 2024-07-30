@@ -6,7 +6,7 @@
       <div class="more-info" @click="OpenInfoCollection"><img src="../../assets/images/DashBoard/info.png" alt=""></div>
       </div>
     <div class="crud">
-      <div class="funil" @click="showfunil">
+      <div class="funil" v-if="admin == 1" @click="showfunil">
         <p :style="{ backgroundColor: collection.color}">Novo Funil</p>
       </div>
     </div>
@@ -20,7 +20,7 @@
 </template>
 <script>
 import Funil from './Funil.vue';
-import {mapMutations } from 'vuex';
+import {mapMutations, mapGetters } from 'vuex';
 export default {
   components: { Funil },
   name: 'Collection',
@@ -122,7 +122,10 @@ export default {
         this.SyncData()
       }
     }
-  }
+  }, 
+  computed: {
+  ...mapGetters(["admin"]),
+},
 
 }
 </script>

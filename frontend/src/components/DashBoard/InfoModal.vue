@@ -32,13 +32,13 @@
           </div>
         </div>
         <div class="buttons-info">
-          <div class="edit-info" v-if="!Edit"  @click="EditInfo"><p>Editar</p></div>
-          <div class="edit-info" v-if="Edit"  @click="Validator"><p>Enviar</p></div>
+          <div class="edit-info" v-if="!Edit && admin == 1"  @click="EditInfo"><p>Editar</p></div>
+          <div class="edit-info" v-if="Edit && admin == 1"  @click="Validator"><p>Enviar</p></div>
         </div>
 
 
       </div>
-      <div class="delete-info" v-if="Edit">
+      <div class="delete-info" v-if="Edit && admin == 1">
         <div @click="DeleteInfo"><p>Excluir</p></div>
       </div>
     </div>
@@ -47,6 +47,7 @@
 <script>
 import HttpService, {DeleteCollection, DeleteFunnel, UpdateCollection, UpdateFunnel} from "@/services/HttpService.js";
 import store from '../../store/index.js';
+import {mapGetters} from "vuex";
 
 export default{
   name: 'InfoModal',
@@ -149,7 +150,10 @@ export default{
   },
   created(){
     this.SyncInfo()
-  }
+  },
+  computed: {
+  ...mapGetters(["admin"]),
+},
 }
 </script>
 <style scoped>

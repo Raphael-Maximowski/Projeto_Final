@@ -54,7 +54,8 @@ export default {
   name: 'CreateModal',
   computed:{
     ...mapGetters([
-      'user_id'
+      'user_id',
+      'team'
     ])
   },
   props: {
@@ -125,7 +126,8 @@ export default {
           name : this.name,
           description : this.description,
           color : this.color,
-          type : this.type
+          type : this.type,
+          team_id : this.team 
         }
         this.$emit('SendData', data)
       }
