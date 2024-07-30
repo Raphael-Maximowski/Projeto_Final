@@ -350,7 +350,33 @@ export const GetDataTime = async (data) => {
     const headers = {
         Authorization: `Bearer ${token}`
     }
+    const id = data.id;
+    const url = `teams/${id}`
+    const response =  await  HttpService.get(url, {headers})
+    return response;
+}
 
+export const GetCompany = async (data )=> {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id = data.id;
+    const url =  `empresas/${id}`
+    const response =  await HttpService.get(url, {headers})
+    return response;
+}
+
+export const SetTeam =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const teamId =  data.team_id
+    const url = `teams/${teamId}/add-user`
+    const response =  await HttpService.post(url, data, {headers})
+    window.location.reload();
+    return response;
 }
 export default HttpService;
 
