@@ -15,12 +15,12 @@ class FunnelController extends Controller
     {
         $user = Auth::user();
 
-        
+
         $collection = Collection::findOrFail($collection_id);
 
         return Funnel::where('collection_id', $collection_id)->get();
     }
-    
+
 
     public function store(Request $request)
     {
@@ -77,7 +77,7 @@ class FunnelController extends Controller
     {
         $user = Auth::user();
 
-        $funnel = Funnel::where('id', $id)->where('user_id', $user->id)->firstOrFail(); // Busca um funil específico pelo ID
+        $funnel = Funnel::where('id', $id)->firstOrFail(); // Busca um funil específico pelo ID
         return response()->json($funnel);
     }
 

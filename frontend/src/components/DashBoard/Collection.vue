@@ -121,7 +121,6 @@ export default {
       }
       const response = await GetFunnel(data);
       this.funnels =  response.data
-      console.log('teste')
       console.log('Funil Collection', this.funnels)
     },
     ...mapMutations(['updateColors'])
