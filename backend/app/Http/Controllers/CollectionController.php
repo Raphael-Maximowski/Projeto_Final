@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Collection;
 use App\Models\Team;
 
+
 class CollectionController extends Controller
 {
 
