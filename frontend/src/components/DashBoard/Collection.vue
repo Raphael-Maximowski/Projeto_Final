@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="group">
-    <div v-for="funil in funnel">
+    <div v-for="funil in funnels">
       <Funil :color="color" @OpenInformations="OpenInformations" :funil="funil"/>
     </div>
   </div>
@@ -21,6 +21,7 @@
 <script>
 import Funil from './Funil.vue';
 import {mapMutations, mapGetters } from 'vuex';
+import {GetFunnel} from "@/services/HttpService.js";
 export default {
   components: { Funil },
   name: 'Collection',
@@ -38,9 +39,7 @@ export default {
       type: Object,
       required: true
     },
-    funnels: {
-      type: Object
-    },
+
     resync: {
       type: Boolean
     }
@@ -58,6 +57,7 @@ export default {
       data: [],
       receive_data: [],
       funnel: [],
+      funnels: {}
     }
   },
   created() {
@@ -65,7 +65,7 @@ export default {
     this.color = this.collection.color
     this.updateColors(this.color)
     this.$emit('Color')
-
+    this.GetFunnels()
   },
   methods: {
     OpenModal()
@@ -113,6 +113,16 @@ export default {
           this.funnel.push(this.funnels[i])
         }
       }
+    },
+    async GetFunnels()
+    {
+      const data = {
+        collection_id : this.collection.id
+      }
+      const response = await GetFunnel(data);
+      this.funnels =  response.data
+      console.log('teste')
+      console.log('Funil Collection', this.funnels)
     },
     ...mapMutations(['updateColors'])
   },

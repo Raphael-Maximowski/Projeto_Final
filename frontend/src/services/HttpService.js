@@ -83,11 +83,13 @@ export const SendFunnel = async (data) => {
     const response = await HttpService.post('funnels', data, {headers})
 }
 
-export const GetFunnel =  async() => {
+export const GetFunnel =  async(data) => {
     const token = store.getters.user_token;
     const headers = {
         Authorization: `Bearer ${token}`}
-    const response =  await HttpService.get('funnels', {headers})
+    const collection_id = data.collection_id
+    const url = `funnels/collection/${collection_id}`
+    const response =  await HttpService.get(url, {headers})
     return response;
 }
 

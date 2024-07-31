@@ -323,6 +323,7 @@ export default {
         'value' : this.value,
       }
       const response =  await UpdateInfoContact(data)
+      window.location.reload();
       return response
     },
     async DeleteContact(){
@@ -542,8 +543,9 @@ export default {
       this.SaveCompany().then(() => {
         this.SaveTeam();
       })
+      window.location.reload();
     },
-    // Nome time - Desc time - Nome Empresa -  Razao - CNPJ - Inscri - Fund
+
     async GetSize(){
       const response = await GetOneStep(this.id)
       const datastep = response.data;
@@ -564,6 +566,7 @@ export default {
         'step_id' : this.id
       }
       const response =  await SendContact(data);
+      window.location.reload();
       return response;
     },
     SetNullFunil(){
