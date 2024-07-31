@@ -30,6 +30,11 @@ class Team extends Model
     {
         return $this->hasMany(Collection::class);
     }
+
+    public function funnels()
+    {
+        return $this->hasMany(Funnel::class);
+    }
 }
 
 

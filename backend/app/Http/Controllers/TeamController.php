@@ -35,7 +35,7 @@ class TeamController extends Controller
 
     public function show($id)
     {
-        $team = Team::with('collections', 'users')->findOrFail($id);
+        $team = Team::with('collections', 'users', 'funnels')->findOrFail($id);
 
         return response()->json($team);
 }

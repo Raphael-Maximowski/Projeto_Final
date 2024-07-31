@@ -11,12 +11,16 @@ use App\Models\Contact;
 
 class FunnelController extends Controller
 {
-    public function index()
+    public function index($collection_id)
     {
         $user = Auth::user();
 
-        return Funnel::where('user_id', $user->id)->get(); // Retorna todos os funis do usuário
+        
+        $collection = Collection::findOrFail($collection_id);
+
+        return Funnel::where('collection_id', $collection_id)->get();
     }
+    
 
     public function store(Request $request)
     {

@@ -66,7 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
 //rotas funil
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('funnels', [FunnelController::class, 'index']);
+    Route::get('funnels/collection/{collection_id}', [FunnelController::class, 'index']);
     Route::post('funnels', [FunnelController::class, 'store']);
     Route::get('funnels/{id}', [FunnelController::class, 'show']);
     Route::patch('funnels/{id}', [FunnelController::class, 'update']);
