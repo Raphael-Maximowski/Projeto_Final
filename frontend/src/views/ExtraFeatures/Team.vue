@@ -7,7 +7,7 @@
         @returnteam="returnteam"
         @IdTeam="IdTeam"
     />
-
+    <chat/>
     <div><MenuDash/></div>
     <div class="content" v-if="admin == 1">
       <div class="welcome1">
@@ -120,9 +120,10 @@ import {GetCompany, GetDataTime, GetUserEmail, SetTeam, SetUser} from "@/service
 import {mapGetters} from "vuex";
 import Message from "@/components/DashBoard/message.vue";
 import ComumCard from "@/components/ExtraFeatures/CardWorker.vue";
+import Chat from "@/components/ExtraFeatures/Chat.vue";
 
 export default defineComponent({
-  components: {ComumCard, Message, FindWorker, WorkerCards, ModalContato, MenuDash},
+  components: {Chat, ComumCard, Message, FindWorker, WorkerCards, ModalContato, MenuDash},
   data(){
     return{
       teams: false,
