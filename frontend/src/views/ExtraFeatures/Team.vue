@@ -96,6 +96,18 @@
         </div>
       </div>
     </div>
+    <div class="comumuser" v-if="admin != 1 && team != null">
+      <div>
+        <div class="headerlist">Funcionarios Inseridos no seu Time</div>
+        <div class="contentcomumuser">
+          <div v-for="userteam in userinteam">
+            <ComumCard :companydata="companydata" :userteam="userteam"/>
+          </div>
+        </div>
+        <div class="bottomlist"></div>
+      </div>
+
+    </div>
   </div>
 </template>
 <script>
@@ -107,9 +119,10 @@ import FindWorker from "@/components/ExtraFeatures/FindWorker.vue";
 import {GetCompany, GetDataTime, GetUserEmail, SetTeam, SetUser} from "@/services/HttpService.js";
 import {mapGetters} from "vuex";
 import Message from "@/components/DashBoard/message.vue";
+import ComumCard from "@/components/ExtraFeatures/CardWorker.vue";
 
 export default defineComponent({
-  components: {Message, FindWorker, WorkerCards, ModalContato, MenuDash},
+  components: {ComumCard, Message, FindWorker, WorkerCards, ModalContato, MenuDash},
   data(){
     return{
       teams: false,
@@ -204,6 +217,20 @@ export default defineComponent({
 })
 </script>
 <style>
+.contentcomumuser {
+  width: 60vw;
+  height: 500px;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+}
+.comumuser {
+
+  width: 95.7vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .setteam img {
   width: 30px;
   height: 30px;
@@ -244,13 +271,14 @@ export default defineComponent({
   font-weight: bold;
   width: 5vw;
 
-  margin-bottom: 2px;
 }
 
 .contentcompany p {
   font-size: 14px;
   font-style: italic;
   margin-left: 10px;
+  padding: 0px;
+  margin: 0px;
 }
 .info2 h1 {
   margin-top: 15px;

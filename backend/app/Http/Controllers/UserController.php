@@ -55,5 +55,11 @@ class UserController extends Controller
 
         return response()->json(['users' => $users], 200);
     }
+
+    public function profile($id)
+    {
+        $user =  User::FindOrFail($id);
+        return response()->json(['user' => $user], 200);
+    }
 }
 

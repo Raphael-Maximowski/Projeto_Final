@@ -99,7 +99,7 @@ export default {
     ...mapMutations(['updateFunnelId'])
   },
   computed: {
-    ...mapGetters(['funnel_id']),
+    ...mapGetters(['funnel_id', 'user_profile']),
   },
 }
 </script>
