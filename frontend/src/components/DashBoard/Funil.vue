@@ -27,6 +27,7 @@ export default {
     ...mapGetters(['funnel_id']),
   },
   created(){
+    console.log('Funil Unitario', this.funil)
   },
   data ()
   {

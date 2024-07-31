@@ -52,7 +52,6 @@
           <div class="funis">
             <div v-for="collection in collections.collections">
               <Collection
-                  :funnels="funnels"
                   :collection="collection"
                   :resync="resync"
                   @ShowFunil="ActiveFunil"
@@ -163,15 +162,12 @@ export default {
       this.page = 1
       const response = await Pagination(this.page);
       this.collections = response.data
+      console.log(this.collections)
       this.sizepages = this.collections.collections
       return response
     },
 
-    async GetFunnels()
-    {
-      const response = await GetFunnel();
-      this.funnels =  response.data
-    },
+
 
     async SendData(value){
       const data = value
@@ -182,7 +178,6 @@ export default {
         return response;
       } else {
         const response = await SendFunnel(data);
-
         return response;
       }
     },
@@ -229,9 +224,7 @@ export default {
 
   },
   created() {
-    this.GetFunnels().then(() => {
-      this.GetCollection();
-    })
+    this.GetCollection()
     this.ShowUser();
   },
 };
