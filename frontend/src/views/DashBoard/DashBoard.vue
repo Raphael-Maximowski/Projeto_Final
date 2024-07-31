@@ -1,5 +1,6 @@
 <template>
 <main>
+
   <Alert :pass="pass" :errors="errors" />
   <div class="menu">
 
@@ -92,6 +93,7 @@ import Alert from "@/components/Login/Alert.vue";
 import collection from "@/components/DashBoard/Collection.vue";
 import SearchBar from "@/components/DashBoard/SearchBar.vue";
 import Blocker from "@/components/Blocker.vue";
+import Chat from "@/components/ExtraFeatures/Chat.vue";
 export default {
   computed: {
     collection() {
@@ -99,7 +101,7 @@ export default {
     }, 
     ...mapGetters(["admin"]),
   },
-  components: {Blocker, SearchBar, Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
+  components: {Chat, Blocker, SearchBar, Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
   data() {
     return {
       modal: false,

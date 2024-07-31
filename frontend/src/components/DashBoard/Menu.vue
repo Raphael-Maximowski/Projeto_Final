@@ -15,10 +15,15 @@
       <Icones v-if="active_team" imageSrc="/src/assets/images/DashBoard/team.png"/>
       <DefaultIcon @click="SetTeam" v-if="!active_team" imageSrc="/src/assets/images/DashBoard/active_team.png"/>
     </div>
+    <div >
+      <Icones v-if="active_chat" imageSrc="/src/assets/images/DashBoard/activechat.png"/>
+      <DefaultIcon @click="SetChat" v-if="!active_chat" imageSrc="/src/assets/images/DashBoard/chat.png"/>
+    </div>
     <div style="margin-top: 50vh">
       <Icones v-if="active_logout" imageSrc="/src/assets/images/DashBoard/logout.png"/>
       <DefaultIcon @click="SetLogout" v-if="!active_logout" imageSrc="/src/assets/images/DashBoard/active_logout.png"/>
     </div>
+
   </div>
 
 </template>
@@ -37,6 +42,7 @@ export default {
       active_team: false,
       active_user: false,
       active_logout: false,
+      active_chat : false
     }
   },
   methods: {
@@ -45,6 +51,7 @@ export default {
       this.active_user = false
       this.active_team = false
       this.active_logout = false
+      this.active_chat =  false
       this.$router.push('/dashboard');
     },
     SetUser(){
@@ -52,6 +59,7 @@ export default {
       this.active_dash = false
       this.active_team = false
       this.active_logout = false
+      this.active_chat =  false
       this.UpdateUser(this.user_id);
       console.log(this.user_profile)
       this.$router.push('/UserProfile')
@@ -61,6 +69,7 @@ export default {
       this.active_dash = false
       this.active_user = false
       this.active_logout = false
+      this.active_chat =  false
       this.$router.push('/Team')
     },
     SetLogout(){
@@ -68,6 +77,14 @@ export default {
       this.active_dash = false
       this.active_user = false
       this.active_team = false
+      this.active_chat =  false
+    },
+    SetChat(){
+      this.active_logout = false
+      this.active_dash = false
+      this.active_user = false
+      this.active_team = false
+      this.active_chat =  true
     },
     ...mapMutations(['UpdateUser'])
   },

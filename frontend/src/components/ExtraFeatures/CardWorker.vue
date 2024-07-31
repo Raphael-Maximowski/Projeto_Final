@@ -6,7 +6,7 @@
     <p>{{ userteam.email }}</p>
 
     <p>{{ companydata.name }}</p>
-    <img src="../../assets/images/ExtraFeatures/conversando.png">
+    <img  src="../../assets/images/ExtraFeatures/message.png">
   </div>
 </template>
 <script>
