@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,28 @@ class UserController extends Controller
     {
         $user =  User::FindOrFail($id);
         return response()->json(['user' => $user], 200);
+    }
+
+    public function uploadPhoto(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        if ($user->photo) {
+            Storage::delete('public/photos/' . $user->photo);
+        }
+
+        // aqui q vai armazenar a foto
+        $fileName = time() . '.' . $request->photo->extension();
+        $request->photo->storeAs('public/photos', $fileName);
+
+        $user->photo = $fileName;
+        $user->save();
+
+        return response()->json(['message' => 'Foto atualizada com sucesso']);
     }
 }
 
