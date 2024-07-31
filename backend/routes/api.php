@@ -120,4 +120,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('empresas/{id}', [EmpresaController::class, 'update']);
     Route::delete('empresas/{id}', [EmpresaController::class, 'destroy']);
 
+    Route::post('/profile/photo/upload', [UserController::class, 'uploadPhoto'])->name('profile.photo.upload');
+
 });
