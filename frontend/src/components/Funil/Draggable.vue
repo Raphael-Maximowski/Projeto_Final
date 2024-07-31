@@ -69,7 +69,6 @@ export default {
       const response = await GetSteps(data);
       this.$emit('ReceiveId', data.id)
       this.returndata =  response.data;
-      console.log(this.returndata)
       this.size = this.returndata.length
     },
     SetHeaders(){
