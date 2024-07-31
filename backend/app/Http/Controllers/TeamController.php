@@ -68,25 +68,21 @@ class TeamController extends Controller
                 'user_id' => 'required|integer|exists:users,id',
                 'team_id' => 'required|integer|exists:teams,id',
             ]);
-        
+
             $team = Team::findOrFail($teamId);
             $user = User::findOrFail($request->user_id);
-        
+
             // Atualiza o `team_id` do usuário
             $user->team_id = $request->team_id;
             $user->save();
 
             $team->users()->attach($user->id);
-        
+
             return response()->json(['message' => 'Usuário adicionado ao time'], 200);
     }
 
-    public function removeUserFromTeam(Request $request, $teamId, $userId)
+    public function removeUserFromTeam($teamId, $userId)
     {
-        $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
-            'team_id' => 'required|integer|exists:teams,id',
-        ]);
 
         $team = Team::findOrFail($teamId);
         $team->users()->detach($userId);

@@ -13,7 +13,8 @@ export default createStore({
       funnel_id: "",
       colors: "",
       team: "",
-      admin : ""
+      admin : "",
+      user_profile : ""
     }
   },
   getters: {
@@ -29,7 +30,8 @@ export default createStore({
     funnel_id : state => state.user.funnel_id,
     colors : state => state.user.colors,
     team : state => state.user.team,
-    admin : state => state.user.admin
+    admin : state => state.user.admin,
+    user_profile : state => state.user.user_profile
   },
   mutations: {
     updateTeam(state, NewTeam){
@@ -62,6 +64,9 @@ export default createStore({
     },
     updateColors(state, NewColor) {
       state.user.colors = NewColor
+    },
+    UpdateUser(state, NewUser) {
+      state.user.user_profile =  NewUser
     }
   },
   actions: {},

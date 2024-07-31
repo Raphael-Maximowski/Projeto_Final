@@ -2,7 +2,7 @@
 <main>
   <Alert :pass="pass" :errors="errors" />
   <div class="menu">
-    <Blocker></Blocker>
+
       <div v-if="modal">
         <CreateModal
             @closeModal="closeModal"
@@ -33,11 +33,13 @@
           @Error="Error"
       />
 
-    <MenuDash/>
+    <div class="z-index">
+      <MenuDash/>
     </div>
 
-
+    </div>
     <div class="principal">
+
         <div class="header">
             <div class="welcome">
                 <h1>Bem vindo ao seu Customer Relationship Management</h1>
@@ -235,6 +237,9 @@ export default {
 };
 </script>
 <style scoped>
+.z-index {
+  z-index: 2;
+}
 
 * {
     margin: 0;
@@ -259,6 +264,7 @@ main {
 
 .principal {
     width: 95.7vw;
+  z-index: 2;
 }
 
 .header {

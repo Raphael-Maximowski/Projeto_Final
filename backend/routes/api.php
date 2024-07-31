@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('logout', [AuthController::class, 'logout']);
 });
 
+Route::get('user/{id}', [UserController::class, 'profile']);
 
 // Rota para verificar se o usuário está no banco de dados para enviar o email
 Route::post('forget_password', [EmailController::class, 'emailValidated'])

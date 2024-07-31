@@ -378,6 +378,31 @@ export const SetTeam =  async (data) => {
     window.location.reload();
     return response;
 }
+
+export const RemoveTeam =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const teamId =  data.team_id
+    const userId =  data.user_id
+    const url = `teams/${teamId}/remove-user/${userId}`
+    const response = await HttpService.delete(url, {headers})
+    return response
+}
+
+export const GetUserProfile =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id =  data.id
+    const url = `user/${id}`
+    const response = await HttpService.get(url, {headers})
+    return response;
+
+
+}
 export default HttpService;
 
 
