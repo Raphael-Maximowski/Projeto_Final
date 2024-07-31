@@ -22,7 +22,7 @@ class Funnel extends Model
         return $this->belongsTo(Collection::class); // um funil pertence a uma coleção
     }
 
-    public function team()
+    public function team ()
     {
         return $this->belongsTo(Team::class);
     }
