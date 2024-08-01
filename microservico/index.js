@@ -30,7 +30,16 @@ app.post('/users', async (req, res) => {
   }
 });
 
-app.get('/messages/:room'), async (req, res) => {
+app.get('/messages', async (req, res) => {
+  try {
+    const message = await db.Message.findAll();
+    res.json(message);
+  }catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/messages/:room', async (req, res) => {
     const room = req.params.room;
     try {
       const messages = await getMessagesRoom(room);
@@ -38,7 +47,7 @@ app.get('/messages/:room'), async (req, res) => {
   }catch {
     res.status(500).json({ error: error.message});
   }
-}
+});
 
 // Endpoint para obter todos os usuários
 app.get('/users', async (req, res) => {
