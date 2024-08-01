@@ -63,9 +63,13 @@ io.on('connection', (socket) => {
       socket.join(data.room); // O usuário entra em uma sala específica
 
       // Verifica se o usuário já está na sala
-      const userInRoom = users.find(user => user.username === data.username && user.room === data.room);
-      if (userInRoom) {
-        userInRoom.socket_id = socket.id; // Atualiza o ID do socket se o usuário já estiver na sala
+      const userInRoom = users.find(user => user.room === data.room);
+      const reverseString = str => [...str].reverse().join('');
+      const originalString = data.room;
+      const reversedString = reverseString(originalString);
+      console.log(reversedString);
+      if (userInRoom || reversedString) {
+        userInRoom.socket_id = socket.id;
         console.log('User Joined Room');
       } else {
         users.push({

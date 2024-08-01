@@ -35,12 +35,14 @@ export default {
       pair: {},
       openchat: false,
       OwnId : "",
-      OtherId: ""
+      OtherId: "",
+      messages : []
     }
   },
   computed: {
     ...mapGetters(['team_users', 'user_id', 'user_name']),
   },
+
   methods: {
     CloseChat(){
       this.$emit('CloseChat')
@@ -56,7 +58,12 @@ export default {
         'ID_FIRST' : this.user_id,
         'ID_SECOND' : this.OtherId
       }
+      const message = {
+        id : this.user_id,
+        message : value
+      }
       console.log(data)
+      this.messages.push(message)
       ChatService.Message(data)
     },
 
@@ -72,6 +79,7 @@ export default {
       const Room = String(this.OwnId) + String(this.OtherId)
       const UserName = this.user_name
       const SocketID = getSocketId.socket.id
+      console.log('id socket', SocketID)
       ChatService.joinRoom(Room, UserName, SocketID)
       this.openchat = true
     },
