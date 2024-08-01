@@ -4,23 +4,22 @@
       <img style="cursor: pointer" @click="SetDash" src="../../assets/images/Login/logoamarelo.png" alt="">
     </div>
     <div>
-      <Icones v-if="active_dash" imageSrc="/src/assets/images/DashBoard/active_dashboard.png"/>
-      <DefaultIcon @click="SetDash" v-if="!active_dash" imageSrc="/src/assets/images/DashBoard/dashboard.png"/>
+      <Icones v-if="dash_state" imageSrc="/src/assets/images/DashBoard/active_dashboard.png"/>
+      <DefaultIcon @click="SetDash" v-if="!dash_state" imageSrc="/src/assets/images/DashBoard/dashboard.png"/>
     </div>
     <div>
-      <Icones  v-if="active_user" imageSrc="/src/assets/images/DashBoard/active-user.png"/>
-      <DefaultIcon @click="SetUser" v-if="!active_user" imageSrc="/src/assets/images/DashBoard/user.png"/>
+      <Icones  v-if="user_state" imageSrc="/src/assets/images/DashBoard/active-user.png"/>
+      <DefaultIcon @click="SetUser" v-if="!user_state" imageSrc="/src/assets/images/DashBoard/user.png"/>
     </div>
     <div>
-      <Icones v-if="active_team" imageSrc="/src/assets/images/DashBoard/team.png"/>
-      <DefaultIcon @click="SetTeam" v-if="!active_team" imageSrc="/src/assets/images/DashBoard/active_team.png"/>
+      <Icones v-if="team_state" imageSrc="/src/assets/images/DashBoard/team.png"/>
+      <DefaultIcon @click="SetTeam" v-if="!team_state" imageSrc="/src/assets/images/DashBoard/active_team.png"/>
     </div>
     <div >
-      <Icones v-if="active_chat" imageSrc="/src/assets/images/DashBoard/activechat.png"/>
-      <DefaultIcon @click="SetChat" v-if="!active_chat" imageSrc="/src/assets/images/DashBoard/chat.png"/>
+      <Icones v-if="chat_state" imageSrc="/src/assets/images/DashBoard/activechat.png"/>
+      <DefaultIcon @click="SetChat" v-if="!chat_state" imageSrc="/src/assets/images/DashBoard/chat.png"/>
     </div>
-    <div style="margin-top: 50vh">
-      <Icones v-if="active_logout" imageSrc="/src/assets/images/DashBoard/logout.png"/>
+    <div style="margin-top: 44vh">
       <DefaultIcon @click="SetLogout" v-if="!active_logout" imageSrc="/src/assets/images/DashBoard/active_logout.png"/>
     </div>
 
@@ -38,58 +37,43 @@ export default {
   components: {DefaultIcon, Icones },
   data() {
     return {
-      active_dash: true,
-      active_team: false,
-      active_user: false,
-      active_logout: false,
       active_chat : false
     }
   },
   methods: {
     SetDash(){
-      this.active_dash = true
-      this.active_user = false
-      this.active_team = false
-      this.active_logout = false
-      this.active_chat =  false
+      this.UpdateDashState(true)
+      this.UpdateUserState(false)
+      this.UpdateTeamState(false)
+      this.UpdateChatState(false)
       this.$router.push('/dashboard');
     },
     SetUser(){
-      this.active_user = true
-      this.active_dash = false
-      this.active_team = false
-      this.active_logout = false
-      this.active_chat =  false
+      this.UpdateUserState(true)
+      this.UpdateDashState(false)
+      this.UpdateTeamState (false)
+      this.UpdateChatState (false)
       this.UpdateUser(this.user_id);
-      console.log(this.user_profile)
       this.$router.push('/UserProfile')
     },
     SetTeam(){
-      this.active_team = true
-      this.active_dash = false
-      this.active_user = false
-      this.active_logout = false
-      this.active_chat =  false
+      this.UpdateUserState(false)
+      this.UpdateDashState(false)
+      this.UpdateTeamState (true)
+      this.UpdateChatState (false)
       this.$router.push('/Team')
     },
-    SetLogout(){
-      this.active_logout = true
-      this.active_dash = false
-      this.active_user = false
-      this.active_team = false
-      this.active_chat =  false
-    },
     SetChat(){
-      this.active_logout = false
-      this.active_dash = false
-      this.active_user = false
-      this.active_team = false
-      this.active_chat =  true
+      this.UpdateUserState(false)
+      this.UpdateDashState(false)
+      this.UpdateTeamState (false)
+      this.UpdateChatState (!this.chat_state)
+      this.$emit('active_chat')
     },
-    ...mapMutations(['UpdateUser'])
+    ...mapMutations(['UpdateUser', 'UpdateDashState', 'UpdateUserState', 'UpdateTeamState', 'UpdateChatState'])
   },
   computed: {
-    ...mapGetters(['user_id', 'user_profile']),
+    ...mapGetters(['user_id', 'user_profile', 'dash_state', 'user_state', 'team_state', 'chat_state']),
   },
 }
 </script>

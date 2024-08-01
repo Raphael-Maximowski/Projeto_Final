@@ -543,7 +543,7 @@ export default {
       this.SaveCompany().then(() => {
         this.SaveTeam();
       })
-      window.location.reload();
+
     },
 
     async GetSize(){

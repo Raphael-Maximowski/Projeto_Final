@@ -1,6 +1,7 @@
 <template>
   <main>
-    <div><MenuDash/></div>
+    <chat v-if="chat" @CloseChat="active_chat"/>
+    <div><MenuDash  @active_chat="active_chat"/></div>
     <div class="content">
       <div class="profilecontent">
         <div class="photo">
@@ -144,12 +145,14 @@ import MenuDash from "@/components/DashBoard/Menu.vue";
 import {GetUserProfile} from "@/services/HttpService.js";
 import {mapGetters, mapMutations} from "vuex";
 import CardLogs from "@/components/ExtraFeatures/CardLogs.vue";
+import Chat from "@/components/ExtraFeatures/Chat.vue";
 
 export default defineComponent({
-  components: {CardLogs, MenuDash},
+  components: {Chat, CardLogs, MenuDash},
   data(){
     return {
-      dados: {}
+      dados: {},
+      chat: false
     }
   },
   methods: {
@@ -160,7 +163,10 @@ export default defineComponent({
       const response = await GetUserProfile(data)
       this.dados = response.data
       return response;
-    }
+    },
+    active_chat(){
+      this.chat = !this.chat
+    },
 
   },
   created(){

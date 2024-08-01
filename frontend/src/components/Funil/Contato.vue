@@ -5,7 +5,7 @@
       <div class="value">R$ {{this.dadoscontact.value}}</div>
     </div>
   </div>
-  <div style="border: 1px solid lightgray; height: 130px" v-if="this.dadoscontact.name === 'card vazio' && size == 1" class="maincard" @click="ActiveContact">
+  <div style="border: 1px solid lightgray; height: 130px" v-if="this.dadoscontact.name === 'card vazio' && size == 1" class="maincard2" @click="ActiveContact">
     <div class="contentcard2">
       <div>
         <div style="color: lightgray; font-size: 13px;  font-weight: lighter; margin-top: 5px; font-style: italic; text-align: center">Etapa vazia</div>
@@ -62,8 +62,8 @@ export default {
   justify-content: center;
   padding-top: 10px;
   height: 150px;
-
 }
+
 
 .contentcard2 img {
   width: 130px;
@@ -78,6 +78,20 @@ export default {
   width: 218px;
   border: 1px solid rgba(211, 211, 211, 0.51);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.maincard2 {
+  margin-top: 10px;
+  height: 80px;
+  border-radius: 10px;
+  width: 218px;
+  border: 1px solid rgba(211, 211, 211, 0.51);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 6px 20px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+}
+
+.maincard2:hover {
+  opacity: 100;
 
 }
 
