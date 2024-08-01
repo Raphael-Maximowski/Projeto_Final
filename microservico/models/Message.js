@@ -13,6 +13,10 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      secondusername: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: DataTypes.DATE,
       }

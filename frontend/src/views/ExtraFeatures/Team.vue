@@ -7,8 +7,11 @@
         @returnteam="returnteam"
         @IdTeam="IdTeam"
     />
-    <chat/>
-    <div><MenuDash/></div>
+    <chat v-if="chat"
+    @CloseChat="active_chat"
+
+/>
+    <div><MenuDash @active_chat="active_chat"/></div>
     <div class="content" v-if="admin == 1">
       <div class="welcome1">
         <div class="title1">
@@ -117,7 +120,7 @@ import ModalContato from "@/components/Funil/CreateContact.vue";
 import WorkerCards from "@/components/ExtraFeatures/WorkerCard.vue";
 import FindWorker from "@/components/ExtraFeatures/FindWorker.vue";
 import {GetCompany, GetDataTime, GetUserEmail, SetTeam, SetUser} from "@/services/HttpService.js";
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 import Message from "@/components/DashBoard/message.vue";
 import ComumCard from "@/components/ExtraFeatures/CardWorker.vue";
 import Chat from "@/components/ExtraFeatures/Chat.vue";
@@ -136,10 +139,14 @@ export default defineComponent({
       companydata : {},
       teamdata: {},
       userinteam: {},
+      chat : false,
 
     }
   },
   methods: {
+    active_chat(){
+      this.chat = !this.chat
+    },
     MakeChange(value){
       this.trade =  !this.trade
       this.userid = value
@@ -178,7 +185,7 @@ export default defineComponent({
       const response = await GetDataTime(data);
       this.teamdata =  response.data;
       this.userinteam =  this.teamdata.users
-      console.log('User In Team', this.userinteam)
+      this.UpdateTeamUsers(this.userinteam)
       this.empresa_id = response.data.empresa_id
       return response
     },
@@ -197,8 +204,10 @@ export default defineComponent({
       }
       const response =  await SetTeam(data);
       return response;
-    }
+    },
+    ...mapMutations(['UpdateTeamUsers'])
   },
+
   watch: {
     IdTime(value){
       if (value != ""){
@@ -213,7 +222,7 @@ export default defineComponent({
     })
   },
   computed: {
-    ...mapGetters(['user_id', "team", "admin"]),
+    ...mapGetters(['user_id', "team", "admin", "team_users"]),
   },
 })
 </script>

@@ -5,8 +5,13 @@ import store from "./store";
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
+import ChatService from '../src/services/ChatService.js';
+import socket from './services/SocketService.js';
+
 
 const app = createApp(App)
+app.config.globalProperties.$chatService = ChatService;
+app.config.globalProperties.$socket = socket;
 
 
 app.use(router)

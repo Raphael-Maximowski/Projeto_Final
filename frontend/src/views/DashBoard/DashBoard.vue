@@ -1,6 +1,6 @@
 <template>
 <main>
-
+  <chat v-if="chat" @CloseChat="active_chat"/>
   <Alert :pass="pass" :errors="errors" />
   <div class="menu">
 
@@ -35,7 +35,7 @@
       />
 
     <div class="z-index">
-      <MenuDash/>
+      <MenuDash @active_chat="active_chat"/>
     </div>
 
     </div>
@@ -94,6 +94,7 @@ import collection from "@/components/DashBoard/Collection.vue";
 import SearchBar from "@/components/DashBoard/SearchBar.vue";
 import Blocker from "@/components/Blocker.vue";
 import Chat from "@/components/ExtraFeatures/Chat.vue";
+import WebSocketService from "../../services/ChatService.js"
 export default {
   computed: {
     collection() {
@@ -119,11 +120,15 @@ export default {
       resync: false,
       pass : true,
       errors: [],
+      chat : false,
 
     };
   },
 
   methods: {
+    active_chat(){
+      this.chat = !this.chat
+    },
     Error(value){
       this.pass = false
       this.errors[0] = value
@@ -222,6 +227,7 @@ export default {
     },
 
 
+
     ...mapMutations(['updateUserId','updateUserName','updateUserEmail','updateUserValidate','updateUserToken','updateUserCreated', 'updateTeam', 'UpdateAdmin'])
 
   },
@@ -313,6 +319,7 @@ main {
 
 
 .outer {
+  z-index: 1;
   height: 95vh;
   overflow-y: auto; /* Permitir rolagem no eixo Y */
   overflow-x: hidden; /* Ocultar rolagem no eixo X */

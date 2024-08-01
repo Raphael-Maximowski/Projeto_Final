@@ -14,7 +14,12 @@ export default createStore({
       colors: "",
       team: "",
       admin : "",
-      user_profile : ""
+      user_profile : "",
+      team_users : {},
+      state_dash : "",
+      state_user: "",
+      state_team: "",
+      state_chat: ""
     }
   },
   getters: {
@@ -31,9 +36,26 @@ export default createStore({
     colors : state => state.user.colors,
     team : state => state.user.team,
     admin : state => state.user.admin,
-    user_profile : state => state.user.user_profile
+    user_profile : state => state.user.user_profile,
+    team_users : state => state.user.team_users,
+    dash_state : state => state.user.state_dash,
+    user_state : state => state.user.state_user,
+    team_state : state => state.user.state_team,
+    chat_state : state => state.user.state_chat
   },
   mutations: {
+    UpdateDashState(state, NewState){
+      state.user.state_dash = NewState
+    },
+    UpdateUserState(state, NewState){
+      state.user.state_user = NewState
+    },
+    UpdateTeamState(state, NewState){
+      state.user.state_team = NewState
+    },
+    UpdateChatState(state, NewState){
+      state.user.state_chat = NewState
+    },
     updateTeam(state, NewTeam){
       state.user.team =  NewTeam
     },
@@ -67,6 +89,9 @@ export default createStore({
     },
     UpdateUser(state, NewUser) {
       state.user.user_profile =  NewUser
+    },
+    UpdateTeamUsers(state, NewUsers) {
+      state.user.team_users =  NewUsers
     }
   },
   actions: {},
