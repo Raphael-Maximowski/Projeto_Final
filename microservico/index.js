@@ -30,6 +30,16 @@ app.post('/users', async (req, res) => {
   }
 });
 
+app.get('/messages/:room'), async (req, res) => {
+    const room = req.params.room;
+    try {
+      const messages = await getMessagesRoom(room);
+      res.json(messages);
+  }catch {
+    res.status(500).json({ error: error.message});
+  }
+}
+
 // Endpoint para obter todos os usuários
 app.get('/users', async (req, res) => {
   try {
