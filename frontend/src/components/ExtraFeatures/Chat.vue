@@ -1,6 +1,6 @@
 <template>
   <div v-if="openchat" class="openmessage">
-    <div><CardMessage @CloseMessage="CloseMessage" :pair="pair"/></div>
+    <div><CardMessage @SendMessage="SendMessage" @CloseMessage="CloseMessage" :pair="pair"/></div>
   </div>
 
   <div class="contentchat">
@@ -25,24 +25,41 @@
 import CardChat from "@/components/ExtraFeatures/CardChat.vue";
 import {mapGetters, mapMutations} from "vuex";
 import CardMessage from "@/components/ExtraFeatures/CardMensagem.vue";
-
+import getSocketId from "../../services/SocketService.js"
+import ChatService from "@/services/ChatService.js";
 export default {
   name: 'Chat',
   components: {CardMessage, CardChat},
   data(){
     return {
       pair: {},
-      openchat: false
+      openchat: false,
+      OwnId : "",
+      OtherId: ""
     }
   },
   computed: {
-    ...mapGetters(['team_users']),
+    ...mapGetters(['team_users', 'user_id', 'user_name']),
   },
   methods: {
     CloseChat(){
       this.$emit('CloseChat')
       this.UpdateChatState(false)
     },
+    SendMessage(value){
+      const room = String(this.OwnId) + String(this.OtherId)
+      const username = this.user_name
+      const data = {
+        'text' : value,
+        'room' : room,
+        'username' : username,
+        'ID_FIRST' : this.user_id,
+        'ID_SECOND' : this.OtherId
+      }
+      console.log(data)
+      ChatService.Message(data)
+    },
+
     CloseMessage(){
       this.openchat =  false
       console.log('Status Chat', this.openchat)
@@ -50,7 +67,13 @@ export default {
     },
     OpenChat(value){
       this.pair = value.pair
-      this.openchat =  true
+      this.OtherId = value.pair.id
+      this.OwnId = this.user_id
+      const Room = String(this.OwnId) + String(this.OtherId)
+      const UserName = this.user_name
+      const SocketID = getSocketId.socket.id
+      ChatService.joinRoom(Room, UserName, SocketID)
+      this.openchat = true
     },
     ...mapMutations(['UpdateChatState'])
   },
