@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -67,6 +69,14 @@ class ContactController extends Controller
             }
         }
         $contact->update(['posicao' => $novaPosicao]);
+
+        UserLog::create([
+            'user_id' => Auth::id(),
+            'contact_id' => $contact->id,
+            'old_position' => $posicaoAtual,
+            'new_position' => $novaPosicao,
+        ]);
+
         return response()->json($contact);
     }
 
@@ -100,6 +110,13 @@ class ContactController extends Controller
             }
         }
 
+        UserLog::create([
+            'user_id' => Auth::id(),
+            'contact_id' => $contact->id,
+            'old_step' => $oldStep,
+            'old_position' => $oldPosition
+        ]);
+
         return response()->json(['message' => 'Etapa atualizada com sucesso']);
     }
 
@@ -132,6 +149,13 @@ class ContactController extends Controller
             $emptyCard->posicao++;
             $emptyCard->save();
         }
+
+        UserLog::create([
+            'user_id' => Auth::id(),
+            'contact_id' => $contact->id,
+            'new_step' => $newStep,
+            'new_position' => $newPosition,
+        ]);
 
         return response()->json($contact);
     }
