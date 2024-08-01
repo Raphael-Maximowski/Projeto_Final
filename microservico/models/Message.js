@@ -9,13 +9,13 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      username: {
+      ID_FIRST: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-      secondusername: {
+      ID_SECOND: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: DataTypes.DATE,
@@ -25,4 +25,3 @@ export default (sequelize, DataTypes) => {
       tableName: 'messages'
     });
   };
-  

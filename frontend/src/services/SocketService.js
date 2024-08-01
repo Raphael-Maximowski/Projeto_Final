@@ -1,17 +1,18 @@
+
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3005');
+const socket = io('http://localhost:3005', {
+    withCredentials: true,
+    transports: ['websocket', 'polling']
+});
+
+let socketId = null;
 
 socket.on('connect', () => {
-    console.log('Connected to server:', socket.id);
+    socketId = socket.id;
+    console.log('Connected to server:', socketId);
 });
 
-socket.on('disconnect', () => {
-    console.log('Disconnected from server');
-});
+const getSocketId = () => socketId;
 
-socket.on('message', (message) => {
-    console.log('New message:', message);
-});
-
-export default socket;
+export default { socket, getSocketId };

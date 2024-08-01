@@ -1,23 +1,26 @@
 // src/services/ChatService.js
-import axios from 'axios';
+import { io } from "socket.io-client";
+const socket = io("http://localhost:3005", {
+    withCredentials: true,
+});
+
+const callback = (a) => {
+    console.log(a)
+}
 
 const ChatService = {
-    async createUser(data) {
-        try {
-            const response = await axios.post('http://localhost:3005/users', data);
-            return response.data;
-        } catch (error) {
-            throw new Error(error.message);
-        }
+    joinRoom(room, username, socket_id) {
+        socket.emit('select_user', { room, username, socket_id }, callback);
+        console.log('Conexão Efetuada sala ')
     },
-    async getUsers() {
-        try {
-            const response = await axios.get('http://localhost:3005/users');
-            return response.data;
-        } catch (error) {
-            throw new Error(error.message);
-        }
-    }
-};
+    Message(data) {
+        socket.emit('message', data);
+        console.log('Mensagem Enviada')
+    },
+}
+
+
+
+
 
 export default ChatService;

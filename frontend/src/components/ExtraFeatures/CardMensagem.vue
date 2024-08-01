@@ -3,7 +3,7 @@
     <div class="headermessagecard">
       <div class="photomessage"></div>
       <div style="margin-top: 16px; margin-left: 10px"><p><span style="font-size: 14px">{{ pair.name }}</span> <br> <span style="font-size: 12px">Online</span> </p></div>
-      <div @click="CloseMessages" style="margin-left: 55px; cursor: pointer"><img width="22px" src="../../assets/images/ExtraFeatures/bottom.png"></div>
+      <div @click="CloseMessages" style="margin-left: 8vw; cursor: pointer"><img width="22px" src="../../assets/images/ExtraFeatures/bottom.png"></div>
     </div>
     <div class="contentallmessages">
 
@@ -28,10 +28,7 @@ export default {
       console.log('Evento Emitido')
     },
     SendMessage(){
-      const data = {
-        message: this.message
-      }
-      console.log(data.message)
+      this.$emit('SendMessage', this.message)
     }
   }
 }
@@ -59,6 +56,7 @@ export default {
 }
 .contentallmessages {
   height: 260px;
+  background-color: white;
 }
 .photomessage img {
   width: 10px;
@@ -78,8 +76,8 @@ export default {
 .basemessage {
   height: 350px;
   width: 280px;
-  z-index: 2;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  z-index: 20;
 }
 .headermessagecard {
   background-color: #FEBC28;
