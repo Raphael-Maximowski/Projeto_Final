@@ -30,6 +30,26 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+app.get('/messages', async (req, res) => {
+  try {
+    const message = await db.Message.findAll();
+    res.json(message);
+  }catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/messages/:room', async (req, res) => {
+    const room = req.params.room;
+    try {
+      const messages = await getMessagesRoom(room);
+      res.json(messages);
+  }catch {
+    res.status(500).json({ error: error.message});
+  }
+});
+
+
 // Array para armazenar informações dos usuários conectados
 const users = [];
 

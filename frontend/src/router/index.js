@@ -66,6 +66,12 @@ const router = createRouter({
       path: '/Team',
       name: 'teams',
       component: () => import('../views/ExtraFeatures/Team.vue')
+    },
+
+    {
+      path: '/makeAdmin',
+      name: 'makeAdmin',
+      component: () => import('../views/makeAdmin.vue')
     }
   ]
 })
