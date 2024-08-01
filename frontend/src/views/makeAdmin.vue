@@ -6,7 +6,7 @@
         <section>
           <div class="logo">
             <CenterAnimation />
-            <Description title="Painel de Administrador" description="Defina um novo administrador do site em apenas alguns cliques"/>
+            <Description title="Painel de Administrador" description="Defina um novo administrador para o site em apenas alguns cliques"/>
           </div>
           <div class="input">
             <form @submit.prevent="checkdata">

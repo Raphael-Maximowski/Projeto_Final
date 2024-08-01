@@ -23,7 +23,7 @@ class UserController extends Controller
             return response()->json($user, 200);
         }
 
-        public function makeAdmin($id)
+        public function makeAdmin($id) //ajustar makeadm
     {
             $user = User::find($id);
 
