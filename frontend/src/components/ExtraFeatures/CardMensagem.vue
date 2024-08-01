@@ -2,8 +2,8 @@
   <div class="basemessage">
     <div class="headermessagecard">
       <div class="photomessage"></div>
-      <div style="margin-top: 16px; margin-left: 10px"><p><span style="font-size: 14px">{{ pair.name }}</span> <br> <span style="font-size: 12px">Online</span> </p></div>
-      <div @click="CloseMessages" style="margin-left: 8vw; cursor: pointer"><img width="22px" src="../../assets/images/ExtraFeatures/bottom.png"></div>
+      <div style="margin-top: 16px; margin-left: 10px; width: 200px"><p><span style="font-size: 14px">{{ pair.name }}</span> <br> <span style="font-size: 12px">Online</span> </p></div>
+      <div @click="CloseMessages" style=" cursor: pointer"><img width="22px" src="../../assets/images/ExtraFeatures/bottom.png"></div>
     </div>
     <div class="contentallmessages">
 
