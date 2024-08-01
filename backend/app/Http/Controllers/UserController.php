@@ -84,5 +84,17 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Foto atualizada com sucesso']);
     }
+
+    public function getPhoto($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->photo) {
+            $photoUrl = Storage::url('public/photos/' . $user->photo);
+            return response()->json(['photo_url' => $photoUrl]);
+        }
+
+        return response()->json(['message' => 'Foto não encontrada'], 404);
+    }
 }
 

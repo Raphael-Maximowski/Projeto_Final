@@ -12,7 +12,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmpresaController;
-
+use App\Http\Controllers\LogController;
 
 Route::middleware('auth:sanctum')->get('user', function (Request $request) {
     return $request->user();
@@ -121,5 +121,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('empresas/{id}', [EmpresaController::class, 'destroy']);
 
     Route::post('/profile/photo/upload', [UserController::class, 'uploadPhoto'])->name('profile.photo.upload');
+    Route::get('/profile/photo/{id}', [UserController::class, 'getPhoto'])->name('profile.photo.get');
+
+    Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+    Route::get('/logs/{id}', [LogController::class, 'show'])->name('logs.show');
 
 });
