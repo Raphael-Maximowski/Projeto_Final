@@ -204,6 +204,8 @@ class ContactController extends Controller
             });
         }
 
+        $query->where('name', '!=', 'card vazio');
+
         $users = $query->get();
 
         return response()->json(['users' => $users], 200);
