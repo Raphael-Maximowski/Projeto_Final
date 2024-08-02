@@ -419,7 +419,9 @@ export const CreateAdmin = async (data) => {
     const headers = {
         Authorization: `Bearer ${token}`
     }
-
+    const email =  data
+    const url =  `users/make-admin/${email}`
+    const response = await HttpService.put(url, data,{headers})
 }
 export default HttpService;
 
