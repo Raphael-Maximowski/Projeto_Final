@@ -23,9 +23,9 @@ class UserController extends Controller
             return response()->json($user, 200);
         }
 
-        public function makeAdmin($id) //ajustar makeadm
+        public function makeAdmin($email) //ajustar makeadm
     {
-            $user = User::find($id);
+            $user = User::find('email', $email);
 
             if (!$user) {
                 return response()->json(['message' => 'Usuário não encontrado'], 404);
