@@ -50,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'getAuthenticatedUser']);
 });
 
-Route::put('users/{id}/make-admin', [UserController::class, 'makeAdmin']);
+Route::put('users/make-admin/{email}', [UserController::class, 'makeAdmin']);
 
 
 //rotas coleção (preciso ver se posso adicionar elas no grupo acima para autenticar)
