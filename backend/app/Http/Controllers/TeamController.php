@@ -21,6 +21,7 @@ class TeamController extends Controller
             'name' => 'required|string',
             'description' => 'required|string',
             'admin_id' => 'required|integer',
+            'user_id' => 'required'
         ]);
         $admin = AdminUser::findOrFail($request->admin_id);
 
@@ -29,6 +30,7 @@ class TeamController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'empresa_id' => $company->id,
+            'user_id' => $request->user_id
         ]);
         return response()->json($team, 201);
     }

@@ -518,7 +518,8 @@ export default {
       const data = {
         'name' : this.nometeam,
         'description' : this.descteam,
-        'admin_id' : this.user_id
+        'admin_id' : this.user_id,
+        'user_id' : this.user_id
       }
       const response = await CreateTeam(data);
       const getdata =  response.data;

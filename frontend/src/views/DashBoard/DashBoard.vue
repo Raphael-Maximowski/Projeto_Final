@@ -41,7 +41,6 @@
 
     </div>
     <div class="principal">
-      <Blocker/>
         <div class="header">
             <div class="welcome">
                 <h1>Bem vindo ao seu Customer Relationship Management</h1>
