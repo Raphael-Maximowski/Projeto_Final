@@ -14,6 +14,18 @@
   </div>
 </template>
 <style>
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 .img-up img {
   margin-top: 1vh;
   width: 150px;
@@ -63,6 +75,7 @@ a {
   display: flex;
   justify-content: center;
   text-align: center;
+  animation: slideDownFadeIn 0.7s ease forwards;
 }
 
 .email h3 {
@@ -100,6 +113,21 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+
+}
+
+.modal-slide-enter-active, .modal-slide-leave-active {
+  transition: all 0.5s ease;
+}
+
+.modal-slide-enter, .modal-slide-leave-to /* .modal-slide-leave-active no <2.1.8 */ {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.modal-slide-enter-to {
+  transform: translateY(0);
+  opacity: 1;
 }
 </style>
 <script>

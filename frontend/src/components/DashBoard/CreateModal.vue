@@ -43,7 +43,6 @@
         <div class="submit" @click="Validator">Criar</div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -136,6 +135,17 @@ export default {
 </script>
 
 <style scoped>
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 hr {
   width: 30vw;
 }
@@ -221,6 +231,7 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .content {
@@ -231,6 +242,7 @@ hr {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
   z-index: 5;
+  animation: slideDownFadeIn 0.7s ease forwards;
 }
 
 .title {

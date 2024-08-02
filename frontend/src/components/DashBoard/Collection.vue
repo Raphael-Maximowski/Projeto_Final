@@ -65,7 +65,6 @@ export default {
     this.color = this.collection.color
     this.updateColors(this.color)
     this.$emit('Color')
-    this.GetFunnels()
   },
   methods: {
     OpenModal()
@@ -100,15 +99,18 @@ export default {
       ]
       this.OpenModal()
     },
-    SyncData(){
-      this.receive_data = this.collection
-      this.id_collection = this.collection.id
+    async SyncData(){
+      const data = {
+        collection_id : this.collection.id
+      }
+      const response = await GetFunnel(data);
+      this.funnels =  response.data
       this.$emit('ResetResync');
-      this.funnel = []
 
 
       for(let i = 0; i < this.funnels.length; i++){
         let id = this.funnels[i].collection_id;
+        console.log('Compare ', 'Funnel ID: ', id, 'Collecion ID: ', this.id_collection)
         if (id === this.id_collection){
           this.funnel.push(this.funnels[i])
         }
@@ -184,7 +186,7 @@ h1 {
 .funil {
   cursor: pointer;
   margin-top: 15px;
-  margin-right: 1vw;
+  margin-right: 0.5vw;
 }
 
 .funil p {
@@ -193,7 +195,6 @@ h1 {
     border-radius: 8px;
     font-size: 17px;
     margin-top: 17px;
-    margin-left: 15px;
 }
 
 .title img {

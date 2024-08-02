@@ -2,7 +2,10 @@
   <div class="basemessage">
     <div class="headermessagecard">
       <div class="photomessage"></div>
-      <div style="margin-top: 16px; margin-left: 10px; width: 200px"><p><span style="font-size: 14px">{{ pair.name }}</span> <br> <span style="font-size: 12px">Online</span> </p></div>
+      <div style="width: 200px">
+        <div style="margin-top: 16px; margin-left: 10px; width: 200px"><p><span style="font-size: 14px;width: 100px">{{ pair.name }}</span> <br> <span style="font-size: 12px">Online</span> </p></div>
+      </div>
+
       <div @click="CloseMessages" style=" cursor: pointer"><img width="22px" src="../../assets/images/ExtraFeatures/bottom.png"></div>
     </div>
     <div class="contentallmessages">
@@ -42,6 +45,7 @@ export default {
 .sendmessage {
   display: flex;
   align-items: center;
+  background-color: white;
 }
 
 .sendmessage input {
@@ -72,6 +76,7 @@ export default {
   border-radius: 50%;
   margin-left: 10px;
   border: 1px solid lightgray;
+
 }
 .basemessage {
   height: 350px;

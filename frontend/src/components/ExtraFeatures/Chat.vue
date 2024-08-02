@@ -92,6 +92,27 @@ export default {
 }
 </script>
 <style>
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .openmessage {
   position: absolute;
   width: 99vw;
@@ -100,6 +121,7 @@ export default {
   justify-content: end;
   align-items: end;
   z-index: 10;
+  animation: slideInFromBottom 0.5s ease-in-out;
 }
 
 .chats {
@@ -135,6 +157,7 @@ export default {
   z-index: 10;
   border-radius: 0px 0px 0px 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  animation: slideInFromRight 0.5s ease forwards;
 
 }
 </style>

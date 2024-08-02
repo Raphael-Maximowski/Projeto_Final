@@ -5,8 +5,8 @@
       <div class="value">R$ {{this.dadoscontact.value}}</div>
     </div>
   </div>
-  <div style="border: 1px solid lightgray; height: 130px" v-if="this.dadoscontact.name === 'card vazio' && size == 1" class="maincard2" @click="ActiveContact">
-    <div class="contentcard2">
+  <div style="border: 1px solid lightgray; height: 130px" v-if="this.dadoscontact.name === 'card vazio' && size == 1" class="maincard2">
+    <div class="contentcard2" @click="OpenCreate">
       <div>
         <div style="color: lightgray; font-size: 13px;  font-weight: lighter; margin-top: 5px; font-style: italic; text-align: center">Etapa vazia</div>
         <div>
@@ -31,6 +31,11 @@ export default {
   methods: {
     ActiveContact(){
       this.$emit('ActiveContactEtapa',this.dadoscontact);
+      console.log('Abriu do Errado')
+    },
+    OpenCreate(){
+      this.$emit('OpenCreate');
+      console.log('Saiu do Contato')
     }
   }
 }
@@ -92,6 +97,8 @@ export default {
 
 .maincard2:hover {
   opacity: 100;
+  transition: 0.8s;
+  cursor: pointer;
 
 }
 

@@ -23,7 +23,7 @@
       >
         <template #item="{element}">
           <div>
-            <ContatoCard :size="size" v-if="cards.length !== 0" @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
+            <ContatoCard @OpenCreate="OpenCreate" :size="size" v-if="cards.length !== 0" @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
           </div>
 
         </template>
@@ -158,6 +158,10 @@ export default {
         this.cards.push(GetData[i])
       }
       return response;
+    },
+    OpenCreate(){
+      this.$emit('OpenCreate');
+      console.log('Saiu da Etapa')
     },
 
     log: function(evt, id) {

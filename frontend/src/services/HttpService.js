@@ -402,7 +402,23 @@ export const GetUserProfile =  async (data) => {
     const url = `user/${id}`
     const response = await HttpService.get(url, {headers})
     return response;
+}
 
+export const GetLogs =  async () => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const url = `logs`
+    const response = await HttpService.get(url, {headers})
+    return response;
+}
+
+export const CreateAdmin = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
 
 }
 export default HttpService;
