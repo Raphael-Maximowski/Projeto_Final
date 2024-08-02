@@ -9,8 +9,8 @@
           </div>
           <div><h1>Voltar</h1></div>
         </div>
-        <div><p v-if="dadoscontact == null && !team" style="margin-left: 17vw" @click="SendContact">Criar Contato</p></div>
-        <div><p v-if="dadoscontact != null  && !team" @click="UpdateContact">Atualizar Contato</p></div>
+        <div><p v-if="dadoscontact == null && !team" style="margin-left: 16vw" @click="SendContact">Criar Contato</p></div>
+        <div><p v-if="dadoscontact != null  && !team" style="margin-left: 14vw" @click="UpdateContact">Atualizar Contato</p></div>
         <div><p v-if="team" @click="SendData">Criar Time</p></div>
       </div>
 
@@ -809,12 +809,24 @@ hr {
   height: 620px;
 }
 
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .content {
   background-color: #f9fafc;
   z-index: 2000;
   width: 40vw;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  animation: slideInFromRight 0.5s ease forwards;
 }
 
 .modalcontato {

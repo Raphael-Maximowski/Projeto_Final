@@ -167,12 +167,24 @@ export default{
   z-index: 3;
 }
 
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .base-modal3 {
   background-color: white;
   width: 30vw;
   height: 100vh;
   border-radius: 10px 0px 0px 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  animation: slideInFromRight 0.5s ease forwards;
 }
 
 .header-info {
@@ -211,12 +223,13 @@ export default{
 
 .main-info {
   width: 30vw;
-  height: 600px;
+  height: 550px;
 
 }
 
 .delete-info {
   width: 30vw;
+
   display: flex;
   align-items: center;
   justify-content: center;

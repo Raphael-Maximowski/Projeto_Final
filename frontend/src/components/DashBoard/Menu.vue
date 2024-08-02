@@ -20,7 +20,7 @@
       <DefaultIcon @click="SetChat" v-if="!chat_state" imageSrc="/src/assets/images/DashBoard/chat.png"/>
     </div>
     <div style="margin-top: 44vh">
-      <DefaultIcon @click="SetLogout" v-if="!active_logout" imageSrc="/src/assets/images/DashBoard/active_logout.png"/>
+      <DefaultIcon @click="SetLogout" imageSrc="/src/assets/images/DashBoard/active_logout.png"/>
     </div>
 
   </div>
@@ -41,6 +41,10 @@ export default {
     }
   },
   methods: {
+    SetLogout(){
+      this.$store.dispatch('clearState');
+      this.$router.push('/');
+    },
     SetDash(){
       this.UpdateDashState(true)
       this.UpdateUserState(false)

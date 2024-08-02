@@ -18,9 +18,9 @@
           <h1>Team CRM 3C+</h1>
           <p>Configure seus times de forma dinamica</p>
         </div>
-        <div class="create"><p style="color: white; cursor:pointer ; font-size: 17px; font-weight: normal" @click="ActiveModal">Criar Team</p></div>
+        <div v-if="team== null"  class="create"><p style="color: white; cursor:pointer ; font-size: 17px; font-weight: normal" @click="ActiveModal">Criar Team</p></div>
       </div>
-      <div class="main-content" v-if="team != null && admin == 1">
+      <div class="main-content" v-if="team != null && admin === 1">
         <div class="content1">
           <div class="centercontent">
             <div class="info1">
@@ -68,15 +68,15 @@
                 <div>
                   <div class="contentcompany">
                     <h3>Usuarios no Time</h3>
-                    <p>X</p>
+                    <p style="margin-top: 10px">Indisponivel</p>
                   </div>
                   <div class="contentcompany">
                     <h3>Usuarios Ativos</h3>
-                    <p>X</p>
+                    <p  style="margin-top: 10px">Indisponivel</p>
                   </div>
                   <div class="contentcompany">
                     <h3>Usuarios Offline</h3>
-                    <p>X</p>
+                    <p  style="margin-top: 10px">Indisponivel</p>
                   </div>
                 </div>
               </div>
@@ -87,7 +87,7 @@
         <div class="content2">
 
           <div class="list">
-            <div class="headerlist">Usuarios Inseridos no seu Time</div>
+            <div class="headerlist" style="padding-top: 6px">Usuarios Inseridos no seu Time</div>
             <div class="contentuser">
               <div v-for="userteam in userinteam">
                 <WorkerCards :userteam="userteam"/>
@@ -263,11 +263,13 @@ export default defineComponent({
 .cardssearch {
   border-left: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
+  background-color: white;
   height: 20vh;
   overflow-y: auto;
 }
 .flexboxinfo {
   display: flex;
+  background-color: white;
 }
 .contentcompany {
   margin: 5px 20px;
@@ -299,6 +301,7 @@ export default defineComponent({
   border-left: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
   display: flex;
+  background-color: white;
 }
 
 .inputsearch input {
@@ -340,8 +343,11 @@ input:focus {
 }
 
 .contentuser {
-  height: 70vh;
+  height: 69.5vh;
   overflow-y: auto;
+  background-color: white;
+  border-right: 1px solid lightgray;
+  border-left: 1px solid lightgray;
 }
 
 .bottomlist {
@@ -392,7 +398,8 @@ input:focus {
   overflow: hidden;
 }
 .title1 {
-  width: 73vw
+  width: 72vw;
+  margin-left: 15px;
 }
 .create {
   margin-top: 10px;

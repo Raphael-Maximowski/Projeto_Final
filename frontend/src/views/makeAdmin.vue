@@ -39,79 +39,18 @@
   import Description from "@/components/Login/DescriptionView.vue";
   
   export default {
-    computed: {
-      ...mapGetters(['user_token']),
-    },
     components: {Description, Alert, Button, Background, CenterAnimation },
     data() {
       return {
         email: "",
-        password: "",
-        errors: [],
-        pass: true
       };
     },
     methods: {
-      ValidateEmail() {
-        if (this.email.length === 0) {
-          this.errors.push('O campo Email é obrigatório!');
-          this.pass = false;
-        }
-      },
-  
-      ValidatePassword() {
-        if (this.password.length === 0) {
-          this.errors.push('O Campo senha é obrigatório!');
-          this.pass = false;
-        }
-      },
-  
-      ValidateForm() {
-        this.errors = [];
-        this.pass = true;
-        this.ValidateEmail();
-        this.ValidatePassword();
-      },
-  
-      async checkdata() {
-        this.ValidateForm();
-        if (this.pass) {
-          const data = {
-            email: this.email,
-            password: this.password
-          };
-  
-          try {
-            const response = await login(data);
-            if (response.status === 200) {
-              const token = response.data.access_token;
-              console.log(token)
-              this.updateUserToken(token);
-              this.$router.push('/dashboard');
-            }
-          } catch (error) {
-            if (error.response) {
-              if (error.response.status === 401) {
-                this.errors.push('Credenciais Invalidas!');
-              } else if (error.response.status === 403) {
-                this.errors.push('Verifique seu email para poder realizar o login');
-              } else if (error.response.status === 404) {
-                this.errors.push('Usuario não encontrado');
-              } else {
-                this.errors.push('Erro desconhecido ao tentar realizar o login.');
-              }
-              this.pass = false;
-            }
-          }
-        } else { setTimeout(() => {
-          this.pass = true;
-          this.errors = [];
-        }, 8000);
-        }
-      },
-      ...mapMutations(['updateUserToken'])
+      SetAdmin(){
+
+      }
     }
-  };
+  }
   </script>
   
   <style scoped>

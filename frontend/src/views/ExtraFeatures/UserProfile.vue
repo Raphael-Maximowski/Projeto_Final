@@ -28,9 +28,8 @@
             </div>
           </div>
           <div class="block2user">
-            <div class="emblemas">
-              <p style="font-weight: bold">Emblemas Adquiridos</p>
-            </div>
+            <p style="font-weight: bold">Emblemas Adquiridos</p>
+            <p>Em Breve  </p>
           </div>
         </div>
       </div>
@@ -38,7 +37,9 @@
         <div class="headerlogs">
           <h3>Registro de Logs do Usuario(a)</h3>
           <div class="logscontent">
-            <CardLogs/>
+            <div  v-for="data in datas">
+              <CardLogs :data="data"/>
+            </div>
           </div>
         </div>
       </div>
@@ -47,21 +48,27 @@
   </main>
 </template>
 <style scoped>
-.emblemas {  background-color: lightgray;
+.emblemas {
   height: 220px;
   width: 25vw;
   border-radius: 10px;
+  background-color: grey;
 }
 
 .emblemas p {
   margin: 10px 20px;
 }
 .block2user {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 30vw;
-;
+}
+
+.block2user img {
+  width: 200px;
+  border-radius: 10px;
+}
+
+.block2user  p {
+  margin-top: 13px;
 }
 .block1user {
 
@@ -103,8 +110,11 @@
 .logscontent {
   border: 2px solid #FEBC28;
   width: 85vw;
-  height: 250px;
+  height: 200px;
+  overflow-y: auto;
   border-radius: 0px 0px 10px 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 h3 {
@@ -142,7 +152,7 @@ main {
 
 import {defineComponent} from "vue";
 import MenuDash from "@/components/DashBoard/Menu.vue";
-import {GetUserProfile} from "@/services/HttpService.js";
+import {GetLogs, GetUserProfile} from "@/services/HttpService.js";
 import {mapGetters, mapMutations} from "vuex";
 import CardLogs from "@/components/ExtraFeatures/CardLogs.vue";
 import Chat from "@/components/ExtraFeatures/Chat.vue";
@@ -152,7 +162,8 @@ export default defineComponent({
   data(){
     return {
       dados: {},
-      chat: false
+      chat: false,
+      datas: []
     }
   },
   methods: {
@@ -167,10 +178,28 @@ export default defineComponent({
     active_chat(){
       this.chat = !this.chat
     },
+    async GetLogsUsers(){
+      const response = await GetLogs()
+      const temporatydata =  response.data
+
+      for (let i = 0; i < temporatydata.logs.length; i++){
+        if (this.dados.user.id === temporatydata.logs[i].user_id){
+          const object = {
+            'log' : temporatydata.logs[i],
+            'Step' : temporatydata.steps[i]
+          }
+          this.datas.push(object)
+        }
+      }
+      console.log('SizeFinalData', this.datas.length)
+      return response;
+    }
 
   },
   created(){
-    this.GetUser()
+    this.GetUser().then(() => {
+      this.GetLogsUsers();
+    })
   },
   computed: {
     ...mapGetters(['user_profile']),

@@ -44,6 +44,25 @@ export default createStore({
     chat_state : state => state.user.state_chat
   },
   mutations: {
+    CLEAR_STATE(state) {
+      state.user.id = "";
+      state.user.name = "";
+      state.user.email = "";
+      state.user.validated = "";
+      state.user.token = "";
+      state.user.created = "";
+      state.user.funnel_id = "";
+      state.user.colors = "";
+      state.user.team = "";
+      state.user.admin = "";
+      state.user.user_profile = "";
+      state.user.team_users =  "";
+      state.user.state_dash = "";
+      state.user.state_user = "";
+      state.user.state_team = "";
+      state.user.state_chat = "";
+
+    },
     UpdateDashState(state, NewState){
       state.user.state_dash = NewState
     },
@@ -94,7 +113,11 @@ export default createStore({
       state.user.team_users =  NewUsers
     }
   },
-  actions: {},
+  actions: {
+    clearState({ commit }) {
+      commit('CLEAR_STATE');
+    },
+  },
   modules: {},
   plugins: [createPersistedState()],
 });

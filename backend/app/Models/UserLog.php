@@ -27,4 +27,8 @@ class UserLog extends Model
     {
         return $this->belongsTo(Contact::class);
     }
+
+    public function step(){
+        return $this->belongsTo(Step::class);
+    }
 }

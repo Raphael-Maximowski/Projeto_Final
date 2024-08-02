@@ -14,7 +14,7 @@
             >
               <template #item="{ element: header }">
                 <th scope="col">
-                  <Etapa :id_funnel="id_funnel" @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
+                  <Etapa @OpenCreate="OpenCreate" :id_funnel="id_funnel" @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
                 </th>
               </template>
             </draggable>
@@ -71,6 +71,11 @@ export default {
       this.returndata =  response.data;
       this.size = this.returndata.length
     },
+    OpenCreate(){
+      this.$emit('OpenCreate');
+      console.log('Saiu do Dragabble')
+    },
+
     SetHeaders(){
       const porcentage = (100 / this.returndata.length) / 70
       let opacity = 0
