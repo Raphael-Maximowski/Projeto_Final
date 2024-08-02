@@ -1,6 +1,9 @@
 <template>
-  <div class="blockermain">
-    <img src="../../src/assets/images/ExtraFeatures/chat.png">
+  <div class="blocker">
+    <div class="basegif">
+      <div class="part1"><img src="../assets/images/"></div>
+      <div class="part2"></div>
+    </div>
   </div>
 </template>
 <script>
@@ -9,20 +12,21 @@ export default {
 }
 </script>
 <style>
-.blockermain {
-  position: absolute;
-  z-index: 1;
+.basegif {
+  background-color: red;
+  width: 300px;
+  height: 300px;
 
-  margin-left: 60px;
-  width: 100vw;
-
-  height: 100vh;
 }
 
-.blockermain  img {
-  width: 40px;
-
-  margin-left: 93vw;
-  margin-top: 87vh;
+.blocker {
+  width: 100vw;
+  height: 100vh;
+  background-color: #ebf2fb;
+  position: absolute;
+  z-index: 10000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -1,15 +1,14 @@
 <template>
     <main>
-      <Alert :pass="pass" :errors="errors" />
       <div class="camada">
-  
+
         <section>
           <div class="logo">
             <CenterAnimation />
             <Description title="Painel de Administrador" description="Defina um novo administrador para o site em apenas alguns cliques"/>
           </div>
           <div class="input">
-            <form @submit.prevent="checkdata">
+            <form>
               <div>
                 <div>
                   <div class="form-floating mb-3">
@@ -19,7 +18,7 @@
                 </div>
                 <div class="extra_info">
                 </div>
-                <Button text="Adicionar" @click="checkdata" />
+                <Button text="Adicionar" @click="SetAdmin" />
               </div>
             </form>
           </div>
@@ -30,7 +29,7 @@
   </template>
   
   <script>
-  import { login } from '../services/HttpService.js';
+  import {CreateAdmin, login} from '../services/HttpService.js';
   import Background from '../components/Login/Background.vue';
   import CenterAnimation from "@/components/Login/CenterAnimation.vue";
   import Alert from "@/components/Login/Alert.vue";
@@ -46,8 +45,10 @@
       };
     },
     methods: {
-      SetAdmin(){
-
+      async SetAdmin(){
+        const data = this.email
+        const response = await CreateAdmin(data)
+        return response;
       }
     }
   }
