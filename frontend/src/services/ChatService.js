@@ -9,8 +9,8 @@ const callback = (a) => {
 }
 
 const ChatService = {
-    joinRoom(room, username, socket_id) {
-        socket.emit('select_user', { room, username, socket_id}, callback);
+    joinRoom(room, username, socket_id, user_id) {
+        socket.emit('select_user', { room, username, socket_id, user_id}, callback);
         console.log('Conexão Efetuada sala ')
     },
     Message(data) {

@@ -423,6 +423,18 @@ export const CreateAdmin = async (data) => {
     const url =  `users/make-admin/${email}`
     const response = await HttpService.put(url, data,{headers})
 }
+
+export const GetRoom = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const id  = data
+    const url =  `room/${id}`
+    const response = await HttpService.get(url, {headers})
+    return response
+}
+
 export default HttpService;
 
 

@@ -1,6 +1,6 @@
 <template>
   <div v-if="openchat" class="openmessage">
-    <div><CardMessage @SendMessage="SendMessage" @CloseMessage="CloseMessage" :pair="pair"/></div>
+    <div><CardMessage @Room="Room" @SendMessage="SendMessage" @CloseMessage="CloseMessage" :pair="pair"/></div>
   </div>
 
   <div class="contentchat">
@@ -36,7 +36,8 @@ export default {
       openchat: false,
       OwnId : "",
       OtherId: "",
-      messages : []
+      messages : [],
+      room : null
     }
   },
   computed: {
@@ -44,16 +45,22 @@ export default {
   },
 
   methods: {
+    Room(value){
+      this.room =  value.room
+    },
     CloseChat(){
       this.$emit('CloseChat')
       this.UpdateChatState(false)
     },
     SendMessage(value){
-      const room = String(this.OwnId) + String(this.OtherId)
+      if (this.room.length === 0  || this.room === null){
+        const findroom = String(this.OwnId) + String(this.OtherId)
+        this.room  = findroom
+      }
       const username = this.user_name
       const data = {
         'text' : value,
-        'room' : room,
+        'room' : this.room,
         'username' : username,
         'ID_FIRST' : this.user_id,
         'ID_SECOND' : this.OtherId
@@ -80,7 +87,7 @@ export default {
       const UserName = this.user_name
       const SocketID = getSocketId.socket.id
       console.log('id socket', SocketID)
-      ChatService.joinRoom(Room, UserName, SocketID)
+      ChatService.joinRoom(Room, UserName, SocketID, this.OwnId)
       this.openchat = true
     },
     ...mapMutations(['UpdateChatState'])
@@ -153,7 +160,7 @@ export default {
 
 .contentchatreal{
   background-color: white;
-  width: 350px;
+  width: 410px;
   z-index: 10;
   border-radius: 0px 0px 0px 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);

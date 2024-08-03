@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import db from './models/index.js';
 import cors from 'cors';
+import { Op } from 'sequelize';
 
 const app = express();
 const server = createServer(app);
@@ -60,15 +61,14 @@ io.on('connection', (socket) => {
   // Evento quando um usuário seleciona uma sala
   socket.on('select_user', async (data, callback) => {
     try {
-      socket.join(data.room); // O usuário entra em uma sala específica
+      socket.join(data.room);
 
       // Verifica se o usuário já está na sala
-      const userInRoom = users.find(user => user.room === data.room);
-      const reverseString = str => [...str].reverse().join('');
-      const originalString = data.room;
-      const reversedString = reverseString(originalString);
-      console.log(reversedString);
-      if (userInRoom || reversedString) {
+      const originalRoom = data.room;
+
+      let userInRoom = users.find(user => user.room === originalRoom);
+
+      if (userInRoom) {
         userInRoom.socket_id = socket.id;
         console.log('User Joined Room');
       } else {
@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
         });
         console.log('Room Created');
       }
+
 
       // Busca as mensagens da sala e chama o callback com as mensagens
       const messagesRoom = await getMessagesRoom(data.room);
@@ -92,7 +93,7 @@ io.on('connection', (socket) => {
   // Evento quando uma mensagem é enviada
   socket.on('message', async (data) => {
     try {
-      // Cria uma nova mensagem no banco de dados
+
       const message = await db.Message.create({
         text: data.text,
         room: data.room,
@@ -126,3 +127,5 @@ db.sequelize.sync()
     .catch((error) => {
       console.error('Unable to connect to the database:', error);
     });
+
+

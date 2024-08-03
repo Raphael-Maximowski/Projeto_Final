@@ -46,11 +46,14 @@ export default {
 
 .data {
   display: flex;
-  justify-content: space-between;
+  margin-left: 15px;
+
 }
 .name {
+  margin-left: 15px;
   font-size: 15px;
   display: flex;
+  width: 16vw;
   justify-content: space-between;
 
 }
@@ -58,7 +61,6 @@ export default {
 
   height: 40px;
   width: 18vw;
-  margin-left: 1vw;
 }
 .photocard {
   background-color: white;

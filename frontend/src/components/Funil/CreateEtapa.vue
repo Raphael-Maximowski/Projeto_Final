@@ -30,7 +30,7 @@
 
 .cancel {
   position: absolute;
-  margin-left: 13vw;
+  margin-left: 10vw;
   margin-top: 3px;
 }
 

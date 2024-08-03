@@ -38,7 +38,7 @@
 
 
       </div>
-      <div class="delete-info" v-if="Edit && admin == 1">
+      <div class="delete-info" style="margin-top: 260px" v-if="Edit && admin == 1">
         <div @click="DeleteInfo"><p>Excluir</p></div>
       </div>
     </div>
@@ -114,6 +114,7 @@ export default{
           name : this.name,
           description : this.description,
           color : this.color,
+          team_id : this.team
         }
         const response = await UpdateCollection(data)
         return response;
@@ -152,7 +153,7 @@ export default{
     this.SyncInfo()
   },
   computed: {
-  ...mapGetters(["admin"]),
+  ...mapGetters(["admin", "team"]),
 },
 }
 </script>

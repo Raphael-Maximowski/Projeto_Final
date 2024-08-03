@@ -109,11 +109,14 @@ export default defineComponent({
 
 .label {
 
+
   width: 200px;
   text-align: center;
 }
 .create{
   margin-top: 5px;
+
+  margin-left: 10vw;
 }
 .background {
   background-color: blue;

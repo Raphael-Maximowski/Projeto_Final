@@ -38,18 +38,18 @@
   position: absolute;
   display: flex;
   margin-bottom: 10px;
-  margin-left: 8.2vw;
-
+  margin-left: 7.6vw;
   height: 10px;
 }
 
 input {
-  width: 12vw;
+  width: 10.5vw;
   height: 27px;
   border-radius: 5px;
   border: 1px solid grey;
   padding: 10px;
   font-size: 13px;
+  margin-right: 10px;
 }
 
 .cards {

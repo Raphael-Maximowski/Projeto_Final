@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  return sequelize.define('users', {
+  return sequelize.define('usersnode', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,

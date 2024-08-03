@@ -205,7 +205,7 @@
                 </div>
                 <div class="contato">
                   <div class="titlecontact">Inscrição estadual:</div>
-                  <div  style="margin-top: 10px" @click="EditInscri" v-if="!edit_inscri" class="contentcontact">{{ insc_expose }}</div>
+                  <div  style="" @click="EditInscri" v-if="!edit_inscri" class="contentcontact">{{ insc_expose }}</div>
                   <div v-if="edit_inscri" class="contentcontact">
                     <input style="margin-top: 10px" v-model="insc">
                     <div class="confirm-little">
@@ -216,7 +216,7 @@
                 </div>
                 <div class="contato">
                   <div class="titlecontact">Data de fundação:</div>
-                  <div  style="margin-top: 10px" @click="EditFund" v-if="!edit_fund" class="contentcontact">{{ fund_expose }}</div>
+                  <div  style="" @click="EditFund" v-if="!edit_fund" class="contentcontact">{{ fund_expose }}</div>
                   <div v-if="edit_fund" class="contentcontact">
                     <input  style="margin-top: 10px" v-model="fund">
                     <div class="confirm-little">

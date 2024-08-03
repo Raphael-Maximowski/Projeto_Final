@@ -36,6 +36,7 @@
 .img-down img {
   width: 150px;
   position: absolute;
+
   margin-left: 10px;
 }
 
@@ -70,7 +71,7 @@ a {
 .container-modal {
   background-color: white;
   width: 50vw;
-  height: 45vh;
+  height: 35vh;
   border-radius: 20px;
   display: flex;
   justify-content: center;

@@ -19,7 +19,7 @@
       <Icones v-if="chat_state" imageSrc="/src/assets/images/DashBoard/activechat.png"/>
       <DefaultIcon @click="SetChat" v-if="!chat_state" imageSrc="/src/assets/images/DashBoard/chat.png"/>
     </div>
-    <div style="margin-top: 44vh">
+    <div style="margin-top: 60vh">
       <DefaultIcon @click="SetLogout" imageSrc="/src/assets/images/DashBoard/active_logout.png"/>
     </div>
 

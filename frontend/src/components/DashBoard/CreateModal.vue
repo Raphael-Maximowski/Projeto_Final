@@ -126,7 +126,7 @@ export default {
           description : this.description,
           color : this.color,
           type : this.type,
-          team_id : this.team 
+          team_id : this.team
         }
         this.$emit('SendData', data)
       }
@@ -167,6 +167,7 @@ hr {
   text-align: center;
   width: 30vw;
   padding: 5px 0px;
+  margin-top: 10px;
   border-radius: 10px;
   cursor: pointer;
 }

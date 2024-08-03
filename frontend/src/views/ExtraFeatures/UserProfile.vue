@@ -89,7 +89,7 @@
   border: 2px solid lightgray;
   height: 250px;
   width: 57.5vw;
-  margin-top: 3.5vw;
+  margin-top: 6vw;
   border-radius: 10px;
   display: flex;
 }
@@ -191,6 +191,7 @@ export default defineComponent({
           this.datas.push(object)
         }
       }
+      console.log(this.datas)
       console.log('SizeFinalData', this.datas.length)
       return response;
     }

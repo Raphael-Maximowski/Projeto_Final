@@ -39,7 +39,7 @@ class CollectionController extends Controller
             'name' => 'required|string',
             'description' => 'required|string',
             'color' => 'required|string',
-            'team_id' => 'required|integer|exists:teams,id'
+            'team_id' => 'required|integer'
         ]);
 
         $user = Auth::user();

@@ -6,24 +6,31 @@
         <div style="margin-top: 16px; margin-left: 10px; width: 200px"><p><span style="font-size: 14px;width: 100px">{{ pair.name }}</span> <br> <span style="font-size: 12px">Online</span> </p></div>
       </div>
 
-      <div @click="CloseMessages" style=" cursor: pointer"><img width="22px" src="../../assets/images/ExtraFeatures/bottom.png"></div>
+      <div @click="CloseMessages" style=" cursor: pointer"><img width="22px" style="margin-left: 60px" src="../../assets/images/ExtraFeatures/bottom.png"></div>
     </div>
     <div class="contentallmessages">
 
     </div>
-    <div class="sendmessage"><input v-model="message" placeholder="Digite sua Mensagem"><img style="cursor:pointer;" @click="SendMessage" src="../../assets/images/ExtraFeatures/sendmessage.png"></div>
+    <div class="sendmessage"><input style="width: 15vw; padding: 5px 15px" v-model="message" placeholder="Digite sua Mensagem"><img style="cursor:pointer;" @click="SendMessage" src="../../assets/images/ExtraFeatures/sendmessage.png"></div>
   </div>
 </template>
 <script>
+import {GetRoom} from "@/services/HttpService.js";
+import {mapGetters} from "vuex";
+
 export default {
   name: 'CardMessage',
   data(){
     return {
-      message : ""
+      message : "",
+      room : ""
     }
   },
   props: {
     pair: {type:Object}
+  },
+  created() {
+    this.GetRoom()
   },
   methods: {
     CloseMessages(){
@@ -32,7 +39,15 @@ export default {
     },
     SendMessage(){
       this.$emit('SendMessage', this.message)
+    },
+    async GetRoom(){
+      const response = await GetRoom(this.user_id)
+      this.room = response.data;
+      this.$emit('Room', this.room)
     }
+  },
+  computed: {
+    ...mapGetters(['user_id'])
   }
 }
 </script>
@@ -49,6 +64,10 @@ export default {
 }
 
 .sendmessage input {
+  width: 5vw;
+}
+
+.sendmessage input {
   border: 1px solid lightgray;
   width: 220px;
   margin: 0px 10px;
@@ -59,8 +78,9 @@ export default {
   border-radius: 5px;
 }
 .contentallmessages {
-  height: 260px;
-  background-color: white;
+  height: 350px;
+  background: white;
+
 }
 .photomessage img {
   width: 10px;
@@ -79,10 +99,11 @@ export default {
 
 }
 .basemessage {
-  height: 350px;
-  width: 280px;
+  height: 450px;
+  width: 350px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
   z-index: 20;
+  margin-right: vw;
 }
 .headermessagecard {
   background-color: #FEBC28;
@@ -91,4 +112,6 @@ export default {
   align-items: center;
   border-radius: 10px 10px 0px 0px;
 }
+
+
 </style>

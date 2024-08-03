@@ -186,7 +186,7 @@ h1 {
 .funil {
   cursor: pointer;
   margin-top: 15px;
-  margin-right: 0.5vw;
+  margin-left: 34px;
 }
 
 .funil p {
