@@ -5,12 +5,13 @@ const socket = io("http://localhost:3005", {
 });
 
 const callback = (a) => {
-    console.log(a)
+    console.log('Callback', a )
 }
 
 const ChatService = {
     joinRoom(room, username, socket_id, user_id) {
         socket.emit('select_user', { room, username, socket_id, user_id}, callback);
+        console.log('Sala Enviada', room)
         console.log('Conexão Efetuada sala ')
     },
     Message(data) {
@@ -19,7 +20,8 @@ const ChatService = {
     },
     onReceiveMessage(callback) {
         socket.on('ReceiveMessage', callback);
-    }
+        console.log('Recebi a Mensagem')
+    },
 }
 
 

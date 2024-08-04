@@ -429,10 +429,24 @@ export const GetRoom = async (data) => {
     const headers = {
         Authorization: `Bearer ${token}`
     }
-    const id  = data
-    const url =  `room/${id}`
+    const user1 =  data.OwnID;
+    const user2 =  data.OtherID
+
+    const url =  `/room/${user1}/${user2}`
     const response = await HttpService.get(url, {headers})
     return response
+}
+
+export const GetHistory =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`
+    }
+    const user1 =  data.OwnID
+    const user2 =  data.OtherID
+    const url = `/history/${user1}/${user2}`
+    const response = await HttpService.get(url, {headers})
+    return response;
 }
 
 export default HttpService;

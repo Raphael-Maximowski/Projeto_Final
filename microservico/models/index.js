@@ -18,7 +18,7 @@ const db = {
   Sequelize,
   sequelize,
   User: UserModel(sequelize, DataTypes),
-  Message: MessageModel(sequelize, DataTypes)
+  Message: MessageModel(sequelize, DataTypes),
 };
 
 export default db;

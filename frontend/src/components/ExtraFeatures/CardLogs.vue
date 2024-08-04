@@ -23,7 +23,6 @@ export default {
     }
   },
   created(){
-    console.log(this.data)
     if (this.data.log.new_position == null){
       this.position = this.data.log.old_position
     } else { this.position = this.data.log.new_position}

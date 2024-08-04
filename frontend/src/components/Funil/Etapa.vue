@@ -153,7 +153,6 @@ export default {
       const response = await GetContacts(data)
       const GetData = response.data
       this.size = GetData.length
-      console.log(this.size)
       for (let i = 0; i < GetData.length; i++){
         this.cards.push(GetData[i])
       }
@@ -167,7 +166,6 @@ export default {
     log: function(evt, id) {
       this.key = Object.keys(evt)
       this.evt = evt
-      console.log(evt, id)
 
       if (this.key[0] === 'moved') {
         this.evt = evt
@@ -187,7 +185,6 @@ export default {
         this.evt = evt
         this.newId = id
         this.idcontact = this.evt.added.element.id
-        console.log('id', this.idcontact)
         this.Added();
       }
     },
@@ -255,7 +252,6 @@ export default {
   created(){
     this.GetContact()
     this.name = this.dados.dados.name
-    console.log(this.size)
   }
 }
 </script>

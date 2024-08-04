@@ -73,7 +73,6 @@ export default {
     },
     OpenCreate(){
       this.$emit('OpenCreate');
-      console.log('Saiu do Dragabble')
     },
 
     SetHeaders(){
@@ -104,7 +103,6 @@ export default {
     },
     log: function(evt) {
       const pos = (evt.moved.newIndex) + 1
-      console.log('ID FUNNEL', evt.moved.element.dados.id)
       this.newdata = {
         'id' : evt.moved.element.dados.id,
         'posicao' : pos,

@@ -110,7 +110,6 @@ export default {
 
       for(let i = 0; i < this.funnels.length; i++){
         let id = this.funnels[i].collection_id;
-        console.log('Compare ', 'Funnel ID: ', id, 'Collecion ID: ', this.id_collection)
         if (id === this.id_collection){
           this.funnel.push(this.funnels[i])
         }
@@ -123,7 +122,6 @@ export default {
       }
       const response = await GetFunnel(data);
       this.funnels =  response.data
-      console.log('Funil Collection', this.funnels)
     },
     ...mapMutations(['updateColors'])
   },

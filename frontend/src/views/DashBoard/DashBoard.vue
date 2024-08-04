@@ -169,7 +169,6 @@ export default {
       this.page = 1
       const response = await Pagination(this.page);
       this.collections = response.data
-      console.log(this.collections)
       this.sizepages = this.collections.collections
       return response
     },
@@ -198,7 +197,6 @@ export default {
     async ShowUser()
     {
       const response = await GetUser();
-      console.log('user', response.data)
       this.updateUserId(response.data.id);
       this.updateUserName(response.data.name);
       this.updateUserEmail(response.data.email);

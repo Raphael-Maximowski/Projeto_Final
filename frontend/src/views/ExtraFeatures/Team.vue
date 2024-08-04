@@ -216,7 +216,6 @@ export default defineComponent({
     }
   },
   created(){
-    console.log('created')
     this.GetTeamData().then(() => {
       this.GetCompanyView();
     })

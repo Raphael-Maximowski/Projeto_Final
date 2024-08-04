@@ -45,7 +45,6 @@ export default {
     userteam: {type:Object}
   },
   created(){
-    console.log(this.userteam)
   },
   methods: {
     async RemoveFromTeam(){
@@ -53,7 +52,6 @@ export default {
         user_id : this.userteam.id,
         team_id : this.userteam.team_id
       }
-      console.log('Data Exclude User', data)
       const response = await RemoveTeam(data)
       return response;
     },
