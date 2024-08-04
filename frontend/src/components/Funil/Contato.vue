@@ -31,11 +31,9 @@ export default {
   methods: {
     ActiveContact(){
       this.$emit('ActiveContactEtapa',this.dadoscontact);
-      console.log('Abriu do Errado')
     },
     OpenCreate(){
       this.$emit('OpenCreate');
-      console.log('Saiu do Contato')
     }
   }
 }

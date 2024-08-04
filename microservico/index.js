@@ -57,20 +57,18 @@ const users = [];
 // socket.io
 io.on('connection', (socket) => {
   console.log('a user connected');
-
   // Evento quando um usuário seleciona uma sala
   socket.on('select_user', async (data, callback) => {
     try {
-      socket.join(data.room);
-
-      // Verifica se o usuário já está na sala
       const originalRoom = data.room;
+      console.log('Sala', originalRoom)
+      socket.join(data.room);
 
       let userInRoom = users.find(user => user.room === originalRoom);
 
       if (userInRoom) {
         userInRoom.socket_id = socket.id;
-        console.log('User Joined Room');
+        console.log('User Joined Room', data.room);
       } else {
         users.push({
           room: data.room,
@@ -93,7 +91,6 @@ io.on('connection', (socket) => {
   // Evento quando uma mensagem é enviada
   socket.on('message', async (data) => {
     try {
-
       const message = await db.Message.create({
         text: data.text,
         room: data.room,
@@ -102,16 +99,15 @@ io.on('connection', (socket) => {
         username: data.username,
         created_at: new Date()
       });
-
-      // Emite a mensagem para todos os usuários na sala
+      console.log('Mensagem Enviada')
       io.to(data.room).emit('ReceiveMessage', message);
+      console.log('Mensagem Enviada para Sala ', data.room );
     } catch (error) {
       console.error('Error in message:', error);
     }
   });
 });
 
-// Função para buscar mensagens de uma sala específica
 async function getMessagesRoom(room) {
   const messagesRoom = await db.Message.findAll({ where: { room } });
   return messagesRoom; // Retorna as mensagens da sala

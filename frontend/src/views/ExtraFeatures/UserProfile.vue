@@ -191,8 +191,6 @@ export default defineComponent({
           this.datas.push(object)
         }
       }
-      console.log(this.datas)
-      console.log('SizeFinalData', this.datas.length)
       return response;
     }
 

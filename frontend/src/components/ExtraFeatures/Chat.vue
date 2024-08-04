@@ -37,7 +37,7 @@ export default {
       OwnId : "",
       OtherId: "",
       messages : [],
-      room : null
+      room : ""
     }
   },
   computed: {
@@ -53,7 +53,8 @@ export default {
       this.UpdateChatState(false)
     },
     SendMessage(value){
-      if (this.room.length === 0  || this.room === null){
+      if (this.room ==  undefined){
+        console.log('Sala Vazia')
         const findroom = String(this.OwnId) + String(this.OtherId)
         this.room  = findroom
       }
@@ -69,31 +70,28 @@ export default {
         id : this.user_id,
         message : value
       }
-      console.log(data)
       this.messages.push(message)
       ChatService.Message(data)
     },
 
     CloseMessage(){
       this.openchat =  false
-      console.log('Status Chat', this.openchat)
 
     },
     OpenChat(value){
       this.pair = value.pair
       this.OtherId = value.pair.id
       this.OwnId = this.user_id
-      const Room = String(this.OwnId) + String(this.OtherId)
+      const Room = value.room
       const UserName = this.user_name
       const SocketID = getSocketId.socket.id
-      console.log('id socket', SocketID)
+      console.log('JoinRoomDados', 'Room', Room, 'Username', UserName, 'SockerID', SocketID, 'User_id', this.OwnId )
       ChatService.joinRoom(Room, UserName, SocketID, this.OwnId)
       this.openchat = true
     },
     ...mapMutations(['UpdateChatState'])
   },
   created(){
-    console.log('Usuarios do Time', this.team_users)
   },
 
 }

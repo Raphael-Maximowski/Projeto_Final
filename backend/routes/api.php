@@ -127,7 +127,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
     Route::get('/logs/{id}', [LogController::class, 'show'])->name('logs.show');
 
-    Route::get('/room/{id}', [MessageController::class, 'show']);
+    Route::get('/room/{user1}/{user2}', [MessageController::class, 'show']);
     Route::get('/history/{user1}/{user2}', [MessageController::class, 'history']);
 
 });
