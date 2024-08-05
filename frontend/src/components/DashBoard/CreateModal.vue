@@ -130,7 +130,9 @@ export default {
           team_id : this.team
         }
         this.$emit('SendData', data)
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       }
     },
 };

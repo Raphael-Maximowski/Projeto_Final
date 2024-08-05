@@ -91,7 +91,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->photo) {
-            $photoUrl = Storage::url('public/photos/' . $user->photo);
+
+            $baseUrl = 'http://localhost:8000/storage/app/public/photos';
+            $photoPath = $user->photo;
+            $photoUrl = $baseUrl . '/' . $photoPath;
             return response()->json(['photo_url' => $photoUrl]);
         }
 

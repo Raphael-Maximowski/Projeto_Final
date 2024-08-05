@@ -23,6 +23,7 @@ export default {
     }
   },
   created(){
+
     if (this.data.log.new_position == null){
       this.position = this.data.log.old_position
     } else { this.position = this.data.log.new_position}
@@ -36,11 +37,17 @@ export default {
       const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Month is 0-based
       const year = date.getUTCFullYear();
 
-      const hours = String(date.getUTCHours()).padStart(2, '0');
+      let hours = date.getUTCHours() - 3;
+      if (hours < 0) {
+        hours += 24; // Ajuste se as horas forem negativas
+        date.setUTCDate(date.getUTCDate() - 1); // Ajuste o dia se necessário
+      }
+      hours = String(hours).padStart(2, '0');
+
       const minutes = String(date.getUTCMinutes()).padStart(2, '0');
       const seconds = String(date.getUTCSeconds()).padStart(2, '0');
 
-      this.date = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+      this.date = `${String(date.getUTCDate()).padStart(2, '0')}/${month}/${year} ${hours}:${minutes}:${seconds}`;
     }
   }
 }

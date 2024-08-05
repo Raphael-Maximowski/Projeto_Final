@@ -117,6 +117,9 @@ export default{
           team_id : this.team
         }
         const response = await UpdateCollection(data)
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
         return response;
       } else {
         const data = {
@@ -126,6 +129,9 @@ export default{
           description : this.description,
         }
         const response = await UpdateFunnel(data);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
         return response;
       }
 

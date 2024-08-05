@@ -449,6 +449,28 @@ export const GetHistory =  async (data) => {
     return response;
 }
 
+export const UploadPhoto =  async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+    }
+    const url = `/profile/photo/upload`
+    const response = await HttpService.post(url, data, {headers})
+    return response;
+}
+
+export const GetPhoto = async (data) => {
+    const token = store.getters.user_token;
+    const headers = {
+        Authorization: `Bearer ${token}`,
+    }
+    const id = data
+    const url = `/profile/photo/${id}`
+    const response = await HttpService.get(url, {headers})
+    return response
+}
+
 export default HttpService;
 
 
