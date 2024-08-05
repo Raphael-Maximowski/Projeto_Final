@@ -526,7 +526,11 @@ export default {
       const getdata =  response.data;
       const id =  getdata.id
       this.$emit('IdTeam', id)
-      console.log('Evento Emitido')
+      setTimeout(() => {
+        this.pass = true;
+        this.errors = [];
+      }, 500);
+
       return response;
     },
     async SaveCompany(){
