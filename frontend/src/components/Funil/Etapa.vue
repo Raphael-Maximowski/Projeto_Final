@@ -23,7 +23,7 @@
       >
         <template #item="{element}">
           <div>
-            <ContatoCard @OpenCreate="OpenCreate" :size="size" v-if="cards.length !== 0" @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
+            <ContatoCard @Whatsapp="Whatsapp" @OpenCreate="OpenCreate" :size="size" v-if="cards.length !== 0" @ActiveContactEtapa="ActiveContact" :dadoscontact="element"/>
           </div>
 
         </template>
@@ -146,6 +146,9 @@ export default {
     }
   },
   methods: {
+    Whatsapp(){
+      this.$emit('Whatsapp')
+    },
     async GetContact(){
       const data = {
         id: this.dados.dados.id

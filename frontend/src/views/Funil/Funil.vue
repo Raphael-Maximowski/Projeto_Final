@@ -31,7 +31,7 @@
         </div>
       </div>
       <div>
-        <Draggable @OpenCreate="OpenCreate" @ActiveFromStep="ActiveFromStep" :dadosfunil="dadosfunil"  @ActiveContactMain="ActiveContactMain" @ReceiveIdPost="ReceiveIdPost" @ReceiveId = "ReceiveId" />
+        <Draggable @Whatsapp="Whatsapp" @OpenCreate="OpenCreate" @ActiveFromStep="ActiveFromStep" :dadosfunil="dadosfunil"  @ActiveContactMain="ActiveContactMain" @ReceiveIdPost="ReceiveIdPost" @ReceiveId = "ReceiveId" />
       </div>
     </div>
   </main>
@@ -63,6 +63,9 @@ export default defineComponent({
     };
   },
   methods: {
+    Whatsapp(){
+      this.activecontact = false
+    },
     OpenCreate(){
       this.activecontact = !this.activecontact
     },

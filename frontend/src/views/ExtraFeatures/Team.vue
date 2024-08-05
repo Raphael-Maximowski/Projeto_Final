@@ -12,6 +12,8 @@
 
 />
     <div><MenuDash @active_chat="active_chat"/></div>
+    <Alert v-if="this.pass = false"  :errors="errors"/>
+    <div><Blocker v-if="team == null && admin == 0"/></div>
     <div class="content" v-if="admin == 1">
       <div class="welcome1">
         <div class="title1">
@@ -85,7 +87,6 @@
           </div>
         </div>
         <div class="content2">
-
           <div class="list">
             <div class="headerlist" style="padding-top: 6px">Usuarios Inseridos no seu Time</div>
             <div class="contentuser">
@@ -101,6 +102,7 @@
     </div>
     <div class="comumuser" v-if="admin != 1 && team != null">
       <div>
+
         <div class="headerlist">Funcionarios Inseridos no seu Time</div>
         <div class="contentcomumuser">
           <div v-for="userteam in userinteam">
@@ -124,9 +126,11 @@ import {mapGetters, mapMutations} from "vuex";
 import Message from "@/components/DashBoard/message.vue";
 import ComumCard from "@/components/ExtraFeatures/CardWorker.vue";
 import Chat from "@/components/ExtraFeatures/Chat.vue";
+import Blocker from "@/components/Blocker.vue";
+import Alert from "@/components/Login/Alert.vue";
 
 export default defineComponent({
-  components: {Chat, ComumCard, Message, FindWorker, WorkerCards, ModalContato, MenuDash},
+  components: {Alert, Blocker, Chat, ComumCard, Message, FindWorker, WorkerCards, ModalContato, MenuDash},
   data(){
     return{
       teams: false,
@@ -140,6 +144,8 @@ export default defineComponent({
       teamdata: {},
       userinteam: {},
       chat : false,
+      pass : true,
+      errors : []
 
     }
   },
@@ -166,9 +172,24 @@ export default defineComponent({
       const data = {
         email : this.usersearch
       }
-      const response = await GetUserEmail(data);
-      this.users =  response.data
-      return response
+      if (this.usersearch.length == 0) {
+        this.pass = false
+        this.errors.push('Insira algum Email')
+        setTimeout(() => {
+          this.pass = true;
+          this.errors = [];
+        }, 8000);
+      } else {
+        const response = await GetUserEmail(data);
+        this.users =  response.data
+        console.log(this.users);
+        if (this.users.users.length == 0){
+          this.users = {
+            users : [{name: 'Nenhum Usuario Encontrado', email: ""}]
+          }
+      }
+        return response;
+      }
     },
     async SetTeamUser(){
       const data = {

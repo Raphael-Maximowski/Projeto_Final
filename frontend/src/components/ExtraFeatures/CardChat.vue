@@ -36,6 +36,9 @@ export default {
       const response = await GetRoom(data)
       this.room = response.data;
       this.room = this.room.room
+      if (this.room == undefined) {
+        this.room = String(this.user_id) + String(this.user.id)
+      }
 
       this.ActiveConversation()
     },

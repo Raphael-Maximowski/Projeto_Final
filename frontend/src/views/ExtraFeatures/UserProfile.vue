@@ -3,6 +3,7 @@
     <chat v-if="chat" @CloseChat="active_chat"/>
     <div><MenuDash  @active_chat="active_chat"/></div>
     <div class="content">
+      <Blocker v-if="team == null && admin == 0"/>
       <div class="profilecontent">
         <div class="photo">
           <div class="imgphoto"></div>
@@ -156,9 +157,10 @@ import {GetLogs, GetUserProfile} from "@/services/HttpService.js";
 import {mapGetters, mapMutations} from "vuex";
 import CardLogs from "@/components/ExtraFeatures/CardLogs.vue";
 import Chat from "@/components/ExtraFeatures/Chat.vue";
+import Blocker from "@/components/Blocker.vue";
 
 export default defineComponent({
-  components: {Chat, CardLogs, MenuDash},
+  components: {Blocker, Chat, CardLogs, MenuDash},
   data(){
     return {
       dados: {},
@@ -201,7 +203,7 @@ export default defineComponent({
     })
   },
   computed: {
-    ...mapGetters(['user_profile']),
+    ...mapGetters(['user_profile', 'team', 'admin']),
   },
 })
 </script>

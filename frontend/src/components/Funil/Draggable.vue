@@ -14,7 +14,7 @@
             >
               <template #item="{ element: header }">
                 <th scope="col">
-                  <Etapa @OpenCreate="OpenCreate" :id_funnel="id_funnel" @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
+                  <Etapa @Whatsapp="Whatsapp" @OpenCreate="OpenCreate" :id_funnel="id_funnel" @ActiveFromStep="ActiveFromStep" :dadosfunilstep="dadosfunil" @ActiveContact="ActiveContact" :dados="header"></Etapa>
                 </th>
               </template>
             </draggable>
@@ -62,6 +62,9 @@ export default {
     };
   },
   methods: {
+    Whatsapp(){
+      this.$emit('Whatsapp')
+    },
     async SendData(){
       const data = {
         id : this.funnel_id
