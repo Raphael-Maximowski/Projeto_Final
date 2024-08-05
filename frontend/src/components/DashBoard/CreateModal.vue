@@ -111,6 +111,7 @@ export default {
           this.SendData()
         } else {
           this.$emit('Error', this.error[0])
+          console.log('Erro emitido', this.error[0])
         }
 
         this.error = []
@@ -129,6 +130,7 @@ export default {
           team_id : this.team
         }
         this.$emit('SendData', data)
+        window.location.reload();
       }
     },
 };

@@ -38,9 +38,9 @@
       <MenuDash @active_chat="active_chat"/>
 
     </div>
-
     </div>
     <div class="principal">
+      <Blocker v-if="team == null && admin == 0"/>
         <div class="header">
             <div class="welcome">
                 <h1>Bem vindo ao seu Customer Relationship Management</h1>
@@ -100,7 +100,7 @@ export default {
     collection() {
       return collection
     }, 
-    ...mapGetters(["admin"]),
+    ...mapGetters(["admin", "team", "admin"]),
   },
   components: {Chat, Blocker, SearchBar, Alert, InfoModal, CreateModal, MenuDash, Collection, Funil },
   data() {
@@ -197,6 +197,8 @@ export default {
     async ShowUser()
     {
       const response = await GetUser();
+
+      console.log('User', response.data)
       this.updateUserId(response.data.id);
       this.updateUserName(response.data.name);
       this.updateUserEmail(response.data.email);

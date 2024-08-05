@@ -1,18 +1,12 @@
 <template>
   <div id="modal" v-if="pass != true">
-    <!-- Container Principal do Modal -->
     <div class="info-modal">
-      <!-- Background Icone -->
-      <div class="icon">
-        <!-- Background Ghost -->
-        <div class="ghost">
-          <!-- Inserindo Image Ghost -->
-          <div class="img-modal"></div>
+      <div class="icon1">
+        <div class="ghost1">
+          <div class="img-modal1"></div>
         </div>
-        <!-- Background Erros -->
-        <div class="error">
-          <!-- Exibindo Primeiro erro Disparado na Array -->
-          <p>{{ errors[0] }}</p>
+        <div class="error1">
+          <p>{{errors[0]}}</p>
         </div>
       </div>
       <!-- Underline Vermelho no Alerta -->
@@ -34,6 +28,10 @@ export default {
       required: true
     }
   },
+  created() {
+    console.log('Erro no FIlho', this.errors)
+    console.log('Pass', this.pass)
+  },
   methods: {
     setTrue() {
       this.$emit('update:pass', true);
@@ -43,6 +41,11 @@ export default {
 </script>
 
 <style>
+.teste {
+  display: flex;
+  height: 8vh;
+
+}
 @keyframes moveUpDown {
   0% {
     opacity: 0;
@@ -75,6 +78,7 @@ export default {
   position: absolute;
   z-index: 4;
 
+
 }
 
 /* Principal Elemento Visual Modal */
@@ -85,13 +89,13 @@ export default {
 }
 
 /* Configuração Texto */
-.error p {
+.error1 p {
   margin-top: 10px;
   font-size: 13px;
 }
 
 /* Imagem Ghost */
-.img-modal {
+.img-modal1 {
   background-image: url('../../assets/images/Login/modal.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -110,7 +114,7 @@ export default {
 }
 
 /* Tamanho Background icon ghost */
-.icon {
+.icon1 {
   height: 8vh;
   display: flex;
 }
@@ -123,7 +127,7 @@ export default {
 }
 
 /* Background Ghost */
-.ghost {
+.ghost1 {
   width: 6vw;
   height: 8vh;
   display: flex;
@@ -132,7 +136,7 @@ export default {
 }
 
 /* Background Erro */
-.error {
+.error1 {
   width: 9vw;
   height: 8vh;
 }

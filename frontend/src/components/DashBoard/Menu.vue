@@ -16,8 +16,8 @@
       <DefaultIcon @click="SetTeam" v-if="!team_state" imageSrc="/src/assets/images/DashBoard/active_team.png"/>
     </div>
     <div >
-      <Icones v-if="chat_state" imageSrc="/src/assets/images/DashBoard/activechat.png"/>
-      <DefaultIcon @click="SetChat" v-if="!chat_state" imageSrc="/src/assets/images/DashBoard/chat.png"/>
+      <Icones v-if="chat_state && team != null" imageSrc="/src/assets/images/DashBoard/activechat.png"/>
+      <DefaultIcon @click="SetChat" v-if="!chat_state && team != null" imageSrc="/src/assets/images/DashBoard/chat.png"/>
     </div>
     <div style="margin-top: 60vh">
       <DefaultIcon @click="SetLogout" imageSrc="/src/assets/images/DashBoard/active_logout.png"/>
@@ -77,7 +77,7 @@ export default {
     ...mapMutations(['UpdateUser', 'UpdateDashState', 'UpdateUserState', 'UpdateTeamState', 'UpdateChatState'])
   },
   computed: {
-    ...mapGetters(['user_id', 'user_profile', 'dash_state', 'user_state', 'team_state', 'chat_state']),
+    ...mapGetters(['user_id', 'user_profile', 'dash_state', 'user_state', 'team_state', 'chat_state', 'team']),
   },
 }
 </script>

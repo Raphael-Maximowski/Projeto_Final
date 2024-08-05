@@ -31,7 +31,7 @@ export default {
 <style>
 .maincontentcards p {
   margin: 10px 15px;
-  width: 15vw;
+  width: 16.3vw;
   margin-left: 20px;
 }
 

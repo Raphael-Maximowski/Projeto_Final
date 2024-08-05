@@ -71,6 +71,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
           <div class="base" v-if="!team">
