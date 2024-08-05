@@ -120,6 +120,9 @@ export default {
         'funnel_id' : this.id_funnel.id
       }
       const response = await CreateStep(data)
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
       return response
     }
   },

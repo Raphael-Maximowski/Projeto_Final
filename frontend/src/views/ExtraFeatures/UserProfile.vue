@@ -7,7 +7,12 @@
       <div class="profilecontent">
         <div class="photo">
           <div class="imgphoto"></div>
+          <div class="inputphoto">
+            <input type="file" >
+            <p>Insira sua Foto</p>
+          </div>
         </div>
+
         <div class="infouser">
           <div class="block1user">
             <div class="flexuser">
@@ -49,6 +54,39 @@
   </main>
 </template>
 <style scoped>
+.inputphoto {
+  width: 13vw;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.inputphoto input{
+  position: absolute;
+  font-size: 12px;
+  margin-left: 70px;
+  margin-top: 30px;
+  z-index: 2;
+  opacity: 0;
+}
+
+.inputphoto p {
+  margin-top: 30px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: #FEBC28;
+  position: absolute;
+  width: 10vw;
+}
+
+.imgphoto input {
+  font-size: 30px;
+  width: 10vw;
+  height: 10vh;
+}
+
 .emblemas {
   height: 220px;
   width: 25vw;
@@ -103,8 +141,9 @@
 
 }
 .photo {
-  width: 32vw;
-  display: flex;
+  width: 23vw;
+  margin-top: 7%;
+  margin-left: 10%;
   align-items: center;
   justify-content: center;
 }
@@ -153,7 +192,7 @@ main {
 
 import {defineComponent} from "vue";
 import MenuDash from "@/components/DashBoard/Menu.vue";
-import {GetLogs, GetUserProfile} from "@/services/HttpService.js";
+import {GetLogs, GetPhoto, GetUserProfile, UploadPhoto} from "@/services/HttpService.js";
 import {mapGetters, mapMutations} from "vuex";
 import CardLogs from "@/components/ExtraFeatures/CardLogs.vue";
 import Chat from "@/components/ExtraFeatures/Chat.vue";
@@ -165,10 +204,34 @@ export default defineComponent({
     return {
       dados: {},
       chat: false,
-      datas: []
+      datas: [],
+      photo: "",
+      fileName: "",
+      returnpicture : ""
     }
   },
   methods: {
+    async onFileChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.photo = file;
+        this.fileName = file.name;
+
+        let formData = new FormData();
+        formData.append('photo', this.photo);
+
+        try {
+          const response = await this.uploadPhoto(formData);
+          console.log('Foto enviada com sucesso:', response);
+        } catch (error) {
+          console.error('Erro ao enviar a foto:', error.response ? error.response.data : error);
+        }
+      }
+    },
+    async uploadPhoto(formData) {
+      return await UploadPhoto(formData);
+
+    },
     async GetUser(){
       const data = {
         id: this.user_profile
@@ -179,6 +242,30 @@ export default defineComponent({
     },
     active_chat(){
       this.chat = !this.chat
+    },
+    async GetUserPhoto() {
+      try {
+        const data = this.user_id;
+        const response = await GetPhoto(data);
+
+        let photoUrl = response.data.photo_url;
+
+        if (photoUrl) {
+          // Corrige barras invertidas na URL
+          photoUrl = photoUrl.replace(/\\/, '/');
+          // Define a URL da foto
+          this.returnpicture = photoUrl;
+        } else {
+          this.returnpicture = null;
+        }
+
+        console.log(this.returnpicture); // Verifique a URL da foto no console
+        this.errorMessage = '';
+      } catch (error) {
+        console.error('Erro ao buscar a foto:', error);
+        this.errorMessage = error.response ? error.response.data.message : 'Erro desconhecido';
+        this.returnpicture = null;
+      }
     },
     async GetLogsUsers(){
       const response = await GetLogs()
@@ -201,9 +288,10 @@ export default defineComponent({
     this.GetUser().then(() => {
       this.GetLogsUsers();
     })
+    this.GetUserPhoto()
   },
   computed: {
-    ...mapGetters(['user_profile', 'team', 'admin']),
+    ...mapGetters(['user_profile', 'team', 'admin', 'user_id']),
   },
 })
 </script>

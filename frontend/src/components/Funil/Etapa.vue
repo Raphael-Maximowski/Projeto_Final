@@ -238,6 +238,9 @@ export default {
         'id' : this.dados.dados.id,
       }
       const response = DeleteStep(data)
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
       return response
     },
     async UpdateStep(){
@@ -246,6 +249,9 @@ export default {
         'name' :  this.name
       }
       const response = UpdateStepInfo(data)
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
       return response;
     },
 

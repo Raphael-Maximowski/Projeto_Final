@@ -59,7 +59,8 @@ export default defineComponent({
       nomefunil: "",
       dadoscontact :  null,
       contact: null,
-      step: null
+      step: null,
+      reload : false
     };
   },
   methods: {
