@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "vuedraggable": "^4.1.0",
-    "vuex-persistedstate": "^4.1.0"
-  }
-}
